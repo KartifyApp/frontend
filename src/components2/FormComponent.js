@@ -1,16 +1,31 @@
-import { Card, CardHeader, Divider, Box, Button, TextField, MenuItem, CardContent } from '@mui/material'
+import { Card, CardHeader, Divider, Box, Button, TextField, MenuItem, CardContent, CircularProgress } from '@mui/material'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
 
-const FormComponent = ({ msg, fields, postHandler }) => {
+const FormComponent = ({ loading, msg, fields, submitAction }) => {
     const dispatch = useDispatch()
 
     const [data, setData] = useState({})
 
     useEffect(() => {
-        fields.forEach((field) => (data[field.key] = ''))
-    }, [fields, data])
+        const defaultData = {}
+        for (var field of fields) {
+            defaultData[field.key] = field.default
+        }
+        setData(defaultData)
+    }, [fields, loading])
+
+    const submitHandler = () => {
+        for (var field of fields) {
+            if (field.required && !data[field.key]) {
+                toast.error(`${field.key} value not provided.`)
+                return
+            }
+        }
+        dispatch(submitAction(data))
+    }
 
     return (
         <Card>
@@ -28,12 +43,12 @@ const FormComponent = ({ msg, fields, postHandler }) => {
                         field.dropdown ? (
                             <TextField
                                 key={field.key}
-                                required
+                                required={field.required}
                                 select
                                 label={field.label}
                                 value={data[field.key]}
                                 onChange={(e) => setData({ ...data, [field.key]: e.target.value })}
-                                style={{ width: '90%' }}
+                                style={{ width: '95%', margin: '8px' }}
                             >
                                 {Object.keys(field.menu).map((key) => (
                                     <MenuItem key={key} value={field.menu[key]}>
@@ -44,20 +59,26 @@ const FormComponent = ({ msg, fields, postHandler }) => {
                         ) : (
                             <TextField
                                 key={field.key}
-                                required
+                                required={field.required}
                                 type={field.key === 'password' ? 'password' : 'text'}
                                 label={field.label}
                                 value={data[field.key]}
                                 onChange={(e) => setData({ ...data, [field.key]: e.target.value })}
-                                style={{ width: '90%' }}
+                                style={{ width: '95%', margin: '8px' }}
                             />
                         )
                     )}
-                    <Box textAlign="center">
-                        <Button sx={{ margin: 2 }} variant="contained" onClick={(e) => dispatch(postHandler(data))}>
-                            {msg[1]}
-                        </Button>
-                    </Box>
+                    {loading ? (
+                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <CircularProgress />
+                        </Box>
+                    ) : (
+                        <Box textAlign="center">
+                            <Button sx={{ margin: 2 }} variant="contained" onClick={(e) => submitHandler()}>
+                                {msg[1]}
+                            </Button>
+                        </Box>
+                    )}
                 </Box>
             </CardContent>
         </Card>

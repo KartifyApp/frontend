@@ -10,7 +10,8 @@ const reducers = combineReducers({
     userLogin: UserReducers.userLoginReducer,
     userRegister: UserReducers.userRegisterReducer,
     platformList: PlatformReducers.platformsListReducer,
-    productList: ProductReducers.productListReducer
+    productList: ProductReducers.productListReducer,
+    productCreate: ProductReducers.productCreateReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null

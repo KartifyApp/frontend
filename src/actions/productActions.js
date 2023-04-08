@@ -19,4 +19,20 @@ export class ProductActions {
             })
         }
     }
+
+    static createProduct = (productData) => async (dispatch, getState) => {
+        try {
+            dispatch({ type: ProductConstants.PRODUCT_CREATE_REQUEST })
+            const { data } = await axios.post(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, productData, ActionServices.getConfig(getState))
+            dispatch({
+                type: ProductConstants.PRODUCT_CREATE_SUCCESS,
+                payload: data
+            })
+        } catch (error) {
+            dispatch({
+                type: ProductConstants.PRODUCT_CREATE_FAIL,
+                payload: ActionServices.getError(error)
+            })
+        }
+    }
 }

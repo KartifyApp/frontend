@@ -29,26 +29,28 @@ const UserAuth = () => {
 
     const loginForm = (
         <FormComponent
+            loading={loading}
             msg={['Login with your credentials', 'Login']}
             fields={[
-                { key: 'username', label: 'Username' },
-                { key: 'password', label: 'Password' }
+                { key: 'username', label: 'Username', required: true },
+                { key: 'password', label: 'Password', required: true }
             ]}
-            postHandler={UserActions.login}
+            submitAction={UserActions.login}
         />
     )
 
     const registerForm = (
         <FormComponent
+            loading={loading}
             msg={['Register as a consumer, provider or delivery', 'Register']}
             fields={[
-                { key: 'name', label: 'Name' },
-                { key: 'email', label: 'Email' },
-                { key: 'userType', label: 'User Type', dropdown: true, menu: UserType },
-                { key: 'username', label: 'Username' },
-                { key: 'password', label: 'Password' }
+                { key: 'name', label: 'Name', required: true },
+                { key: 'email', label: 'Email', required: true },
+                { key: 'userType', label: 'User Type', dropdown: true, menu: UserType, required: true },
+                { key: 'username', label: 'Username', required: true },
+                { key: 'password', label: 'Password', required: true }
             ]}
-            postHandler={UserActions.register}
+            submitAction={UserActions.register}
         />
     )
 

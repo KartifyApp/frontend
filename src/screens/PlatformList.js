@@ -37,6 +37,7 @@ const PlatformList = () => {
                     { name: 'Reviews', onClick: (e) => {} }
                 ]
             }))}
+            filters={[]}
         />
     )
 }

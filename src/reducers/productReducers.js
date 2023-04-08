@@ -13,4 +13,17 @@ export class ProductReducers {
                 return state
         }
     }
+
+    static productCreateReducer = (state = {}, action) => {
+        switch (action.type) {
+            case ProductConstants.PRODUCT_CREATE_REQUEST:
+                return { loading: true }
+            case ProductConstants.PRODUCT_CREATE_SUCCESS:
+                return { loading: false, product: action.payload }
+            case ProductConstants.PRODUCT_CREATE_FAIL:
+                return { loading: false, error: action.payload }
+            default:
+                return state
+        }
+    }
 }
