@@ -25,7 +25,7 @@ const UserAuth = () => {
         if (success) {
             toast.success(success)
         }
-    }, [userInfo, loading])
+    }, [userInfo])
 
     const loginForm = (
         <FormComponent
@@ -56,7 +56,7 @@ const UserAuth = () => {
         <Grid container direction="row" justifyContent="center" alignItems="stretch" spacing={0}>
             <Grid item xs={4.5}>
                 <TabsComponent
-                    msg={[`ASC Login`, `IITB ASC`, `Login to your account`]}
+                    msg={[`Login`, `Kartify Auth`, `Login to your account`]}
                     tabs={[
                         {
                             value: 'login',

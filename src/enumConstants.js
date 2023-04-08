@@ -2,7 +2,8 @@ export const RouteConstants = Object.freeze({
     BASE_URL: 'http://localhost:5000',
     AUTH_PATH: '/auth',
     USER_ROUTES: '/api/user',
-    PLATFORM_ROUTES: '/api/platform'
+    PLATFORM_ROUTES: '/api/platform',
+    PRODUCT_ROUTES: '/api/product'
 })
 
 export const UserType = Object.freeze({

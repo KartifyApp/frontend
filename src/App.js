@@ -1,6 +1,7 @@
 import { useRoutes } from 'react-router-dom'
 import router from 'src/router'
 import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
@@ -15,7 +16,7 @@ function App() {
         <ThemeProvider>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <CssBaseline />
-                {/* <ToastContainer
+                <ToastContainer
                     position="bottom-right"
                     autoClose={3000}
                     hideProgressBar
@@ -26,7 +27,7 @@ function App() {
                     draggable
                     pauseOnHover
                     theme="colored"
-                /> */}
+                />
                 {content}
             </LocalizationProvider>
         </ThemeProvider>

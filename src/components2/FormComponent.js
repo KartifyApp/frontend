@@ -10,7 +10,7 @@ const FormComponent = ({ msg, fields, postHandler }) => {
 
     useEffect(() => {
         fields.forEach((field) => (data[field.key] = ''))
-    }, [data, fields])
+    }, [fields, data])
 
     return (
         <Card>
@@ -45,7 +45,7 @@ const FormComponent = ({ msg, fields, postHandler }) => {
                             <TextField
                                 key={field.key}
                                 required
-                                type={field.key == 'password' ? 'password' : 'text'}
+                                type={field.key === 'password' ? 'password' : 'text'}
                                 label={field.label}
                                 value={data[field.key]}
                                 onChange={(e) => setData({ ...data, [field.key]: e.target.value })}

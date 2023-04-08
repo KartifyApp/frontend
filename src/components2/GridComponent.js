@@ -38,8 +38,11 @@ const GridComponent = ({ msg, loading, data }) => {
                                                 </Typography>
                                             </CardContent>
                                             <CardActions disableSpacing sx={{ mt: 'auto' }}>
-                                                <Button size="small">{element.button1.name}</Button>
-                                                <Button size="small">{element.button2.name}</Button>
+                                                {element.buttons.map((button) => (
+                                                    <Button size="small" onClick={button.onClick} key={button.name}>
+                                                        {button.name}
+                                                    </Button>
+                                                ))}
                                             </CardActions>
                                         </Card>
                                     </Grid>

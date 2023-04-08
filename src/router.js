@@ -51,6 +51,7 @@ const StatusMaintenance = Loader(lazy(() => import('src/content/pages/Status/Mai
 
 const UserAuth = Loader(lazy(() => import('src/screens/UserAuth')))
 const PlatformList = Loader(lazy(() => import('src/screens/PlatformList')))
+const ProductList = Loader(lazy(() => import('src/screens/ProductList')))
 
 const routes = [
     {
@@ -196,12 +197,35 @@ const routes = [
         ]
     },
     {
-        path: 'platforms',
+        path: 'platform',
         element: <SidebarLayout />,
         children: [
             {
                 path: '',
                 element: <PlatformList />
+            },
+            {
+                path: ':platformId',
+                children: [
+                    {
+                        path: '',
+                        element: null
+                    },
+                    {
+                        path: 'products',
+                        element: <ProductList />
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        path: 'product',
+        element: <SidebarLayout />,
+        children: [
+            {
+                path: '',
+                element: <StatusMaintenance />
             }
         ]
     }
