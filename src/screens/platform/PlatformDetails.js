@@ -7,6 +7,7 @@ import FormComponent from 'src/components2/FormComponent'
 import { InfoComponent } from 'src/components2/InfoComponent'
 import TabsComponent from 'src/components2/TabsComponent'
 import { AddressKeys, PlatformStatus, RouteConstants } from 'src/enumConstants'
+import ProductListTable from './ProductListTable'
 
 const PlatformDetails = () => {
     const navigate = useNavigate()
@@ -111,7 +112,7 @@ const PlatformDetails = () => {
             tabs={[
                 { value: 'platformDetails', label: 'Details', component: platformInfo },
                 { value: 'reviews', label: 'Reviews', component: platformInfo },
-                { value: 'products', label: 'Products', component: platformInfo }
+                { value: 'products', label: 'Products', component: <ProductListTable platform={platformDetails.data} /> }
             ]}
             loading={false}
         />

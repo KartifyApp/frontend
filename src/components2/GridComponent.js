@@ -43,7 +43,7 @@ const GridComponent = ({ msg, loading, data, filter, createForm }) => {
                                     <Grid container>
                                         <Grid item xs={6}>
                                             <FormControl fullWidth variant="outlined">
-                                                <InputLabel>Filter</InputLabel>
+                                                <InputLabel>{filter.label}</InputLabel>
                                                 <Select
                                                     value={filterValue}
                                                     onChange={(e) => {

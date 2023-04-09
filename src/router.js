@@ -51,7 +51,7 @@ const StatusMaintenance = Loader(lazy(() => import('src/content/pages/Status/Mai
 
 const UserAuth = Loader(lazy(() => import('src/screens/UserAuth')))
 const PlatformList = Loader(lazy(() => import('src/screens/platform/PlatformList')))
-const ProductList = Loader(lazy(() => import('src/screens/ProductList')))
+const ProductList = Loader(lazy(() => import('src/screens/product/ProductList')))
 const PlatformDetails = Loader(lazy(() => import('src/screens/platform/PlatformDetails')))
 
 const routes = [

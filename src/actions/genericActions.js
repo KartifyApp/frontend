@@ -31,8 +31,6 @@ export class GenericActions {
                     type: ReduxConstants.CREATE_SUCCESS,
                     payload: data
                 })
-                await ActionServices.sleep(STATE_RESET_TIME)
-                dispatch({ type: ReduxConstants.CREATE_RESET })
             } catch (error) {
                 dispatch({
                     type: ReduxConstants.CREATE_FAIL,
