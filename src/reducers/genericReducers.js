@@ -14,7 +14,7 @@ export class GenericReducers {
         }
     }
 
-    static dataCreateReducer = (state = { data: {}, loading: false }, action) => {
+    static dataCreateReducer = (state = { loading: false }, action) => {
         switch (action.type) {
             case ReduxConstants.CREATE_REQUEST:
                 return { loading: true }

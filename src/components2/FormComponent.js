@@ -1,37 +1,17 @@
 import { Card, CardHeader, Divider, Box, Button, TextField, MenuItem, CardContent, CircularProgress } from '@mui/material'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { toast } from 'react-toastify'
 
-const FormComponent = ({ loading, msg, fields, submitAction }) => {
-    const dispatch = useDispatch()
-
-    const [data, setData] = useState({})
+const FormComponent = ({ msg, fields, submitHandler, loading }) => {
+    const [formData, setFormData] = useState({})
 
     useEffect(() => {
         const defaultData = {}
         for (var field of fields) {
             defaultData[field.key] = field.default || ''
         }
-        setData(defaultData)
-    }, [fields, loading])
-
-    const submitHandler = () => {
-        for (var field of fields) {
-            if (field.required && !data[field.key]) {
-                toast.error(`${field.key} value not provided.`)
-                return
-            }
-        }
-        if (data.categories) {
-            data.categories = data.categories
-                .split(',')
-                .map((category) => category.trim())
-                .filter((category) => category.length > 0)
-        }
-        dispatch(submitAction(data))
-    }
+        setFormData(defaultData)
+    }, [fields])
 
     return (
         <Card>
@@ -52,8 +32,8 @@ const FormComponent = ({ loading, msg, fields, submitAction }) => {
                                 required={field.required}
                                 select
                                 label={field.label}
-                                value={data[field.key] || ''}
-                                onChange={(e) => setData({ ...data, [field.key]: e.target.value })}
+                                value={formData[field.key] || ''}
+                                onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
                                 style={{ width: '95%', margin: '8px' }}
                             >
                                 {field.menu.map((menuItem) => (
@@ -68,8 +48,8 @@ const FormComponent = ({ loading, msg, fields, submitAction }) => {
                                 required={field.required}
                                 type={field.key === 'password' ? 'password' : 'text'}
                                 label={field.label}
-                                value={data[field.key] || ''}
-                                onChange={(e) => setData({ ...data, [field.key]: e.target.value })}
+                                value={formData[field.key] || ''}
+                                onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
                                 style={{ width: '95%', margin: '8px' }}
                             />
                         )
@@ -80,7 +60,7 @@ const FormComponent = ({ loading, msg, fields, submitAction }) => {
                         </Box>
                     ) : (
                         <Box textAlign="center">
-                            <Button sx={{ margin: 2 }} variant="contained" onClick={(e) => submitHandler()}>
+                            <Button sx={{ margin: 2 }} variant="contained" onClick={(e) => submitHandler(formData)}>
                                 {msg[1]}
                             </Button>
                         </Box>

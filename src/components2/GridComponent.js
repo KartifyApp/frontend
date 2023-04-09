@@ -27,9 +27,8 @@ const GridComponent = ({ msg, loading, data, filter, createForm }) => {
     const [filteredData, setFilteredData] = useState([])
 
     useEffect(() => {
-        setOpen(false)
-        setFilteredData(data)
-    }, [data, loading])
+        setFilteredData(data || [])
+    }, [data])
     return (
         <>
             <Header msg={[msg[0], msg[1]]} />
