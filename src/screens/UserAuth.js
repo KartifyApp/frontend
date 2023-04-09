@@ -46,7 +46,7 @@ const UserAuth = () => {
             fields={[
                 { key: 'name', label: 'Name', required: true },
                 { key: 'email', label: 'Email', required: true },
-                { key: 'userType', label: 'User Type', dropdown: true, menu: UserType, required: true },
+                { key: 'userType', label: 'User Type', dropdown: true, menu: Object.values(UserType), required: true },
                 { key: 'username', label: 'Username', required: true },
                 { key: 'password', label: 'Password', required: true }
             ]}

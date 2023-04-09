@@ -5,13 +5,17 @@ import thunk from 'redux-thunk'
 import { UserReducers } from './reducers/userReducers'
 import { PlatformReducers } from './reducers/platformReducers'
 import { ProductReducers } from './reducers/productReducers'
+import { GenericReducers } from './reducers/genericReducers'
 
 const reducers = combineReducers({
     userLogin: UserReducers.userLoginReducer,
     userRegister: UserReducers.userRegisterReducer,
-    platformList: PlatformReducers.platformsListReducer,
+    platformList: PlatformReducers.platformListReducer,
+    platformCreate: PlatformReducers.platformCreateReducer,
     productList: ProductReducers.productListReducer,
-    productCreate: ProductReducers.productCreateReducer
+    productCreate: ProductReducers.productCreateReducer,
+    dataList: GenericReducers.dataListReducer,
+    dataCreate: GenericReducers.dataCreateReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null

@@ -12,7 +12,7 @@ const FormComponent = ({ loading, msg, fields, submitAction }) => {
     useEffect(() => {
         const defaultData = {}
         for (var field of fields) {
-            defaultData[field.key] = field.default
+            defaultData[field.key] = field.default || ''
         }
         setData(defaultData)
     }, [fields, loading])
@@ -23,6 +23,12 @@ const FormComponent = ({ loading, msg, fields, submitAction }) => {
                 toast.error(`${field.key} value not provided.`)
                 return
             }
+        }
+        if (data.categories) {
+            data.categories = data.categories
+                .split(',')
+                .map((category) => category.trim())
+                .filter((category) => category.length > 0)
         }
         dispatch(submitAction(data))
     }
@@ -46,13 +52,13 @@ const FormComponent = ({ loading, msg, fields, submitAction }) => {
                                 required={field.required}
                                 select
                                 label={field.label}
-                                value={data[field.key]}
+                                value={data[field.key] || ''}
                                 onChange={(e) => setData({ ...data, [field.key]: e.target.value })}
                                 style={{ width: '95%', margin: '8px' }}
                             >
-                                {Object.keys(field.menu).map((key) => (
-                                    <MenuItem key={key} value={field.menu[key]}>
-                                        {key}
+                                {field.menu.map((menuItem) => (
+                                    <MenuItem key={menuItem} value={menuItem}>
+                                        {menuItem}
                                     </MenuItem>
                                 ))}
                             </TextField>
@@ -62,7 +68,7 @@ const FormComponent = ({ loading, msg, fields, submitAction }) => {
                                 required={field.required}
                                 type={field.key === 'password' ? 'password' : 'text'}
                                 label={field.label}
-                                value={data[field.key]}
+                                value={data[field.key] || ''}
                                 onChange={(e) => setData({ ...data, [field.key]: e.target.value })}
                                 style={{ width: '95%', margin: '8px' }}
                             />

@@ -63,7 +63,7 @@ const GridComponent = ({ msg, loading, data, filter, createForm }) => {
                                                 </Select>
                                             </FormControl>
                                         </Grid>
-                                        <Grid xs={6}>
+                                        <Grid item xs={6}>
                                             <Button size="large" sx={{ marginLeft: 2 }} variant="contained" onClick={(e) => setOpen(true)}>
                                                 Create
                                             </Button>

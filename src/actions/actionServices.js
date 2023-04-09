@@ -1,5 +1,7 @@
 export class ActionServices {
     static getConfig = (getState) => {
+        if (!getState) return {}
+
         const {
             userLogin: { userInfo }
         } = getState()
