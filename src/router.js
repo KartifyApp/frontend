@@ -50,8 +50,9 @@ const StatusMaintenance = Loader(lazy(() => import('src/content/pages/Status/Mai
 // screens
 
 const UserAuth = Loader(lazy(() => import('src/screens/UserAuth')))
-const PlatformList = Loader(lazy(() => import('src/screens/PlatformList')))
+const PlatformList = Loader(lazy(() => import('src/screens/platform/PlatformList')))
 const ProductList = Loader(lazy(() => import('src/screens/ProductList')))
+const PlatformDetails = Loader(lazy(() => import('src/screens/platform/PlatformDetails')))
 
 const routes = [
     {
@@ -209,7 +210,7 @@ const routes = [
                 children: [
                     {
                         path: '',
-                        element: null
+                        element: <PlatformDetails />
                     },
                     {
                         path: 'products',

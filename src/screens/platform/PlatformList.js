@@ -2,10 +2,11 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
+
 import { GenericActions } from 'src/actions/genericActions'
 import FormComponent from 'src/components2/FormComponent'
 import GridComponent from 'src/components2/GridComponent'
-import { PlatformStatus, RouteConstants, UserType } from 'src/enumConstants'
+import { AddressKeys, PlatformStatus, RouteConstants, UserType } from 'src/enumConstants'
 
 const PlatformList = () => {
     const dispatch = useDispatch()
@@ -17,14 +18,8 @@ const PlatformList = () => {
 
     useEffect(() => {
         if (!userInfo || !userInfo.token) navigate('/auth')
-        if (platformCreate.error) {
-            toast.error(platformCreate.error)
-            delete platformCreate.error
-        }
-        if (platformCreate.data) {
-            toast.success(`${platformCreate.data.name} created successfully`)
-            delete platformCreate.data
-        }
+        if (platformCreate.error) toast.error(platformCreate.error)
+        if (platformCreate.data) toast.success(`${platformCreate.data.name} created successfully`)
         if (!platformCreate.loading) dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES))
     }, [userInfo, platformCreate.loading, dispatch, navigate])
 
@@ -32,7 +27,12 @@ const PlatformList = () => {
         { key: 'name', label: 'Name', required: true },
         { key: 'description', label: 'Description' },
         { key: 'categories', label: 'Categories' },
-        { key: 'platformStatus', label: 'Platform Status', dropdown: true, menu: Object.values(PlatformStatus), default: PlatformStatus.DOWNTIME }
+        { key: 'platformStatus', label: 'Platform Status', dropdown: true, menu: Object.values(PlatformStatus), default: PlatformStatus.DOWNTIME },
+        { key: 'postOffice', label: 'Post Office' },
+        { key: 'city', label: 'City' },
+        { key: 'pinCode', label: 'PIN Code' },
+        { key: 'country', label: 'Country' },
+        { key: 'phoneNumber', label: 'Phone' }
     ]
 
     const submitHandler = (data) => {
@@ -42,11 +42,16 @@ const PlatformList = () => {
                 return
             }
         }
-        if (data.categories) {
-            data.categories = data.categories
-                .split(',')
-                .map((category) => category.trim())
-                .filter((category) => category.length > 0)
+        data.categories = data.categories
+            ? data.categories
+                  .split(',')
+                  .map((category) => category.trim())
+                  .filter((category) => category.length > 0)
+            : []
+        data.platformAddress = {}
+        for (var key of AddressKeys) {
+            data.platformAddress[key] = data[key]
+            delete data[key]
         }
         dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES, data))
     }
@@ -65,7 +70,7 @@ const PlatformList = () => {
                 description: platform.description,
                 platformStatus: platform.platformStatus,
                 buttons: [
-                    { name: 'Info', onClick: (e) => {} },
+                    { name: 'Info', onClick: (e) => navigate(`/platform/${platform.platformId}`, { state: { platform: platform } }) },
                     { name: 'Products', onClick: (e) => navigate(`/platform/${platform.platformId}/products`, { state: { platform: platform } }) }
                 ]
             }))}

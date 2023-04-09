@@ -17,4 +17,8 @@ export class ActionServices {
     static getError = (error) => {
         return error.response && error.response.data.message ? error.response.data.message : error.message
     }
+
+    static sleep = (time) => {
+        return new Promise((resolve) => setTimeout(resolve, time))
+    }
 }
