@@ -20,6 +20,7 @@ export const PlatformStatus = Object.freeze({
 })
 
 export const ReduxConstants = Object.freeze({
+    RESET: 'RESET',
     LIST_REQUEST: 'LIST_REQUEST',
     LIST_SUCCESS: 'LIST_SUCCESS',
     LIST_FAIL: 'LIST_FAIL',

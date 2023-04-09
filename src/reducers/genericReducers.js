@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify'
 import { ReduxConstants } from 'src/enumConstants'
 
 export class GenericReducers {

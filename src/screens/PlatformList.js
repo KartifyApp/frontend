@@ -26,7 +26,7 @@ const PlatformList = () => {
             delete platformCreate.data
         }
         if (!platformCreate.loading) dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES))
-    }, [userInfo, platformCreate, dispatch, navigate])
+    }, [userInfo, platformCreate.loading, dispatch, navigate])
 
     const fields = [
         { key: 'name', label: 'Name', required: true },
