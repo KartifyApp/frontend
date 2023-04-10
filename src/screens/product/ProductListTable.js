@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router'
 import { GenericActions } from 'src/actions/genericActions'
 import { TableComponent } from 'src/components2/TableComponent'
 import { RouteConstants } from 'src/enumConstants'
-import { ProductCreateForm } from './productForms'
+import { ProductCreateForm } from './ProductForms'
 
 export const ProductListTable = ({ platform }) => {
     const dispatch = useDispatch()

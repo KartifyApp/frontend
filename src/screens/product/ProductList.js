@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router'
 import { GenericActions } from 'src/actions/genericActions'
 import GridComponent from 'src/components2/GridComponent'
 import { RouteConstants } from 'src/enumConstants'
-import { ProductCreateForm } from './productForms'
+import { ProductCreateForm } from './ProductForms'
 
 const ProductList = () => {
     const dispatch = useDispatch()
@@ -31,7 +31,7 @@ const ProductList = () => {
                 name: [product.name, product.brand, product.category].join('\xa0'.repeat(5)),
                 description: product.description,
                 category: product.category,
-                buttons: [{ name: 'Info' }]
+                buttons: [{ name: 'Info', onClick: (e) => navigate(`/product/${product.productId}`, { state: { product: product } }) }]
             }))}
             filter={{
                 label: 'Cartegory',

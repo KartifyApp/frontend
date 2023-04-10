@@ -53,6 +53,7 @@ const UserAuth = Loader(lazy(() => import('src/screens/UserAuth')))
 const PlatformList = Loader(lazy(() => import('src/screens/platform/PlatformList')))
 const ProductList = Loader(lazy(() => import('src/screens/product/ProductList')))
 const PlatformDetails = Loader(lazy(() => import('src/screens/platform/PlatformDetails')))
+const ProductDetails = Loader(lazy(() => import('src/screens/product/ProductDetails')))
 
 const routes = [
     {
@@ -226,7 +227,11 @@ const routes = [
         children: [
             {
                 path: '',
-                element: <StatusMaintenance />
+                element: <Navigate to="/platform" />
+            },
+            {
+                path: ':productId',
+                element: <ProductDetails />
             }
         ]
     }
