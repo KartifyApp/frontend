@@ -2,11 +2,11 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { GenericActions } from 'src/actions/genericActions'
-import TableComponent from 'src/components2/TableComponent'
+import { TableComponent } from 'src/components2/TableComponent'
 import { RouteConstants } from 'src/enumConstants'
-import { ProductCreateForm } from '../product/productForms'
+import { ProductCreateForm } from './productForms'
 
-const ProductListTable = ({ platform }) => {
+export const ProductListTable = ({ platform }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -14,15 +14,15 @@ const ProductListTable = ({ platform }) => {
 
     useEffect(() => {
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, { platformId: platform.platformId }))
-    }, [platform])
+    }, [platform, dispatch])
 
     const fields = [
+        { key: 'productId', label: 'Product ID' },
         { key: 'name', label: 'Name' },
         { key: 'brand', label: 'Brand' },
         { key: 'category', label: 'Category' },
         { key: 'price', label: 'Price' },
-        { key: 'stockCount', label: 'Stock Count' },
-        { key: 'platformId', label: 'Platform ID' }
+        { key: 'stockCount', label: 'Stock Count' }
     ]
     return (
         <TableComponent
@@ -39,5 +39,3 @@ const ProductListTable = ({ platform }) => {
         />
     )
 }
-
-export default ProductListTable

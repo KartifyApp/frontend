@@ -96,11 +96,13 @@ const InfoValueComponent = ({ element }) => {
     )
 }
 
-const InfoComponent = ({ data, msg, updateForm, deleteHandler }) => {
-    const [open, setOpen] = useState(false)
+const InfoComponent = ({ data, msg, updateForm, deleteForm }) => {
+    const [updateOpen, setUpdateOpen] = useState(false)
+    const [deleteOpen, setDeleteOpen] = useState(false)
 
     useEffect(() => {
-        setOpen(false)
+        setUpdateOpen(false)
+        setDeleteOpen(false)
     }, [data])
 
     return (
@@ -113,18 +115,18 @@ const InfoComponent = ({ data, msg, updateForm, deleteHandler }) => {
                             <Grid container alignItems="right">
                                 {updateForm && (
                                     <Grid item xs={5}>
-                                        <Button size="large" sx={{ marginLeft: 2 }} variant="contained" onClick={(e) => setOpen(true)}>
+                                        <Button size="large" sx={{ marginLeft: 2 }} variant="contained" onClick={(e) => setUpdateOpen(true)}>
                                             Update
                                         </Button>
                                     </Grid>
                                 )}
-                                {deleteHandler && (
+                                {deleteForm && (
                                     <Grid item xs={5}>
                                         <Button
                                             size="large"
                                             sx={{ marginLeft: 2, backgroundColor: 'red' }}
                                             variant="contained"
-                                            onClick={(e) => deleteHandler()}
+                                            onClick={(e) => setDeleteOpen(true)}
                                         >
                                             Delete
                                         </Button>
@@ -144,9 +146,14 @@ const InfoComponent = ({ data, msg, updateForm, deleteHandler }) => {
                         })}
                     </Grid>
                 </Typography>
-                {updateForm && open && (
-                    <Dialog onClose={(e) => setOpen(false)} open={open}>
+                {updateForm && (
+                    <Dialog onClose={(e) => setUpdateOpen(false)} open={updateOpen}>
                         {updateForm}
+                    </Dialog>
+                )}
+                {deleteForm && (
+                    <Dialog onClose={(e) => setDeleteOpen(false)} open={deleteOpen}>
+                        {deleteForm}
                     </Dialog>
                 )}
             </CardContent>

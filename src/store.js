@@ -3,14 +3,11 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 
 import { UserReducers } from './reducers/userReducers'
-import { ProductReducers } from './reducers/productReducers'
 import { GenericReducers } from './reducers/genericReducers'
 
 const reducers = combineReducers({
     userLogin: UserReducers.userLoginReducer,
     userRegister: UserReducers.userRegisterReducer,
-    productList: ProductReducers.productListReducer,
-    productCreate: ProductReducers.productCreateReducer,
     dataList: GenericReducers.dataListReducer,
     dataCreate: GenericReducers.dataCreateReducer,
     dataDetails: GenericReducers.dataDetailsReducer,

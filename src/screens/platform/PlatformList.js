@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router'
 import { GenericActions } from 'src/actions/genericActions'
 import GridComponent from 'src/components2/GridComponent'
 import { PlatformStatus, RouteConstants, UserType } from 'src/enumConstants'
-import { PlatformCreateForm } from './platformForms'
+import { PlatformCreateForm } from './PlatformForms'
 
 const PlatformList = () => {
     const dispatch = useDispatch()

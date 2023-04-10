@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { Grid } from '@mui/material'
 
-import TabsComponent from 'src/components2/TabsComponent'
+import { TabsComponent } from 'src/components2/TabsComponent'
 import { UserType } from 'src/enumConstants'
 import { UserActions } from 'src/actions/userActions'
 import FormComponent from 'src/components2/FormComponent'

@@ -87,7 +87,7 @@ const TabsContainerWrapper = styled(Box)(
   `
 )
 
-function TabsComponent({ msg, tabs, loading, refresh = true }) {
+export const TabsComponent = ({ msg, tabs, loading, refresh = true }) => {
     const [currentTab, setCurrentTab] = useState(tabs[0].value)
 
     useEffect(() => {
@@ -124,5 +124,3 @@ function TabsComponent({ msg, tabs, loading, refresh = true }) {
         </>
     )
 }
-
-export default TabsComponent

@@ -17,17 +17,23 @@ import {
     CardHeader,
     Grid,
     Button,
-    Dialog
+    Dialog,
+    IconButton,
+    useTheme
 } from '@mui/material'
+import EditTwoToneIcon from '@mui/icons-material/EditTwoTone'
+import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 
-const TableComponent = ({ fields, data, msg, loading, filter, createForm }) => {
+export const TableComponent = ({ fields, data, msg, loading, filter, createForm }) => {
+    const theme = useTheme()
+
     const [open, setOpen] = useState(false)
+    const [form, setForm] = useState({})
     const [filterValue, setFilterValue] = useState('All')
     const [filteredData, setFilteredData] = useState([])
 
     useEffect(() => {
         setOpen(false)
-        console.log(data)
         setFilteredData(data || [])
     }, [data, loading])
 
@@ -37,32 +43,46 @@ const TableComponent = ({ fields, data, msg, loading, filter, createForm }) => {
                 action={
                     <>
                         <Box width={300}>
-                            <Grid container>
-                                <Grid item xs={6}>
-                                    <FormControl fullWidth variant="outlined">
-                                        <InputLabel>{filter.label}</InputLabel>
-                                        <Select
-                                            value={filterValue}
-                                            onChange={(e) => {
-                                                setFilterValue(e.target.value)
-                                                setFilteredData(data.filter((element) => element[filter.key] === e.target.value || e.target.value === 'All'))
+                            <Grid container justifyContent="flex-end">
+                                {filter && (
+                                    <Grid item xs={6}>
+                                        <FormControl fullWidth variant="outlined">
+                                            <InputLabel>{filter.label}</InputLabel>
+                                            <Select
+                                                value={filterValue}
+                                                onChange={(e) => {
+                                                    setFilterValue(e.target.value)
+                                                    setFilteredData(
+                                                        data.filter((element) => element[filter.key] === e.target.value || e.target.value === 'All')
+                                                    )
+                                                }}
+                                                label="Filter"
+                                                autoWidth
+                                            >
+                                                {['All', ...filter.menu].map((mentItem) => (
+                                                    <MenuItem key={mentItem} value={mentItem}>
+                                                        {mentItem}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                )}
+                                {createForm && (
+                                    <Grid item xs={6}>
+                                        <Button
+                                            size="large"
+                                            sx={{ marginLeft: 2 }}
+                                            variant="contained"
+                                            onClick={(e) => {
+                                                setOpen(true)
+                                                setForm(createForm)
                                             }}
-                                            label="Filter"
-                                            autoWidth
                                         >
-                                            {['All', ...filter.menu].map((mentItem) => (
-                                                <MenuItem key={mentItem} value={mentItem}>
-                                                    {mentItem}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <Button size="large" sx={{ marginLeft: 2 }} variant="contained" onClick={(e) => setOpen(true)}>
-                                        Create
-                                    </Button>
-                                </Grid>
+                                            Create
+                                        </Button>
+                                    </Grid>
+                                )}
                             </Grid>
                         </Box>
                     </>
@@ -82,27 +102,58 @@ const TableComponent = ({ fields, data, msg, loading, filter, createForm }) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {filteredData.map((data) => (
-                            <TableRow hover key={data.key} onClick={data.onClick}>
+                        {filteredData.map((row) => (
+                            <TableRow hover key={row.key} onClick={row.onClick}>
                                 {fields.map((field) => (
                                     <TableCell key={field.key} align="center">
-                                        <Typography variant="body1" fontWeight="bold" color="text.primary" gutterBottom noWrap>
-                                            {data[field.key]}
-                                        </Typography>
+                                        {field.key === 'actions' ? (
+                                            <>
+                                                <IconButton
+                                                    sx={{
+                                                        '&:hover': {
+                                                            background: theme.colors.primary.lighter
+                                                        },
+                                                        color: theme.palette.primary.main
+                                                    }}
+                                                    color="inherit"
+                                                    size="small"
+                                                    onClick={(e) => {
+                                                        setOpen(true)
+                                                        setForm(row.updateForm)
+                                                    }}
+                                                >
+                                                    <EditTwoToneIcon fontSize="small" />
+                                                </IconButton>
+                                                <IconButton
+                                                    sx={{
+                                                        '&:hover': { background: theme.colors.error.lighter },
+                                                        color: theme.palette.error.main
+                                                    }}
+                                                    color="inherit"
+                                                    size="small"
+                                                    onClick={(e) => {
+                                                        setOpen(true)
+                                                        setForm(row.deleteForm)
+                                                    }}
+                                                >
+                                                    <DeleteTwoToneIcon fontSize="small" />
+                                                </IconButton>
+                                            </>
+                                        ) : (
+                                            <Typography variant="body1" fontWeight="bold" color="text.primary" gutterBottom noWrap>
+                                                {row[field.key]}
+                                            </Typography>
+                                        )}
                                     </TableCell>
                                 ))}
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
-                {open && (
-                    <Dialog onClose={(e) => setOpen(false)} open={open}>
-                        {createForm}
-                    </Dialog>
-                )}
+                <Dialog onClose={(e) => setOpen(false)} open={open}>
+                    {form}
+                </Dialog>
             </TableContainer>
         </Card>
     )
 }
-
-export default TableComponent

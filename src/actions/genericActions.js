@@ -65,8 +65,6 @@ export class GenericActions {
                 type: ReduxConstants.UPDATE_SUCCESS,
                 payload: data
             })
-            await ActionServices.sleep(STATE_RESET_TIME)
-            dispatch({ type: ReduxConstants.UPDATE_RESET })
         } catch (error) {
             dispatch({
                 type: ReduxConstants.UPDATE_FAIL,
