@@ -28,7 +28,7 @@ export const TableComponent = ({ fields, data, msg, loading, filter, createForm 
     const theme = useTheme()
 
     const [open, setOpen] = useState(false)
-    const [form, setForm] = useState({})
+    const [form, setForm] = useState(createForm)
     const [filterValue, setFilterValue] = useState('All')
     const [filteredData, setFilteredData] = useState([])
 
@@ -103,7 +103,7 @@ export const TableComponent = ({ fields, data, msg, loading, filter, createForm 
                     </TableHead>
                     <TableBody>
                         {filteredData.map((row) => (
-                            <TableRow hover key={row.key} onClick={row.onClick}>
+                            <TableRow key={row.key} hover onClick={row.onClick}>
                                 {fields.map((field) => (
                                     <TableCell key={field.key} align="center">
                                         {field.key === 'actions' ? (
@@ -121,6 +121,7 @@ export const TableComponent = ({ fields, data, msg, loading, filter, createForm 
                                                         setOpen(true)
                                                         setForm(row.updateForm)
                                                     }}
+                                                    key={1}
                                                 >
                                                     <EditTwoToneIcon fontSize="small" />
                                                 </IconButton>
@@ -135,6 +136,7 @@ export const TableComponent = ({ fields, data, msg, loading, filter, createForm 
                                                         setOpen(true)
                                                         setForm(row.deleteForm)
                                                     }}
+                                                    key={2}
                                                 >
                                                     <DeleteTwoToneIcon fontSize="small" />
                                                 </IconButton>

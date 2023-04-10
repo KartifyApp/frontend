@@ -49,7 +49,7 @@ const StatusMaintenance = Loader(lazy(() => import('src/content/pages/Status/Mai
 
 // screens
 
-const UserAuth = Loader(lazy(() => import('src/screens/UserAuth')))
+const UserAuth = Loader(lazy(() => import('src/screens/user/UserAuth')))
 const PlatformList = Loader(lazy(() => import('src/screens/platform/PlatformList')))
 const ProductList = Loader(lazy(() => import('src/screens/product/ProductList')))
 const PlatformDetails = Loader(lazy(() => import('src/screens/platform/PlatformDetails')))

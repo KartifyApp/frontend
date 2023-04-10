@@ -22,8 +22,7 @@ export const PlatformReviewCreateForm = ({ platformId }) => {
 
     const fields = [
         { key: 'comment', label: 'Comment', required: true },
-        { key: 'Rating', label: 'Rating', required: true },
-        { key: 'platformId', label: 'Platform ID', default: platformId, required: true }
+        { key: 'rating', label: 'Rating', required: true }
     ]
 
     const submitHandler = (data) => {
@@ -47,17 +46,16 @@ export const PlatformReviewUpdateForm = ({ platformReview }) => {
     const platformReviewUpdate = useSelector((state) => state.dataUpdate)
 
     useEffect(() => {
-        if (platformReviewUpdate.error) toast.error(platformReview.error)
+        if (platformReviewUpdate.error) toast.error(platformReviewUpdate.error)
         if (platformReviewUpdate.data) {
-            toast.error(`Review ${platformReviewUpdate.data.platformReviewId} updated successfully`)
+            toast.success(`Review ${platformReviewUpdate.data.platformReviewId} updated successfully`)
             window.location.reload()
         }
     }, [platformReviewUpdate])
 
     const fields = [
         { key: 'comment', label: 'Comment', required: true, default: platformReview.comment },
-        { key: 'Rating', label: 'Rating', required: true, default: platformReview.rating },
-        { key: 'platformId', label: 'Platform ID', required: true, default: platformReview.platformId }
+        { key: 'rating', label: 'Rating', required: true, default: platformReview.rating }
     ]
 
     const submitHandler = (data) => {

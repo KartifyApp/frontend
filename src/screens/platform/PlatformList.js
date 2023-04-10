@@ -23,7 +23,7 @@ const PlatformList = () => {
         <GridComponent
             msg={[
                 'Platforms',
-                userInfo.userType === UserType.PROVIDER ? 'View all the platforms created by you' : 'Shop from any platform of your choice',
+                userInfo?.userType === UserType.PROVIDER ? 'View all the platforms created by you' : 'Shop from any platform of your choice',
                 'Platforms'
             ]}
             loading={platformList.loading}

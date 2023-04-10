@@ -6,6 +6,7 @@ import { InfoComponent } from 'src/components2/InfoComponent'
 import { TabsComponent } from 'src/components2/TabsComponent'
 import { RouteConstants } from 'src/enumConstants'
 import { ProductDeleteForm, ProductUpdateForm } from './ProductForms'
+import { ProductReviewList } from './ProductReview'
 
 const ProductDetails = () => {
     const navigate = useNavigate()
@@ -45,7 +46,7 @@ const ProductDetails = () => {
             msg={[`Product Details`, `Product ID ${productDetails.data.productId}`, `Get all information about ${productDetails.data.name}`]}
             tabs={[
                 { value: 'productDetails', label: 'Details', component: productInfo },
-                { value: 'reviews', label: 'Reviews', component: productInfo }
+                { value: 'reviews', label: 'Reviews', component: <ProductReviewList product={productDetails.data} /> }
             ]}
             loading={false}
         />

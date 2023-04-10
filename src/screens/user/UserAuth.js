@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { Grid } from '@mui/material'
 
@@ -11,6 +11,7 @@ import FormComponent from 'src/components2/FormComponent'
 
 const UserAuth = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const { loading, success, error, userInfo } = useSelector((state) => state.userLogin)
 
@@ -35,7 +36,7 @@ const UserAuth = () => {
                 { key: 'username', label: 'Username', required: true },
                 { key: 'password', label: 'Password', required: true }
             ]}
-            submitAction={UserActions.login}
+            submitHandler={(data) => dispatch(UserActions.login(data))}
         />
     )
 
@@ -50,7 +51,7 @@ const UserAuth = () => {
                 { key: 'username', label: 'Username', required: true },
                 { key: 'password', label: 'Password', required: true }
             ]}
-            submitAction={UserActions.register}
+            submitHandler={(data) => dispatch(UserActions.register(data))}
         />
     )
 

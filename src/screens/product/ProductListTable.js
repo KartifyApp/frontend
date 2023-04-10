@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { GenericActions } from 'src/actions/genericActions'
 import { TableComponent } from 'src/components2/TableComponent'
-import { RouteConstants } from 'src/enumConstants'
+import { RouteConstants, UserType } from 'src/enumConstants'
 import { ProductCreateForm } from './ProductForms'
 
 export const ProductListTable = ({ platform }) => {
@@ -11,6 +11,7 @@ export const ProductListTable = ({ platform }) => {
     const navigate = useNavigate()
 
     const productList = useSelector((state) => state.dataList)
+    const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, { platformId: platform.platformId }))
@@ -35,7 +36,7 @@ export const ProductListTable = ({ platform }) => {
                 menu: platform.categories
             }}
             msg={[`Products in platform ${platform.name}`]}
-            createForm={<ProductCreateForm platformId={platform.platformId} />}
+            createForm={userInfo.userType === UserType.PROVIDER ? <ProductCreateForm platformId={platform.platformId} /> : null}
         />
     )
 }

@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router'
 import { GenericActions } from 'src/actions/genericActions'
 import { InfoComponent } from 'src/components2/InfoComponent'
 import { TabsComponent } from 'src/components2/TabsComponent'
-import { RouteConstants } from 'src/enumConstants'
+import { RouteConstants, UserType } from 'src/enumConstants'
 import { ProductListTable } from '../product/ProductListTable'
 import { PlatformDeleteForm, PlatformUpdateForm } from './PlatformForms'
 import { PlatformReviewList } from './PlatformReview'
@@ -17,6 +17,7 @@ const PlatformDetails = () => {
     const platform = state?.platform
 
     const platformDetails = useSelector((state) => state.dataDetails)
+    const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
         if (!platform) navigate('/platform')
@@ -44,8 +45,8 @@ const PlatformDetails = () => {
                     ]
                 }
             ]}
-            updateForm={<PlatformUpdateForm platform={platformDetails.data} />}
-            deleteForm={<PlatformDeleteForm platform={platformDetails.data} />}
+            updateForm={userInfo.userType === UserType.PROVIDER ? <PlatformUpdateForm platform={platformDetails.data} /> : null}
+            deleteForm={userInfo.userType === UserType.PROVIDER ? <PlatformDeleteForm platform={platformDetails.data} /> : null}
         />
     )
 
