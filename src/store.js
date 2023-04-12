@@ -7,7 +7,6 @@ import { GenericReducers } from './reducers/genericReducers'
 
 const reducers = combineReducers({
     userLogin: UserReducers.userLoginReducer,
-    userRegister: UserReducers.userRegisterReducer,
     dataList: GenericReducers.dataListReducer,
     dataCreate: GenericReducers.dataCreateReducer,
     dataDetails: GenericReducers.dataDetailsReducer,

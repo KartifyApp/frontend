@@ -45,3 +45,10 @@ export const ReduxConstants = Object.freeze({
     DELETE_FAIL: 'DELETE_FAIL',
     DELETE_RESET: 'DELETE_RESET'
 })
+
+export const UserConstants = Object.freeze({
+    USER_LOGIN_REQUEST: 'USER_LOGIN_REQUEST',
+    USER_LOGIN_SUCCESS: 'USER_LOGIN_SUCCESS',
+    USER_LOGIN_FAIL: 'USER_LOGIN_FAIL',
+    USER_LOGOUT: 'USER_LOGOUT'
+})

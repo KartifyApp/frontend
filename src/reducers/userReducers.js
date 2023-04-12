@@ -1,4 +1,4 @@
-import { UserConstants } from 'src/reduxConstants'
+import { UserConstants } from 'src/enumConstants'
 
 export class UserReducers {
     static userLoginReducer = (state = {}, action) => {
@@ -8,22 +8,9 @@ export class UserReducers {
             case UserConstants.USER_LOGIN_SUCCESS:
                 return { loading: false, userInfo: action.payload }
             case UserConstants.USER_LOGIN_FAIL:
-                return { loading: false, error: action.payload.response.data.message }
+                return { loading: false, error: action.payload }
             case UserConstants.USER_LOGOUT:
-                return {}
-            default:
-                return state
-        }
-    }
-
-    static userRegisterReducer = (state = {}, action) => {
-        switch (action.type) {
-            case UserConstants.USER_REGISTER_REQUEST:
-                return { loading: true }
-            case UserConstants.USER_REGISTER_SUCCESS:
-                return { loading: false, userInfo: action.payload }
-            case UserConstants.USER_REGISTER_FAIL:
-                return { loading: false, error: action.payload.response.data.message }
+                return { loading: false }
             default:
                 return state
         }

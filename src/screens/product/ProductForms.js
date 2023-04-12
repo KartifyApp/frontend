@@ -30,12 +30,6 @@ export const ProductCreateForm = ({ platformId }) => {
     ]
 
     const submitHandler = (data) => {
-        for (var field of fields) {
-            if (field.required && !data[field.key]) {
-                toast.error(`${field.label} value not provided.`)
-                return
-            }
-        }
         data.platformId = platformId
         dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, data))
     }
@@ -67,12 +61,6 @@ export const ProductUpdateForm = ({ product }) => {
     ]
 
     const submitHandler = (data) => {
-        for (var field of fields) {
-            if (field.required && !data[field.key]) {
-                toast.error(`${field.label} value not provided.`)
-                return
-            }
-        }
         dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/${product.productId}`, data))
     }
 

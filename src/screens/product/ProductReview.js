@@ -26,12 +26,6 @@ export const ProductReviewCreateForm = ({ productId }) => {
     ]
 
     const submitHandler = (data) => {
-        for (var field of fields) {
-            if (field.required && !data[field.key]) {
-                toast.error(`${field.label} value not provided.`)
-                return
-            }
-        }
         dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/${productId}/review`, data))
     }
 
@@ -57,12 +51,6 @@ export const ProductReviewUpdateForm = ({ productReview }) => {
     ]
 
     const submitHandler = (data) => {
-        for (var field of fields) {
-            if (field.required && !data[field.key]) {
-                toast.error(`${field.label} value not provided.`)
-                return
-            }
-        }
         dispatch(
             GenericActions.updateData(
                 RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/${productReview.productId}/review/${productReview.productReviewId}`,

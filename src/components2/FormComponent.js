@@ -1,6 +1,7 @@
 import { Card, CardHeader, Divider, Box, Button, TextField, MenuItem, CardContent, CircularProgress } from '@mui/material'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 const FormComponent = ({ msg, fields, submitHandler, loading }) => {
     const [formData, setFormData] = useState({})
@@ -60,7 +61,19 @@ const FormComponent = ({ msg, fields, submitHandler, loading }) => {
                         </Box>
                     ) : (
                         <Box textAlign="center">
-                            <Button sx={{ margin: 2 }} variant="contained" onClick={(e) => submitHandler(formData)}>
+                            <Button
+                                sx={{ margin: 2 }}
+                                variant="contained"
+                                onClick={(e) => {
+                                    for (var field of fields) {
+                                        if (field.required && !formData[field.key]) {
+                                            toast.error(`${field.label} value not provided.`)
+                                            return
+                                        }
+                                    }
+                                    submitHandler(formData)
+                                }}
+                            >
                                 {msg[1]}
                             </Button>
                         </Box>

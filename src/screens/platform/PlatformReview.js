@@ -26,12 +26,6 @@ export const PlatformReviewCreateForm = ({ platformId }) => {
     ]
 
     const submitHandler = (data) => {
-        for (var field of fields) {
-            if (field.required && !data[field.key]) {
-                toast.error(`${field.label} value not provided.`)
-                return
-            }
-        }
         dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platformId}/review`, data))
     }
 
@@ -59,12 +53,6 @@ export const PlatformReviewUpdateForm = ({ platformReview }) => {
     ]
 
     const submitHandler = (data) => {
-        for (var field of fields) {
-            if (field.required && !data[field.key]) {
-                toast.error(`${field.label} value not provided.`)
-                return
-            }
-        }
         dispatch(
             GenericActions.updateData(
                 RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platformReview.platformId}/review/${platformReview.platformReviewId}`,

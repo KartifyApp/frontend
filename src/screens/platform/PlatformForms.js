@@ -32,12 +32,6 @@ export const PlatformCreateForm = () => {
     ]
 
     const submitHandler = (data) => {
-        for (var field of fields) {
-            if (field.required && !data[field.key]) {
-                toast.error(`${field.label} value not provided.`)
-                return
-            }
-        }
         data.categories = data.categories
             ? data.categories
                   .split(',')
@@ -82,12 +76,6 @@ export const PlatformUpdateForm = ({ platform }) => {
     ]
 
     const submitHandler = (data) => {
-        for (var field of fields) {
-            if (field.required && !data[field.key]) {
-                toast.error(`${field.label} value not provided.`)
-                return
-            }
-        }
         data.categories = data.categories
             ? data.categories
                   .split(',')

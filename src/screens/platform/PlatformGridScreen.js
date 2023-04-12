@@ -8,6 +8,7 @@ import { PlatformStatus, RouteConstants, UserType } from 'src/enumConstants'
 import { PlatformCreateForm } from './PlatformForms'
 import Header from 'src/components2/Header'
 import Footer from 'src/components2/Footer'
+import { toast } from 'react-toastify'
 
 const PlatformGridScreen = () => {
     const dispatch = useDispatch()
@@ -17,7 +18,10 @@ const PlatformGridScreen = () => {
     const platformList = useSelector((state) => state.dataList)
 
     useEffect(() => {
-        if (!userInfo || !userInfo.token) navigate('/auth')
+        if (!userInfo || !userInfo.token) {
+            toast.error('No token found')
+            navigate('/auth')
+        }
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES))
     }, [userInfo, dispatch, navigate])
 

@@ -49,11 +49,11 @@ const StatusMaintenance = Loader(lazy(() => import('src/content/pages/Status/Mai
 
 // screens
 
-const UserAuth = Loader(lazy(() => import('src/screens/user/UserAuth')))
+const UserAuthScreen = Loader(lazy(() => import('src/screens/user/UserAuthScreen')))
 const PlatformGridScreen = Loader(lazy(() => import('src/screens/platform/PlatformGridScreen')))
 const ProductGridScreen = Loader(lazy(() => import('src/screens/product/ProductGridScreen')))
-const PlatformDetails = Loader(lazy(() => import('src/screens/platform/PlatformDetails')))
-const ProductDetails = Loader(lazy(() => import('src/screens/product/ProductDetails')))
+const PlatformDetailsScreen = Loader(lazy(() => import('src/screens/platform/PlatformDetailsScreen')))
+const ProductDetailsScreen = Loader(lazy(() => import('src/screens/product/ProductDetailsScreen')))
 
 const routes = [
     {
@@ -62,7 +62,7 @@ const routes = [
         children: [
             {
                 path: '/auth',
-                element: <UserAuth />
+                element: <UserAuthScreen />
             },
             {
                 path: '/',
@@ -211,7 +211,7 @@ const routes = [
                 children: [
                     {
                         path: '',
-                        element: <PlatformDetails />
+                        element: <PlatformDetailsScreen />
                     }
                 ]
             }
@@ -227,7 +227,7 @@ const routes = [
             },
             {
                 path: ':productId',
-                element: <ProductDetails />
+                element: <ProductDetailsScreen />
             }
         ]
     }

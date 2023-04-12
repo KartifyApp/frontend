@@ -10,8 +10,9 @@ import { PlatformDeleteForm, PlatformUpdateForm } from './PlatformForms'
 import { PlatformReviewList } from './PlatformReview'
 import Footer from 'src/components2/Footer'
 import Header from 'src/components2/Header'
+import { toast } from 'react-toastify'
 
-const PlatformDetails = () => {
+const PlatformDetailsScreen = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -22,9 +23,20 @@ const PlatformDetails = () => {
     const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
+        if (!userInfo || !userInfo.token) {
+            toast.error('No token found')
+            navigate('/auth')
+        }
         if (!platform) navigate('/platform')
         dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platform.platformId}`))
     }, [platform, dispatch, navigate])
+
+    useEffect(() => {
+        if (platformDetails.error) {
+            toast.error(platformDetails.error)
+            navigate('/status/404')
+        }
+    }, [platformDetails])
 
     const platformInfo = (
         <InfoComponent
@@ -79,4 +91,4 @@ const PlatformDetails = () => {
     )
 }
 
-export default PlatformDetails
+export default PlatformDetailsScreen

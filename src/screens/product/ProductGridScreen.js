@@ -7,6 +7,7 @@ import { RouteConstants, UserType } from 'src/enumConstants'
 import { ProductCreateForm } from './ProductForms'
 import Footer from 'src/components2/Footer'
 import Header from 'src/components2/Header'
+import { toast } from 'react-toastify'
 
 const ProductGridScreen = () => {
     const dispatch = useDispatch()
@@ -19,8 +20,11 @@ const ProductGridScreen = () => {
     const productList = useSelector((state) => state.dataList)
 
     useEffect(() => {
+        if (!userInfo || !userInfo.token) {
+            toast.error('No token found')
+            navigate('/auth')
+        }
         if (!platform) navigate('/platform')
-        if (!userInfo || !userInfo.token) navigate('/auth')
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, { platformId: platform.platformId }))
     }, [userInfo, platform, dispatch, navigate])
 

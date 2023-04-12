@@ -9,19 +9,32 @@ import { ProductDeleteForm, ProductUpdateForm } from './ProductForms'
 import { ProductReviewList } from './ProductReview'
 import Header from 'src/components2/Header'
 import Footer from 'src/components2/Footer'
+import { toast } from 'react-toastify'
 
-const ProductDetails = () => {
+const ProductDetailsScreen = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const { productId } = useParams()
 
     const productDetails = useSelector((state) => state.dataDetails)
+    const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
+        if (!userInfo || !userInfo.token) {
+            toast.error('No token found')
+            navigate('/auth')
+        }
         if (!productId) navigate('/product')
         dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/${productId}`))
     }, [productId, dispatch, navigate])
+
+    useEffect(() => {
+        if (productDetails.error) {
+            toast.error(productDetails.error)
+            navigate('/status/404')
+        }
+    }, [productDetails])
 
     const productInfo = (
         <InfoComponent
@@ -57,4 +70,4 @@ const ProductDetails = () => {
     )
 }
 
-export default ProductDetails
+export default ProductDetailsScreen
