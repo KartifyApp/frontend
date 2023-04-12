@@ -56,8 +56,10 @@ export const TableComponent = ({ fields, data, msg, loading, filter, createForm 
                                                         data.filter((element) => element[filter.key] === e.target.value || e.target.value === 'All')
                                                     )
                                                 }}
+                                                size="small"
                                                 label="Filter"
                                                 autoWidth
+                                                sx={{ marginRight: 2 }}
                                             >
                                                 {['All', ...filter.menu].map((mentItem) => (
                                                     <MenuItem key={mentItem} value={mentItem}>
@@ -69,10 +71,9 @@ export const TableComponent = ({ fields, data, msg, loading, filter, createForm 
                                     </Grid>
                                 )}
                                 {createForm && (
-                                    <Grid item xs={6}>
+                                    <Grid item xs={4}>
                                         <Button
-                                            size="large"
-                                            sx={{ marginLeft: 2 }}
+                                            sx={{ marginRight: 2 }}
                                             variant="contained"
                                             onClick={(e) => {
                                                 setOpen(true)

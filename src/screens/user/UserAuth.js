@@ -8,6 +8,8 @@ import { TabsComponent } from 'src/components2/TabsComponent'
 import { UserType } from 'src/enumConstants'
 import { UserActions } from 'src/actions/userActions'
 import FormComponent from 'src/components2/FormComponent'
+import Header from 'src/components2/Header'
+import Footer from 'src/components2/Footer'
 
 const UserAuth = () => {
     const navigate = useNavigate()
@@ -20,7 +22,6 @@ const UserAuth = () => {
             navigate('/')
         }
         if (error) {
-            console.log(error)
             toast.error(error)
         }
         if (success) {
@@ -58,8 +59,8 @@ const UserAuth = () => {
     return (
         <Grid container direction="row" justifyContent="center" alignItems="stretch" spacing={0}>
             <Grid item xs={4.5}>
+                <Header msg={[`Login`, `Kartify Auth`, `Login to your account`]} />
                 <TabsComponent
-                    msg={[`Login`, `Kartify Auth`, `Login to your account`]}
                     tabs={[
                         {
                             value: 'login',
@@ -75,6 +76,7 @@ const UserAuth = () => {
                     loading={loading}
                     refresh={false}
                 />
+                <Footer />
             </Grid>
         </Grid>
     )

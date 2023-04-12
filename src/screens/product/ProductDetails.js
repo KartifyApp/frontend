@@ -1,26 +1,27 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { GenericActions } from 'src/actions/genericActions'
 import { InfoComponent } from 'src/components2/InfoComponent'
 import { TabsComponent } from 'src/components2/TabsComponent'
 import { RouteConstants } from 'src/enumConstants'
 import { ProductDeleteForm, ProductUpdateForm } from './ProductForms'
 import { ProductReviewList } from './ProductReview'
+import Header from 'src/components2/Header'
+import Footer from 'src/components2/Footer'
 
 const ProductDetails = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { state } = useLocation()
-    const product = state?.product
+    const { productId } = useParams()
 
     const productDetails = useSelector((state) => state.dataDetails)
 
     useEffect(() => {
-        if (!product) navigate('/product')
-        dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/${product.productId}`))
-    }, [product, dispatch, navigate])
+        if (!productId) navigate('/product')
+        dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/${productId}`))
+    }, [productId, dispatch, navigate])
 
     const productInfo = (
         <InfoComponent
@@ -42,14 +43,17 @@ const ProductDetails = () => {
     )
 
     return (
-        <TabsComponent
-            msg={[`Product Details`, `Product ID ${productDetails.data.productId}`, `Get all information about ${productDetails.data.name}`]}
-            tabs={[
-                { value: 'productDetails', label: 'Details', component: productInfo },
-                { value: 'reviews', label: 'Reviews', component: <ProductReviewList product={productDetails.data} /> }
-            ]}
-            loading={false}
-        />
+        <>
+            <Header msg={[`Product Details`, `Product ID ${productDetails.data.productId}`, `Get all information about ${productDetails.data.name}`]} />
+            <TabsComponent
+                tabs={[
+                    { value: 'productDetails', label: 'Details', component: productInfo },
+                    { value: 'reviews', label: 'Reviews', component: <ProductReviewList product={productDetails.data} /> }
+                ]}
+                loading={false}
+            />
+            <Footer />
+        </>
     )
 }
 

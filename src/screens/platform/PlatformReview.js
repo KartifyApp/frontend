@@ -108,11 +108,10 @@ export const PlatformReviewDeleteForm = ({ platformReview }) => {
     )
 }
 
-export const PlatformReviewList = ({ platform }) => {
+export const PlatformReviewList = ({ platform, create, action }) => {
     const dispatch = useDispatch()
 
     const platformReviewList = useSelector((state) => state.dataList)
-    const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platform.platformId}/review`))
@@ -124,7 +123,7 @@ export const PlatformReviewList = ({ platform }) => {
         { key: 'rating', label: 'Rating' },
         { key: 'userId', label: 'User ID' },
         { key: 'platformId', label: 'Platform ID' },
-        userInfo.userType == UserType.CONSUMER && { key: 'actions', label: 'Actions' }
+        action && { key: 'actions', label: 'Actions' }
     ]
     return (
         <TableComponent
@@ -137,7 +136,7 @@ export const PlatformReviewList = ({ platform }) => {
             }))}
             fields={fields}
             msg={[`Reviews for platform ${platform.name}`]}
-            createForm={userInfo.userType === UserType.CONSUMER ? <PlatformReviewCreateForm platformId={platform.platformId} /> : null}
+            createForm={create ? <PlatformReviewCreateForm platformId={platform.platformId} /> : null}
         />
     )
 }

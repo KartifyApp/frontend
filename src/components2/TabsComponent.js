@@ -87,7 +87,7 @@ const TabsContainerWrapper = styled(Box)(
   `
 )
 
-export const TabsComponent = ({ msg, tabs, loading, refresh = true }) => {
+export const TabsComponent = ({ tabs, loading, refresh = true }) => {
     const [currentTab, setCurrentTab] = useState(tabs[0].value)
 
     useEffect(() => {
@@ -95,32 +95,28 @@ export const TabsComponent = ({ msg, tabs, loading, refresh = true }) => {
     }, [refresh ? tabs : null])
 
     return (
-        <>
-            <Header msg={msg} />
-            <Container maxWidth="lg">
-                <TabsContainerWrapper>
-                    <Tabs
-                        onChange={(e, value) => setCurrentTab(value)}
-                        value={currentTab}
-                        variant="scrollable"
-                        scrollButtons="auto"
-                        textColor="primary"
-                        indicatorColor="primary"
-                    >
-                        {tabs.map((tab) => (
-                            <Tab key={tab.value} label={tab.label} value={tab.value} />
-                        ))}
-                    </Tabs>
-                </TabsContainerWrapper>
-                {loading ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <CircularProgress />
-                    </Box>
-                ) : (
-                    <>{tabs.find((tab) => tab.value == currentTab).component}</>
-                )}
-            </Container>
-            <Footer />
-        </>
+        <Container maxWidth="lg">
+            <TabsContainerWrapper>
+                <Tabs
+                    onChange={(e, value) => setCurrentTab(value)}
+                    value={currentTab}
+                    variant="scrollable"
+                    scrollButtons="auto"
+                    textColor="primary"
+                    indicatorColor="primary"
+                >
+                    {tabs.map((tab) => (
+                        <Tab key={tab.value} label={tab.label} value={tab.value} />
+                    ))}
+                </Tabs>
+            </TabsContainerWrapper>
+            {loading ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <CircularProgress />
+                </Box>
+            ) : (
+                <>{tabs.find((tab) => tab.value == currentTab).component}</>
+            )}
+        </Container>
     )
 }

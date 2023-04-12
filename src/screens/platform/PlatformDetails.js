@@ -8,6 +8,8 @@ import { RouteConstants, UserType } from 'src/enumConstants'
 import { ProductListTable } from '../product/ProductListTable'
 import { PlatformDeleteForm, PlatformUpdateForm } from './PlatformForms'
 import { PlatformReviewList } from './PlatformReview'
+import Footer from 'src/components2/Footer'
+import Header from 'src/components2/Header'
 
 const PlatformDetails = () => {
     const navigate = useNavigate()
@@ -30,6 +32,7 @@ const PlatformDetails = () => {
             data={[
                 { key: 'Platform ID', value: platformDetails.data.platformId },
                 { key: 'Name', value: platformDetails.data.name },
+                { key: 'Image', value: platformDetails.data.image },
                 { key: 'Description', value: platformDetails.data.description },
                 { key: 'User ID', value: platformDetails.data.userId },
                 { key: 'Categories', value: platformDetails.data.categories?.map((category, i) => ({ key: i + 1, value: category })) },
@@ -51,15 +54,28 @@ const PlatformDetails = () => {
     )
 
     return (
-        <TabsComponent
-            msg={[`Platform Details`, `Platform ID ${platformDetails.data.platformId}`, `Get all information about ${platformDetails.data.name}`]}
-            tabs={[
-                { value: 'platformDetails', label: 'Details', component: platformInfo },
-                { value: 'reviews', label: 'Reviews', component: <PlatformReviewList platform={platformDetails.data} /> },
-                { value: 'products', label: 'Products', component: <ProductListTable platform={platformDetails.data} /> }
-            ]}
-            loading={false}
-        />
+        <>
+            <Header
+                msg={[`Platform Details`, `Platform ID ${platformDetails.data.platformId}`, `Get all information about ${platformDetails.data.name}`]}
+                buttons={[
+                    { label: 'Orders', onClick: (e) => {} },
+                    { label: 'Delivery', onClick: (e) => {} }
+                ]}
+            />
+            <TabsComponent
+                tabs={[
+                    { value: 'platformDetails', label: 'Details', component: platformInfo },
+                    {
+                        value: 'reviews',
+                        label: 'Reviews',
+                        component: <PlatformReviewList platform={platformDetails.data} create={userInfo.userType === UserType.CONSUMER} action={false} />
+                    },
+                    { value: 'products', label: 'Products', component: <ProductListTable platform={platformDetails.data} /> }
+                ]}
+                loading={false}
+            />
+            <Footer />
+        </>
     )
 }
 

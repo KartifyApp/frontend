@@ -112,22 +112,17 @@ const InfoComponent = ({ data, msg, updateForm, deleteForm }) => {
                 action={
                     <>
                         <Box width={300}>
-                            <Grid container alignItems="right">
+                            <Grid container justifyContent="flex-end">
                                 {updateForm && (
-                                    <Grid item xs={5}>
-                                        <Button size="large" sx={{ marginLeft: 2 }} variant="contained" onClick={(e) => setUpdateOpen(true)}>
+                                    <Grid item xs={4}>
+                                        <Button sx={{ marginRight: 2 }} variant="contained" onClick={(e) => setUpdateOpen(true)}>
                                             Update
                                         </Button>
                                     </Grid>
                                 )}
                                 {deleteForm && (
-                                    <Grid item xs={5}>
-                                        <Button
-                                            size="large"
-                                            sx={{ marginLeft: 2, backgroundColor: 'red' }}
-                                            variant="contained"
-                                            onClick={(e) => setDeleteOpen(true)}
-                                        >
+                                    <Grid item xs={4}>
+                                        <Button sx={{ marginRight: 2, backgroundColor: 'red' }} variant="contained" onClick={(e) => setDeleteOpen(true)}>
                                             Delete
                                         </Button>
                                     </Grid>
