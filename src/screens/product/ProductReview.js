@@ -1,11 +1,10 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import { GenericActions } from 'src/actions/genericActions'
 import FormComponent from 'src/components2/FormComponent'
 import { TableComponent } from 'src/components2/TableComponent'
-import { RouteConstants, UserType } from 'src/enumConstants'
+import { RouteConstants } from 'src/enumConstants'
 
 export const ProductReviewCreateForm = ({ productId }) => {
     const dispatch = useDispatch()
@@ -26,7 +25,8 @@ export const ProductReviewCreateForm = ({ productId }) => {
     ]
 
     const submitHandler = (data) => {
-        dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/${productId}/review`, data))
+        data.productId = productId
+        dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/review`, data))
     }
 
     return <FormComponent loading={productReviewCreate.loading} msg={['Create a new product Review', 'Submit']} fields={fields} submitHandler={submitHandler} />
@@ -51,12 +51,7 @@ export const ProductReviewUpdateForm = ({ productReview }) => {
     ]
 
     const submitHandler = (data) => {
-        dispatch(
-            GenericActions.updateData(
-                RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/${productReview.productId}/review/${productReview.productReviewId}`,
-                data
-            )
-        )
+        dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/review/${productReview.productReviewId}`, data))
     }
 
     return <FormComponent loading={productReviewUpdate.loading} msg={['Update product Review', 'Update']} fields={fields} submitHandler={submitHandler} />
@@ -76,11 +71,7 @@ export const ProductReviewDeleteForm = ({ productReview }) => {
     }, [productReviewDelete])
 
     const deleteHandler = () => {
-        dispatch(
-            GenericActions.deleteData(
-                RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/${productReview.productId}/review/${productReview.productReviewId}`
-            )
-        )
+        dispatch(GenericActions.deleteData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/review/${productReview.productReviewId}`))
     }
 
     return (
@@ -93,14 +84,15 @@ export const ProductReviewDeleteForm = ({ productReview }) => {
     )
 }
 
-export const ProductReviewList = ({ product }) => {
+export const ProductReviewList = ({ product, action, create }) => {
     const dispatch = useDispatch()
 
     const productReviewList = useSelector((state) => state.dataList)
-    const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
-        dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/${product.productId}/review`))
+        dispatch(
+            GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/review` + (product ? `?productId=${product.productId}` : ''))
+        )
     }, [product, dispatch])
 
     const fields = [
@@ -109,7 +101,7 @@ export const ProductReviewList = ({ product }) => {
         { key: 'rating', label: 'Rating' },
         { key: 'userId', label: 'User ID' },
         { key: 'productId', label: 'Product ID' },
-        userInfo.userType == UserType.CONSUMER && { key: 'actions', label: 'Actions' }
+        action && { key: 'actions', label: 'Actions' }
     ]
     return (
         <TableComponent
@@ -121,8 +113,8 @@ export const ProductReviewList = ({ product }) => {
                 deleteForm: <ProductReviewDeleteForm productReview={productReview} />
             }))}
             fields={fields}
-            msg={[`Reviews for product ${product.name}`]}
-            createForm={userInfo.userType === UserType.CONSUMER ? <ProductReviewCreateForm productId={product.productId} /> : null}
+            msg={[product ? `Reviews for product ${product.name}` : 'All product reviews by you']}
+            createForm={product && create ? <ProductReviewCreateForm productId={product.productId} /> : null}
         />
     )
 }

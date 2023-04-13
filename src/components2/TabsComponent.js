@@ -105,9 +105,11 @@ export const TabsComponent = ({ tabs, loading, refresh = true }) => {
                     textColor="primary"
                     indicatorColor="primary"
                 >
-                    {tabs.map((tab) => (
-                        <Tab key={tab.value} label={tab.label} value={tab.value} />
-                    ))}
+                    {tabs
+                        .filter((tab) => tab)
+                        .map((tab) => (
+                            <Tab key={tab.value} label={tab.label} value={tab.value} />
+                        ))}
                 </Tabs>
             </TabsContainerWrapper>
             {loading ? (
@@ -115,7 +117,7 @@ export const TabsComponent = ({ tabs, loading, refresh = true }) => {
                     <CircularProgress />
                 </Box>
             ) : (
-                <>{tabs.find((tab) => tab.value == currentTab).component}</>
+                <>{tabs.filter((tab) => tab).find((tab) => tab.value == currentTab).component}</>
             )}
         </Container>
     )

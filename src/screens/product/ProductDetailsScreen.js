@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router'
 import { GenericActions } from 'src/actions/genericActions'
 import { InfoComponent } from 'src/components2/InfoComponent'
 import { TabsComponent } from 'src/components2/TabsComponent'
-import { RouteConstants } from 'src/enumConstants'
+import { RouteConstants, UserType } from 'src/enumConstants'
 import { ProductDeleteForm, ProductUpdateForm } from './ProductForms'
 import { ProductReviewList } from './ProductReview'
 import Header from 'src/components2/Header'
@@ -61,7 +61,11 @@ const ProductDetailsScreen = () => {
             <TabsComponent
                 tabs={[
                     { value: 'productDetails', label: 'Details', component: productInfo },
-                    { value: 'reviews', label: 'Reviews', component: <ProductReviewList product={productDetails.data} /> }
+                    {
+                        value: 'reviews',
+                        label: 'Reviews',
+                        component: <ProductReviewList product={productDetails.data} action={false} create={userInfo.userType === UserType.CONSUMER} />
+                    }
                 ]}
                 loading={false}
             />

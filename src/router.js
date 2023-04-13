@@ -50,6 +50,7 @@ const StatusMaintenance = Loader(lazy(() => import('src/content/pages/Status/Mai
 // screens
 
 const UserAuthScreen = Loader(lazy(() => import('src/screens/user/UserAuthScreen')))
+const UserDetailsScreen = Loader(lazy(() => import('src/screens/user/UserDetailsScreen')))
 const PlatformGridScreen = Loader(lazy(() => import('src/screens/platform/PlatformGridScreen')))
 const ProductGridScreen = Loader(lazy(() => import('src/screens/product/ProductGridScreen')))
 const PlatformDetailsScreen = Loader(lazy(() => import('src/screens/platform/PlatformDetailsScreen')))
@@ -195,6 +196,16 @@ const routes = [
             {
                 path: 'forms',
                 element: <Forms />
+            }
+        ]
+    },
+    {
+        path: 'user',
+        element: <SidebarLayout />,
+        children: [
+            {
+                path: 'profile',
+                element: <UserDetailsScreen />
             }
         ]
     },

@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import { GenericActions } from 'src/actions/genericActions'
 import FormComponent from 'src/components2/FormComponent'
 import { TableComponent } from 'src/components2/TableComponent'
-import { RouteConstants, UserType } from 'src/enumConstants'
+import { RouteConstants } from 'src/enumConstants'
 
 export const PlatformReviewCreateForm = ({ platformId }) => {
     const dispatch = useDispatch()
@@ -26,7 +26,8 @@ export const PlatformReviewCreateForm = ({ platformId }) => {
     ]
 
     const submitHandler = (data) => {
-        dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platformId}/review`, data))
+        data.platformId = platformId
+        dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/review`, data))
     }
 
     return (
@@ -53,12 +54,7 @@ export const PlatformReviewUpdateForm = ({ platformReview }) => {
     ]
 
     const submitHandler = (data) => {
-        dispatch(
-            GenericActions.updateData(
-                RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platformReview.platformId}/review/${platformReview.platformReviewId}`,
-                data
-            )
-        )
+        dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/review/${platformReview.platformReviewId}`, data))
     }
 
     return <FormComponent loading={platformReviewUpdate.loading} msg={['Update platform Review', 'Update']} fields={fields} submitHandler={submitHandler} />
@@ -79,11 +75,7 @@ export const PlatformReviewDeleteForm = ({ platformReview }) => {
     }, [platformReviewDelete, navigate])
 
     const deleteHandler = () => {
-        dispatch(
-            GenericActions.deleteData(
-                RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platformReview.platformId}/review/${platformReview.platformReviewId}`
-            )
-        )
+        dispatch(GenericActions.deleteData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/review/${platformReview.platformReviewId}`))
     }
 
     return (
@@ -102,8 +94,18 @@ export const PlatformReviewList = ({ platform, create, action }) => {
     const platformReviewList = useSelector((state) => state.dataList)
 
     useEffect(() => {
-        dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platform.platformId}/review`))
+        dispatch(
+            GenericActions.getDataList(
+                RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/review` + (platform ? `?platformId=${platform.platformId}` : '')
+            )
+        )
     }, [platform, dispatch])
+
+    useEffect(() => {
+        if (platformReviewList.error) {
+            toast.error(platformReviewList.error)
+        }
+    }, [platformReviewList])
 
     const fields = [
         { key: 'platformReviewId', label: 'Review ID' },
@@ -119,12 +121,12 @@ export const PlatformReviewList = ({ platform, create, action }) => {
             data={platformReviewList.data?.map((platformReview) => ({
                 ...platformReview,
                 key: platformReview.platformReviewId,
-                updateForm: <PlatformReviewUpdateForm platformReview={platformReview} />,
-                deleteForm: <PlatformReviewDeleteForm platformReview={platformReview} />
+                updateForm: action && <PlatformReviewUpdateForm platformReview={platformReview} />,
+                deleteForm: action && <PlatformReviewDeleteForm platformReview={platformReview} />
             }))}
             fields={fields}
-            msg={[`Reviews for platform ${platform.name}`]}
-            createForm={create ? <PlatformReviewCreateForm platformId={platform.platformId} /> : null}
+            msg={[platform ? `Reviews for platform ${platform.name}` : 'All platform reviews by you']}
+            createForm={platform && create ? <PlatformReviewCreateForm platformId={platform.platformId} /> : null}
         />
     )
 }
