@@ -18,8 +18,6 @@ import {
     Typography
 } from '@mui/material'
 import { useEffect, useState } from 'react'
-import Footer from 'src/components2/Footer'
-import Header from 'src/components2/Header'
 
 const GridComponent = ({ msg, loading, data, filter, createForm }) => {
     const [open, setOpen] = useState(false)

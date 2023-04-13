@@ -8,7 +8,7 @@ export class GenericActions {
         async (dispatch, getState = null) => {
             try {
                 dispatch({ type: ReduxConstants.LIST_REQUEST })
-                const { data } = await axios.get(url, { ...ActionServices.getConfig(getState), params: params })
+                const { data } = await axios.get(url, ActionServices.getConfig(getState, params))
                 dispatch({
                     type: ReduxConstants.LIST_SUCCESS,
                     payload: data
@@ -44,7 +44,7 @@ export class GenericActions {
         async (dispatch, getState) => {
             try {
                 dispatch({ type: ReduxConstants.DETAILS_REQUEST })
-                const { data } = await axios.get(url, { ...ActionServices.getConfig(getState), params: params })
+                const { data } = await axios.get(url, ActionServices.getConfig(getState, params))
                 dispatch({
                     type: ReduxConstants.DETAILS_SUCCESS,
                     payload: data

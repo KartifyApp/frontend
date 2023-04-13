@@ -23,6 +23,9 @@ import {
 } from '@mui/material'
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
+import AddBoxIcon from '@mui/icons-material/AddBox'
+import AddIcon from '@mui/icons-material/Add'
+import RemoveIcon from '@mui/icons-material/Remove'
 
 export const TableComponent = ({ fields, data, msg, loading, filter, createForm }) => {
     const theme = useTheme()
@@ -140,6 +143,59 @@ export const TableComponent = ({ fields, data, msg, loading, filter, createForm 
                                                     key={2}
                                                 >
                                                     <DeleteTwoToneIcon fontSize="small" />
+                                                </IconButton>
+                                            </>
+                                        ) : field.key === 'create' ? (
+                                            <IconButton
+                                                sx={{
+                                                    '&:hover': {
+                                                        background: theme.colors.primary.lighter
+                                                    },
+                                                    color: theme.palette.primary.main
+                                                }}
+                                                color="inherit"
+                                                size="small"
+                                                onClick={(e) => {
+                                                    setOpen(true)
+                                                    setForm(row.createForm)
+                                                }}
+                                                key={1}
+                                            >
+                                                <AddBoxIcon fontSize="small" />
+                                            </IconButton>
+                                        ) : field.key === 'update' ? (
+                                            <>
+                                                <IconButton
+                                                    sx={{
+                                                        '&:hover': {
+                                                            background: theme.colors.primary.lighter
+                                                        },
+                                                        color: theme.palette.primary.main
+                                                    }}
+                                                    color="inherit"
+                                                    size="small"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation()
+                                                        row.onRemove()
+                                                    }}
+                                                    key={1}
+                                                >
+                                                    <RemoveIcon fontSize="small" />
+                                                </IconButton>
+                                                <IconButton
+                                                    sx={{
+                                                        '&:hover': { background: theme.colors.error.lighter },
+                                                        color: theme.palette.error.main
+                                                    }}
+                                                    color="inherit"
+                                                    size="small"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation()
+                                                        row.onAdd()
+                                                    }}
+                                                    key={2}
+                                                >
+                                                    <AddIcon fontSize="small" />
                                                 </IconButton>
                                             </>
                                         ) : (

@@ -1,5 +1,5 @@
 export class ActionServices {
-    static getConfig = (getState) => {
+    static getConfig = (getState, params = null) => {
         if (!getState) return {}
 
         const {
@@ -10,7 +10,8 @@ export class ActionServices {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${userInfo?.token}`
-            }
+            },
+            params: params
         }
     }
 

@@ -4,11 +4,11 @@ export class GenericReducers {
     static dataListReducer = (state = { data: [], loading: false }, action) => {
         switch (action.type) {
             case ReduxConstants.LIST_REQUEST:
-                return { loading: true }
+                return { loading: true, data: [] }
             case ReduxConstants.LIST_SUCCESS:
                 return { loading: false, data: action.payload }
             case ReduxConstants.LIST_FAIL:
-                return { loading: false, error: action.payload }
+                return { loading: false, error: action.payload, data: [] }
             case ReduxConstants.LIST_RESET:
                 return { loading: false, data: [] }
             default:

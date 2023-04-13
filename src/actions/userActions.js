@@ -26,6 +26,7 @@ export class UserActions {
     }
 
     static logout = () => async (dispatch) => {
+        localStorage.removeItem('userInfo')
         dispatch({ type: UserConstants.USER_LOGOUT })
     }
 }

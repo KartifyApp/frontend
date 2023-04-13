@@ -29,7 +29,7 @@ const PlatformDetailsScreen = () => {
         }
         if (!platform) navigate('/platform')
         dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platform.platformId}`))
-    }, [platform, dispatch, navigate])
+    }, [platform, userInfo, dispatch, navigate])
 
     useEffect(() => {
         if (platformDetails.error) {

@@ -2,9 +2,6 @@ import { useEffect, useState } from 'react'
 import { Box, Container, Tabs, Tab, CircularProgress } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
-import Footer from 'src/components2/Footer'
-import Header from 'src/components2/Header'
-
 const TabsContainerWrapper = styled(Box)(
     ({ theme }) => `
       padding: 0 ${theme.spacing(2)};
@@ -87,12 +84,12 @@ const TabsContainerWrapper = styled(Box)(
   `
 )
 
-export const TabsComponent = ({ tabs, loading, refresh = true }) => {
+export const TabsComponent = ({ tabs, loading }) => {
     const [currentTab, setCurrentTab] = useState(tabs[0].value)
 
     useEffect(() => {
         setCurrentTab(tabs[0].value)
-    }, [refresh ? tabs : null])
+    }, [tabs])
 
     return (
         <Container maxWidth="lg">
@@ -117,7 +114,7 @@ export const TabsComponent = ({ tabs, loading, refresh = true }) => {
                     <CircularProgress />
                 </Box>
             ) : (
-                <>{tabs.filter((tab) => tab).find((tab) => tab.value == currentTab).component}</>
+                <>{tabs.filter((tab) => tab).find((tab) => tab.value === currentTab).component}</>
             )}
         </Container>
     )

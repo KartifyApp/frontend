@@ -10,6 +10,7 @@ import { ProductReviewList } from './ProductReview'
 import Header from 'src/components2/Header'
 import Footer from 'src/components2/Footer'
 import { toast } from 'react-toastify'
+import { CartActions } from 'src/actions/cartActions'
 
 const ProductDetailsScreen = () => {
     const navigate = useNavigate()
@@ -19,6 +20,7 @@ const ProductDetailsScreen = () => {
 
     const productDetails = useSelector((state) => state.dataDetails)
     const { userInfo } = useSelector((state) => state.userLogin)
+    const { cartProducts, error } = useSelector((state) => state.cartDetails)
 
     useEffect(() => {
         if (!userInfo || !userInfo.token) {
@@ -27,14 +29,14 @@ const ProductDetailsScreen = () => {
         }
         if (!productId) navigate('/product')
         dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/${productId}`))
-    }, [productId, dispatch, navigate])
+    }, [productId, userInfo, dispatch, navigate])
 
     useEffect(() => {
         if (productDetails.error) {
             toast.error(productDetails.error)
-            navigate('/status/404')
         }
-    }, [productDetails])
+        if (error) toast.error('Products must be from same platform')
+    }, [productDetails, error])
 
     const productInfo = (
         <InfoComponent
@@ -57,7 +59,16 @@ const ProductDetailsScreen = () => {
 
     return (
         <>
-            <Header msg={[`Product Details`, `Product ID ${productDetails.data.productId}`, `Get all information about ${productDetails.data.name}`]} />
+            <Header
+                msg={[`Product Details`, `Product ID ${productDetails.data.productId}`, `Get all information about ${productDetails.data.name}`]}
+                buttons={
+                    userInfo.userType === UserType.CONSUMER && [
+                        cartProducts[productDetails.data.productId]
+                            ? { label: 'Remove', onClick: (e) => dispatch(CartActions.removeFromcart(productDetails.data)) }
+                            : { label: 'Add', onClick: (e) => dispatch(CartActions.addToCart(productDetails.data)) }
+                    ]
+                }
+            />
             <TabsComponent
                 tabs={[
                     { value: 'productDetails', label: 'Details', component: productInfo },

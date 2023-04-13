@@ -2,7 +2,8 @@ export const RouteConstants = Object.freeze({
     BASE_URL: 'http://localhost:5000',
     USER_ROUTES: '/api/user',
     PLATFORM_ROUTES: '/api/platform',
-    PRODUCT_ROUTES: '/api/product'
+    PRODUCT_ROUTES: '/api/product',
+    DELIVERY_JOB: '/api/delivery-job'
 })
 
 export const UserType = Object.freeze({
@@ -51,4 +52,11 @@ export const UserConstants = Object.freeze({
     USER_LOGIN_SUCCESS: 'USER_LOGIN_SUCCESS',
     USER_LOGIN_FAIL: 'USER_LOGIN_FAIL',
     USER_LOGOUT: 'USER_LOGOUT'
+})
+
+export const CartConstants = Object.freeze({
+    CART_UPDATE_PRODUCTS: 'CART_UPDATE_PRODUCT',
+    CART_UPDATE_FAIL: 'CART_UPDATE_FAIL',
+    CART_SAVE_SHIPPING_ADDRESS: 'CART_SAVE_SHIPPING_ADDRESS',
+    CART_SAVE_PAYMENT_METHOD: 'CART_SAVE_PAYMENT_METHOD'
 })
