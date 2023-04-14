@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 
-import { GenericActions } from 'src/actions/genericActions'
+import { GenericActions } from 'src/reduxManager/genericActions'
 import GridComponent from 'src/components2/GridComponent'
 import { PlatformStatus, RouteConstants, UserType } from 'src/enumConstants'
 import { PlatformCreateForm } from './PlatformForms'

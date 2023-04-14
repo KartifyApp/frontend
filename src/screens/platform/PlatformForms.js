@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
-import { GenericActions } from 'src/actions/genericActions'
+import { GenericActions } from 'src/reduxManager/genericActions'
 import FormComponent from 'src/components2/FormComponent'
 import { AddressKeys, PlatformStatus, RouteConstants } from 'src/enumConstants'
 

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
-import { GenericActions } from 'src/actions/genericActions'
+import { GenericActions } from 'src/reduxManager/genericActions'
 import { InfoComponent } from 'src/components2/InfoComponent'
 import { TabsComponent } from 'src/components2/TabsComponent'
 import { RouteConstants, UserType } from 'src/enumConstants'

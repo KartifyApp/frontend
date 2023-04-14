@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
-import { GenericActions } from 'src/actions/genericActions'
+import { GenericActions } from 'src/reduxManager/genericActions'
 import { InfoComponent } from 'src/components2/InfoComponent'
 import { TabsComponent } from 'src/components2/TabsComponent'
 import { RouteConstants, UserType } from 'src/enumConstants'
@@ -10,7 +10,7 @@ import { ProductReviewList } from './ProductReview'
 import Header from 'src/components2/Header'
 import Footer from 'src/components2/Footer'
 import { toast } from 'react-toastify'
-import { CartActions } from 'src/actions/cartActions'
+import { CartActions } from 'src/reduxManager/cartActions'
 
 const ProductDetailsScreen = () => {
     const navigate = useNavigate()
