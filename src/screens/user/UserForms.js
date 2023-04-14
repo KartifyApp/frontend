@@ -64,7 +64,7 @@ export const UserLoginForm = () => {
             toast.success('Login successful')
             navigate('/')
         }
-    }, [userLogin])
+    }, [userLogin, navigate])
 
     const fields = [
         { key: 'username', label: 'Username', required: true },

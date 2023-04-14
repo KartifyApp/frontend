@@ -32,7 +32,7 @@ const UserDetailsScreen = () => {
             toast.error(userDetails.error)
             navigate('/status/404')
         }
-    }, [userDetails])
+    }, [userDetails, navigate])
 
     const userInfoComponent = (
         <InfoComponent

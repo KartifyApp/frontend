@@ -24,7 +24,7 @@ const CartTableScreen = () => {
             navigate('/auth')
         }
         platformId && dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, { platformId }))
-    }, [userInfo, navigate, dispatch])
+    }, [userInfo, platformId, navigate, dispatch])
 
     useEffect(() => {
         if (productList.error) toast.error(productList.error)

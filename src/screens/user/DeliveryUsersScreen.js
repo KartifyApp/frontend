@@ -23,7 +23,7 @@ const DeliveryUsersScreen = () => {
             navigate('/auth')
         }
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.USER_ROUTES + '/delivery'))
-    }, [userInfo])
+    }, [userInfo, dispatch, navigate])
 
     useEffect(() => {
         if (deliveryUserList.error) toast.error(deliveryUserList.error)

@@ -1,7 +1,7 @@
 import { Container } from '@mui/material'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router'
+import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import { GenericActions } from 'src/actions/genericActions'
 import Footer from 'src/components2/Footer'
@@ -26,7 +26,7 @@ const DeliveryJobsScreen = () => {
             navigate('/auth')
         }
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.DELIVERY_JOB, { platformId: platformId }))
-    }, [userInfo, navigate, dispatch])
+    }, [userInfo, platformId, navigate, dispatch])
 
     useEffect(() => {
         if (deliveryJobList.error) {

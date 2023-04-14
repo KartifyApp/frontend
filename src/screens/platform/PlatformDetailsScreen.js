@@ -27,7 +27,7 @@ const PlatformDetailsScreen = () => {
             navigate('/auth')
         }
         dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platformId}`))
-    }, [userInfo, dispatch, navigate])
+    }, [userInfo, platformId, dispatch, navigate])
 
     useEffect(() => {
         if (platformDetails.error) {
@@ -68,7 +68,7 @@ const PlatformDetailsScreen = () => {
                 msg={[`Platform Details`, `Platform ID ${platformDetails.data.platformId}`, `Get all information about ${platformDetails.data.name}`]}
                 buttons={[
                     { label: 'Orders', onClick: (e) => {} },
-                    userInfo.userType != UserType.DELIVERY && {
+                    userInfo.userType !== UserType.DELIVERY && {
                         label: 'Delivery',
                         onClick: (e) => navigate(`/user/delivery-job?platformId=${platformDetails.data.platformId}`)
                     }
@@ -77,12 +77,12 @@ const PlatformDetailsScreen = () => {
             <TabsComponent
                 tabs={[
                     { value: 'platformDetails', label: 'Details', component: platformInfo },
-                    userInfo.userType != UserType.DELIVERY && {
+                    userInfo.userType !== UserType.DELIVERY && {
                         value: 'reviews',
                         label: 'Reviews',
                         component: <PlatformReviewList platform={platformDetails.data} create={userInfo.userType === UserType.CONSUMER} action={false} />
                     },
-                    userInfo.userType != UserType.DELIVERY && {
+                    userInfo.userType !== UserType.DELIVERY && {
                         value: 'products',
                         label: 'Products',
                         component: <ProductListTable platform={platformDetails.data} />
