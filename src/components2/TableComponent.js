@@ -122,6 +122,7 @@ export const TableComponent = ({ fields, data, msg, loading, filter, createForm 
                                                     color="inherit"
                                                     size="small"
                                                     onClick={(e) => {
+                                                        e.stopPropagation()
                                                         setOpen(true)
                                                         setForm(row.updateForm)
                                                     }}
@@ -137,6 +138,7 @@ export const TableComponent = ({ fields, data, msg, loading, filter, createForm 
                                                     color="inherit"
                                                     size="small"
                                                     onClick={(e) => {
+                                                        e.stopPropagation()
                                                         setOpen(true)
                                                         setForm(row.deleteForm)
                                                     }}

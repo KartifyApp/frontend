@@ -5,36 +5,10 @@ import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import { GenericActions } from 'src/actions/genericActions'
 import Footer from 'src/components2/Footer'
-import FormComponent from 'src/components2/FormComponent'
 import Header from 'src/components2/Header'
 import { TableComponent } from 'src/components2/TableComponent'
 import { RouteConstants } from 'src/enumConstants'
-
-export const DeliveryJobCreateForm = ({ userId }) => {
-    const dispatch = useDispatch()
-
-    const deliveryJobCreate = useSelector((state) => state.dataCreate)
-
-    useEffect(() => {
-        if (deliveryJobCreate.error) toast.error(deliveryJobCreate.error)
-        if (deliveryJobCreate.data) {
-            toast.success(`Delivery Job ID ${deliveryJobCreate.data.deliveryJobId} created successfully`)
-            window.location.reload()
-        }
-    }, [deliveryJobCreate])
-
-    const fields = [
-        { key: 'salary', label: 'Salary', required: true },
-        { key: 'platformId', label: 'Platform ID', required: true }
-    ]
-
-    const submitHandler = (data) => {
-        data.userId = userId
-        dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.DELIVERY_JOB, data))
-    }
-
-    return <FormComponent loading={deliveryJobCreate.loading} msg={['Create a new delivery job', 'Submit']} fields={fields} submitHandler={submitHandler} />
-}
+import { DeliveryJobCreateForm } from './DeliveryJobForms'
 
 const DeliveryUsersScreen = () => {
     const dispatch = useDispatch()

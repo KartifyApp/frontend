@@ -28,20 +28,22 @@ const Header = ({ msg, buttons }) => {
             </Helmet>
             <PageTitleWrapper>
                 <Grid container alignItems="center">
-                    <Grid item xs={buttons ? 12 - buttons.length * 1.2 : 12}>
+                    <Grid item xs={buttons ? 12 - buttons.filter((button) => button).length * 1.2 : 12}>
                         <Typography variant="h3" component="h3" gutterBottom>
                             {msg[1]}
                         </Typography>
                         <Typography variant="subtitle2">{msg[2]}</Typography>
                     </Grid>
                     {buttons &&
-                        buttons.map((button) => (
-                            <Grid item key={button.label} xs={1.2}>
-                                <Button sx={{ margin: 0 }} variant="contained" onClick={button.onClick}>
-                                    {button.label}
-                                </Button>
-                            </Grid>
-                        ))}
+                        buttons
+                            .filter((button) => button)
+                            .map((button) => (
+                                <Grid item key={button.label} xs={1.2}>
+                                    <Button sx={{ margin: 0 }} variant="contained" onClick={button.onClick}>
+                                        {button.label}
+                                    </Button>
+                                </Grid>
+                            ))}
                 </Grid>
             </PageTitleWrapper>
         </>

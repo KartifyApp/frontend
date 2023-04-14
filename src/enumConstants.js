@@ -20,6 +20,12 @@ export const PlatformStatus = Object.freeze({
     DOWNTIME: 'DOWNTIME'
 })
 
+export const DeliveryStatus = Object.freeze({
+    ACTIVE: 'ACTIVE',
+    INACTIVE: 'INACTIVE',
+    WORKING: 'WORKING'
+})
+
 export const AddressKeys = ['postOffice', 'pinCode', 'city', 'country', 'phoneNumber']
 
 export const STATE_RESET_TIME = 3000

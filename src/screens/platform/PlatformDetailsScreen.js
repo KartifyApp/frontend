@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { GenericActions } from 'src/actions/genericActions'
 import { InfoComponent } from 'src/components2/InfoComponent'
 import { TabsComponent } from 'src/components2/TabsComponent'
@@ -16,8 +16,7 @@ const PlatformDetailsScreen = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { state } = useLocation()
-    const platform = state?.platform
+    const { platformId } = useParams()
 
     const platformDetails = useSelector((state) => state.dataDetails)
     const { userInfo } = useSelector((state) => state.userLogin)
@@ -27,14 +26,12 @@ const PlatformDetailsScreen = () => {
             toast.error('No token found')
             navigate('/auth')
         }
-        if (!platform) navigate('/platform')
-        dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platform.platformId}`))
-    }, [platform, userInfo, dispatch, navigate])
+        dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platformId}`))
+    }, [userInfo, dispatch, navigate])
 
     useEffect(() => {
         if (platformDetails.error) {
             toast.error(platformDetails.error)
-            navigate('/status/404')
         }
     }, [platformDetails])
 
@@ -71,18 +68,25 @@ const PlatformDetailsScreen = () => {
                 msg={[`Platform Details`, `Platform ID ${platformDetails.data.platformId}`, `Get all information about ${platformDetails.data.name}`]}
                 buttons={[
                     { label: 'Orders', onClick: (e) => {} },
-                    { label: 'Delivery', onClick: (e) => {} }
+                    userInfo.userType != UserType.DELIVERY && {
+                        label: 'Delivery',
+                        onClick: (e) => navigate(`/user/delivery-job?platformId=${platformDetails.data.platformId}`)
+                    }
                 ]}
             />
             <TabsComponent
                 tabs={[
                     { value: 'platformDetails', label: 'Details', component: platformInfo },
-                    {
+                    userInfo.userType != UserType.DELIVERY && {
                         value: 'reviews',
                         label: 'Reviews',
                         component: <PlatformReviewList platform={platformDetails.data} create={userInfo.userType === UserType.CONSUMER} action={false} />
                     },
-                    { value: 'products', label: 'Products', component: <ProductListTable platform={platformDetails.data} /> }
+                    userInfo.userType != UserType.DELIVERY && {
+                        value: 'products',
+                        label: 'Products',
+                        component: <ProductListTable platform={platformDetails.data} />
+                    }
                 ]}
                 loading={false}
             />

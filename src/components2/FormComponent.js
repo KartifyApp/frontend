@@ -9,7 +9,7 @@ const FormComponent = ({ msg, fields, submitHandler, loading }) => {
     useEffect(() => {
         const defaultData = {}
         for (var field of fields) {
-            defaultData[field.key] = field.default || ''
+            if (field) defaultData[field.key] = field.default || ''
         }
         setFormData(defaultData)
     }, [fields])
@@ -22,39 +22,42 @@ const FormComponent = ({ msg, fields, submitHandler, loading }) => {
                 <Box
                     component="form"
                     sx={{
-                        '& .MuiTextField-root': { m: 2 }
+                        '& .MuiTextField-root': { m: 2 },
+                        width: 500
                     }}
                     noValidate
                 >
-                    {fields.map((field) =>
-                        field.dropdown ? (
-                            <TextField
-                                key={field.key}
-                                required={field.required}
-                                select
-                                label={field.label}
-                                value={formData[field.key] || ''}
-                                onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
-                                style={{ width: '95%', margin: '8px' }}
-                            >
-                                {field.menu.map((menuItem) => (
-                                    <MenuItem key={menuItem} value={menuItem}>
-                                        {menuItem}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
-                        ) : (
-                            <TextField
-                                key={field.key}
-                                required={field.required}
-                                type={field.key === 'password' ? 'password' : 'text'}
-                                label={field.label}
-                                value={formData[field.key] || ''}
-                                onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
-                                style={{ width: '95%', margin: '8px' }}
-                            />
-                        )
-                    )}
+                    {fields
+                        .filter((field) => field)
+                        .map((field) =>
+                            field.dropdown ? (
+                                <TextField
+                                    key={field.key}
+                                    required={field.required}
+                                    select
+                                    label={field.label}
+                                    value={formData[field.key] || ''}
+                                    onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
+                                    style={{ width: '95%', margin: '8px' }}
+                                >
+                                    {field.menu.map((menuItem) => (
+                                        <MenuItem key={menuItem} value={menuItem}>
+                                            {menuItem}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            ) : (
+                                <TextField
+                                    key={field.key}
+                                    required={field.required}
+                                    type={field.key === 'password' ? 'password' : 'text'}
+                                    label={field.label}
+                                    value={formData[field.key] || ''}
+                                    onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
+                                    style={{ width: '95%', margin: '8px' }}
+                                />
+                            )
+                        )}
                     {loading ? (
                         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                             <CircularProgress />
@@ -66,7 +69,7 @@ const FormComponent = ({ msg, fields, submitHandler, loading }) => {
                                 variant="contained"
                                 onClick={(e) => {
                                     for (var field of fields) {
-                                        if (field.required && !formData[field.key]) {
+                                        if (field?.required && !formData[field.key]) {
                                             toast.error(`${field.label} value not provided.`)
                                             return
                                         }

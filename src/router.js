@@ -57,6 +57,7 @@ const PlatformDetailsScreen = Loader(lazy(() => import('src/screens/platform/Pla
 const ProductDetailsScreen = Loader(lazy(() => import('src/screens/product/ProductDetailsScreen')))
 const CartTableScreen = Loader(lazy(() => import('src/screens/order/CartTableScreen')))
 const DeliveryUsersScreen = Loader(lazy(() => import('src/screens/user/DeliveryUsersScreen')))
+const DeliveryJobsScreen = Loader(lazy(() => import('src/screens/user/DeliveryJobsScreen')))
 
 const routes = [
     {
@@ -212,6 +213,10 @@ const routes = [
             {
                 path: 'delivery',
                 element: <DeliveryUsersScreen />
+            },
+            {
+                path: 'delivery-job',
+                element: <DeliveryJobsScreen />
             }
         ]
     },

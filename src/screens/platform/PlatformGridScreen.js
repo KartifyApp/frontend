@@ -42,7 +42,7 @@ const PlatformGridScreen = () => {
                     description: platform.description,
                     platformStatus: platform.platformStatus,
                     buttons: [
-                        { name: 'Info', onClick: (e) => navigate(`/platform/${platform.platformId}`, { state: { platform: platform } }) },
+                        { name: 'Info', onClick: (e) => navigate(`/platform/${platform.platformId}`) },
                         { name: 'Products', onClick: (e) => navigate(`/product?platformId=${platform.platformId}`, { state: { platform: platform } }) }
                     ]
                 }))}
