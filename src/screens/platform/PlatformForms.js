@@ -9,15 +9,15 @@ import { AddressKeys, PlatformStatus, RouteConstants } from 'src/enumConstants'
 export const PlatformCreateForm = () => {
     const dispatch = useDispatch()
 
-    const platformCreate = useSelector((state) => state.dataCreate)
+    const { loading, data: createdPlatform, error } = useSelector((state) => state.dataCreate)
 
     useEffect(() => {
-        if (platformCreate.error) toast.error(platformCreate.error)
-        if (platformCreate.data) {
-            toast.success(`${platformCreate.data.name} created successfully`)
+        if (error) toast.error(error)
+        if (createdPlatform.name) {
+            toast.success(`${createdPlatform.name} created successfully`)
             window.location.reload()
         }
-    }, [platformCreate])
+    }, [createdPlatform, error])
 
     const fields = [
         { key: 'name', label: 'Name', required: true },
@@ -46,21 +46,21 @@ export const PlatformCreateForm = () => {
         dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES, data))
     }
 
-    return <FormComponent loading={platformCreate.loading} msg={['Create a new platform', 'Submit']} fields={fields} submitHandler={submitHandler} />
+    return <FormComponent loading={loading} msg={['Create a new platform', 'Submit']} fields={fields} submitHandler={submitHandler} />
 }
 
 export const PlatformUpdateForm = ({ platform }) => {
     const dispatch = useDispatch()
 
-    const platformUpdate = useSelector((state) => state.dataUpdate)
+    const { loading, data: updatedPlatform, error } = useSelector((state) => state.dataUpdate)
 
     useEffect(() => {
-        if (platformUpdate.error) toast.error(platformUpdate.error)
-        if (platformUpdate.data) {
-            toast.success(`Platform ID ${platformUpdate.data.platformId} updated successfully`)
+        if (error) toast.error(error)
+        if (updatedPlatform.platformId) {
+            toast.success(`Platform ID ${updatedPlatform.platformId} updated successfully`)
             window.location.reload()
         }
-    }, [platformUpdate, platform])
+    }, [updatedPlatform, error])
 
     const fields = [
         { key: 'name', label: 'Name', required: true, default: platform.name },
@@ -90,26 +90,26 @@ export const PlatformUpdateForm = ({ platform }) => {
         dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platform.platformId}`, data))
     }
 
-    return <FormComponent loading={platformUpdate.loading} msg={[`Update platform ${platform.name}`, 'Update']} fields={fields} submitHandler={submitHandler} />
+    return <FormComponent loading={loading} msg={[`Update platform ${platform.name}`, 'Update']} fields={fields} submitHandler={submitHandler} />
 }
 
 export const PlatformDeleteForm = ({ platform }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const platformDelete = useSelector((state) => state.dataDelete)
+    const { loading, data: deletedPlatform, error } = useSelector((state) => state.dataDelete)
 
     useEffect(() => {
-        if (platformDelete.error) toast.error(platformDelete.error)
-        if (platformDelete.data) {
-            toast.success(`Platform ID ${platformDelete.data.platformId} deleted successfully`)
+        if (error) toast.error(error)
+        if (deletedPlatform.platformId) {
+            toast.success(`Platform ID ${deletedPlatform.platformId} deleted successfully`)
             navigate('/platform')
         }
-    }, [platformDelete, navigate])
+    }, [deletedPlatform, error, navigate])
 
     const deleteHandler = () => {
         dispatch(GenericActions.deleteData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platform.platformId}`))
     }
 
-    return <FormComponent loading={platformDelete.loading} msg={[`Delete platform ${platform.name}`, 'OK']} fields={[]} submitHandler={deleteHandler} />
+    return <FormComponent loading={loading} msg={[`Delete platform ${platform.name}`, 'OK']} fields={[]} submitHandler={deleteHandler} />
 }

@@ -10,15 +10,15 @@ import { RouteConstants } from 'src/enumConstants'
 export const PlatformReviewCreateForm = ({ platformId }) => {
     const dispatch = useDispatch()
 
-    const platformReviewCreate = useSelector((state) => state.dataCreate)
+    const { loading, data: createdPlatformReview, error } = useSelector((state) => state.dataCreate)
 
     useEffect(() => {
-        if (platformReviewCreate.error) toast.error(platformReviewCreate.error)
-        if (platformReviewCreate.data) {
-            toast.success(`Review ${platformReviewCreate.data.platformReviewId} created successfully`)
+        if (error) toast.error(error)
+        if (createdPlatformReview.platformReviewId) {
+            toast.success(`Platform review ID ${createdPlatformReview.platformReviewId} created successfully`)
             window.location.reload()
         }
-    }, [platformReviewCreate])
+    }, [createdPlatformReview, error])
 
     const fields = [
         { key: 'comment', label: 'Comment', required: true },
@@ -30,23 +30,21 @@ export const PlatformReviewCreateForm = ({ platformId }) => {
         dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/review`, data))
     }
 
-    return (
-        <FormComponent loading={platformReviewCreate.loading} msg={['Create a new platform Review', 'Submit']} fields={fields} submitHandler={submitHandler} />
-    )
+    return <FormComponent loading={loading} msg={['Create a new platform Review', 'Submit']} fields={fields} submitHandler={submitHandler} />
 }
 
 export const PlatformReviewUpdateForm = ({ platformReview }) => {
     const dispatch = useDispatch()
 
-    const platformReviewUpdate = useSelector((state) => state.dataUpdate)
+    const { loading, data: updatedPlatformReview, error } = useSelector((state) => state.dataUpdate)
 
     useEffect(() => {
-        if (platformReviewUpdate.error) toast.error(platformReviewUpdate.error)
-        if (platformReviewUpdate.data) {
-            toast.success(`Review ${platformReviewUpdate.data.platformReviewId} updated successfully`)
+        if (error) toast.error(error)
+        if (updatedPlatformReview.platformReviewId) {
+            toast.success(`Platform review ID ${updatedPlatformReview.platformReviewId} updated successfully`)
             window.location.reload()
         }
-    }, [platformReviewUpdate])
+    }, [updatedPlatformReview, error])
 
     const fields = [
         { key: 'comment', label: 'Comment', required: true, default: platformReview.comment },
@@ -57,41 +55,42 @@ export const PlatformReviewUpdateForm = ({ platformReview }) => {
         dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/review/${platformReview.platformReviewId}`, data))
     }
 
-    return <FormComponent loading={platformReviewUpdate.loading} msg={['Update platform Review', 'Update']} fields={fields} submitHandler={submitHandler} />
+    return (
+        <FormComponent
+            loading={loading}
+            msg={[`Update platform review ${platformReview.platformReviewId}`, 'Update']}
+            fields={fields}
+            submitHandler={submitHandler}
+        />
+    )
 }
 
 export const PlatformReviewDeleteForm = ({ platformReview }) => {
-    const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const platformReviewDelete = useSelector((state) => state.dataDelete)
+    const { loading, data: deletedPlatformReview, error } = useSelector((state) => state.dataDelete)
 
     useEffect(() => {
-        if (platformReviewDelete.error) toast.error(platformReviewDelete.error)
-        if (platformReviewDelete.data) {
-            toast.success(`Review ${platformReviewDelete.data.platformReviewId} deleted successfully`)
+        if (error) toast.error(error)
+        if (deletedPlatformReview) {
+            toast.success(`Platform review ID ${deletedPlatformReview.platformReviewId} deleted successfully`)
             window.location.reload()
         }
-    }, [platformReviewDelete, navigate])
+    }, [deletedPlatformReview, error])
 
     const deleteHandler = () => {
         dispatch(GenericActions.deleteData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/review/${platformReview.platformReviewId}`))
     }
 
     return (
-        <FormComponent
-            loading={platformReviewDelete.loading}
-            msg={[`Delete platform review ${platformReview.platformReviewId}`, 'OK']}
-            fields={[]}
-            submitHandler={deleteHandler}
-        />
+        <FormComponent loading={loading} msg={[`Delete platform review ${platformReview.platformReviewId}`, 'OK']} fields={[]} submitHandler={deleteHandler} />
     )
 }
 
 export const PlatformReviewList = ({ platform, create, action }) => {
     const dispatch = useDispatch()
 
-    const platformReviewList = useSelector((state) => state.dataList)
+    const { loading, data: platformReviews, error } = useSelector((state) => state.dataList)
 
     useEffect(() => {
         dispatch(
@@ -102,10 +101,8 @@ export const PlatformReviewList = ({ platform, create, action }) => {
     }, [platform, dispatch])
 
     useEffect(() => {
-        if (platformReviewList.error) {
-            toast.error(platformReviewList.error)
-        }
-    }, [platformReviewList])
+        if (error) toast.error(error)
+    }, [error])
 
     const fields = [
         { key: 'platformReviewId', label: 'Review ID' },
@@ -117,8 +114,8 @@ export const PlatformReviewList = ({ platform, create, action }) => {
     ]
     return (
         <TableComponent
-            loading={platformReviewList.loading}
-            data={platformReviewList.data?.map((platformReview) => ({
+            loading={loading}
+            data={platformReviews.map((platformReview) => ({
                 ...platformReview,
                 key: platformReview.platformReviewId,
                 updateForm: action && <PlatformReviewUpdateForm platformReview={platformReview} />,
@@ -126,7 +123,7 @@ export const PlatformReviewList = ({ platform, create, action }) => {
             }))}
             fields={fields}
             msg={[platform ? `Reviews for platform ${platform.name}` : 'All platform reviews by you']}
-            createForm={platform && create ? <PlatformReviewCreateForm platformId={platform.platformId} /> : null}
+            createForm={platform && create && <PlatformReviewCreateForm platformId={platform.platformId} />}
         />
     )
 }

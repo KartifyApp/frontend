@@ -9,15 +9,15 @@ import { RouteConstants } from 'src/enumConstants'
 export const ProductCreateForm = ({ platformId }) => {
     const dispatch = useDispatch()
 
-    const productCreate = useSelector((state) => state.dataCreate)
+    const { loading, data: createdProduct, error } = useSelector((state) => state.dataCreate)
 
     useEffect(() => {
-        if (productCreate.error) toast.error(productCreate.error)
-        if (productCreate.data) {
-            toast.success(`${productCreate.data.name} created successfully`)
+        if (error) toast.error(error)
+        if (createdProduct.name) {
+            toast.success(`${createdProduct.name} created successfully`)
             window.location.reload()
         }
-    }, [productCreate])
+    }, [createdProduct, error])
 
     const fields = [
         { key: 'name', label: 'Name', required: true },
@@ -34,21 +34,21 @@ export const ProductCreateForm = ({ platformId }) => {
         dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, data))
     }
 
-    return <FormComponent loading={productCreate.loading} msg={['Create a new product', 'Submit']} fields={fields} submitHandler={submitHandler} />
+    return <FormComponent loading={loading} msg={['Create a new product', 'Submit']} fields={fields} submitHandler={submitHandler} />
 }
 
 export const ProductUpdateForm = ({ product }) => {
     const dispatch = useDispatch()
 
-    const productUpdate = useSelector((state) => state.dataUpdate)
+    const { loading, data: updatedProduct, error } = useSelector((state) => state.dataUpdate)
 
     useEffect(() => {
-        if (productUpdate.error) toast.error(productUpdate.error)
-        if (productUpdate.data) {
-            toast.success(`Product ID ${productUpdate.data.productId} updated successfully`)
+        if (error) toast.error(error)
+        if (updatedProduct.productId) {
+            toast.success(`Product ID ${updatedProduct.productId} updated successfully`)
             window.location.reload()
         }
-    }, [productUpdate, product])
+    }, [updatedProduct, error])
 
     const fields = [
         { key: 'name', label: 'Name', required: true, default: product.name },
@@ -64,26 +64,26 @@ export const ProductUpdateForm = ({ product }) => {
         dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/${product.productId}`, data))
     }
 
-    return <FormComponent loading={productUpdate.loading} msg={[`Update product ${product.name}`, 'Update']} fields={fields} submitHandler={submitHandler} />
+    return <FormComponent loading={loading} msg={[`Update product ${product.name}`, 'Update']} fields={fields} submitHandler={submitHandler} />
 }
 
 export const ProductDeleteForm = ({ product }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const productDelete = useSelector((state) => state.dataDelete)
+    const { loading, data: deletedProduct, error } = useSelector((state) => state.dataDelete)
 
     useEffect(() => {
-        if (productDelete.error) toast.error(productDelete.error)
-        if (productDelete.data) {
-            toast.success(`Product ID ${productDelete.data.productId} deleted successfully`)
+        if (error) toast.error(error)
+        if (deletedProduct.productId) {
+            toast.success(`Product ID ${deletedProduct.productId} deleted successfully`)
             navigate(-1)
         }
-    }, [productDelete, navigate])
+    }, [deletedProduct, error, navigate])
 
     const deleteHandler = () => {
         dispatch(GenericActions.deleteData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/${product.productId}`))
     }
 
-    return <FormComponent loading={productDelete.loading} msg={[`Delete product ${product.name}`, 'OK']} fields={[]} submitHandler={deleteHandler} />
+    return <FormComponent loading={loading} msg={[`Delete product ${product.name}`, 'OK']} fields={[]} submitHandler={deleteHandler} />
 }

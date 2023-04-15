@@ -37,7 +37,7 @@ export const TableComponent = ({ fields, data, msg, loading, filter, createForm 
 
     useEffect(() => {
         setOpen(false)
-        setFilteredData(data || [])
+        setFilteredData(data)
     }, [data, loading])
 
     return (

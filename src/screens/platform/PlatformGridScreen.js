@@ -16,7 +16,7 @@ const PlatformGridScreen = () => {
     const navigate = useNavigate()
 
     const { userInfo } = useSelector((state) => state.userLogin)
-    const platformList = useSelector((state) => state.dataList)
+    const { loading, data: platforms, error } = useSelector((state) => state.dataList)
 
     useEffect(() => {
         if (!userInfo || !userInfo.token) {
@@ -26,6 +26,10 @@ const PlatformGridScreen = () => {
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES))
     }, [userInfo, dispatch, navigate])
 
+    useEffect(() => {
+        if (error) toast.error(error)
+    }, [error])
+
     return (
         <>
             <Header
@@ -34,8 +38,8 @@ const PlatformGridScreen = () => {
             <Container maxWidth="lg">
                 <GridComponent
                     msg={['Platforms']}
-                    loading={platformList.loading}
-                    data={platformList.data?.map((platform) => ({
+                    loading={loading}
+                    data={platforms.map((platform) => ({
                         id: platform.platformId,
                         name: [platform.name, platform.platformStatus].join('\xa0'.repeat(5)),
                         description: platform.description,
@@ -50,7 +54,7 @@ const PlatformGridScreen = () => {
                         key: 'platformStatus',
                         menu: Object.keys(PlatformStatus)
                     }}
-                    createForm={userInfo.userType === UserType.PROVIDER ? <PlatformCreateForm /> : null}
+                    createForm={userInfo.userType === UserType.PROVIDER && <PlatformCreateForm />}
                 />
             </Container>
             <Footer />

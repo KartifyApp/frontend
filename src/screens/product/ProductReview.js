@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+
 import { GenericActions } from 'src/reduxManager/genericActions'
 import FormComponent from 'src/components2/FormComponent'
 import { TableComponent } from 'src/components2/TableComponent'
@@ -9,15 +10,15 @@ import { RouteConstants } from 'src/enumConstants'
 export const ProductReviewCreateForm = ({ productId }) => {
     const dispatch = useDispatch()
 
-    const productReviewCreate = useSelector((state) => state.dataCreate)
+    const { loading, data: createdProductReview, error } = useSelector((state) => state.dataCreate)
 
     useEffect(() => {
-        if (productReviewCreate.error) toast.error(productReviewCreate.error)
-        if (productReviewCreate.data) {
-            toast.success(`Review ${productReviewCreate.data.productReviewId} created successfully`)
+        if (error) toast.error(error)
+        if (createdProductReview.productReviewId) {
+            toast.success(`Product review ID ${createdProductReview.productReviewId} created successfully`)
             window.location.reload()
         }
-    }, [productReviewCreate])
+    }, [createdProductReview, error])
 
     const fields = [
         { key: 'comment', label: 'Comment', required: true },
@@ -29,21 +30,21 @@ export const ProductReviewCreateForm = ({ productId }) => {
         dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/review`, data))
     }
 
-    return <FormComponent loading={productReviewCreate.loading} msg={['Create a new product Review', 'Submit']} fields={fields} submitHandler={submitHandler} />
+    return <FormComponent loading={loading} msg={['Create a new product Review', 'Submit']} fields={fields} submitHandler={submitHandler} />
 }
 
 export const ProductReviewUpdateForm = ({ productReview }) => {
     const dispatch = useDispatch()
 
-    const productReviewUpdate = useSelector((state) => state.dataUpdate)
+    const { loading, data: updatedProductReview, error } = useSelector((state) => state.dataUpdate)
 
     useEffect(() => {
-        if (productReviewUpdate.error) toast.error(productReviewUpdate.error)
-        if (productReviewUpdate.data) {
-            toast.success(`Review ${productReviewUpdate.data.productReviewId} updated successfully`)
+        if (error) toast.error(error)
+        if (updatedProductReview.productReviewId) {
+            toast.success(`Product review ID ${updatedProductReview.productReviewId} updated successfully`)
             window.location.reload()
         }
-    }, [productReviewUpdate])
+    }, [updatedProductReview, error])
 
     const fields = [
         { key: 'comment', label: 'Comment', required: true, default: productReview.comment },
@@ -54,46 +55,50 @@ export const ProductReviewUpdateForm = ({ productReview }) => {
         dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/review/${productReview.productReviewId}`, data))
     }
 
-    return <FormComponent loading={productReviewUpdate.loading} msg={['Update product Review', 'Update']} fields={fields} submitHandler={submitHandler} />
+    return (
+        <FormComponent
+            loading={loading}
+            msg={[`Update product review ${productReview.productReviewId}`, 'Update']}
+            fields={fields}
+            submitHandler={submitHandler}
+        />
+    )
 }
 
 export const ProductReviewDeleteForm = ({ productReview }) => {
     const dispatch = useDispatch()
 
-    const productReviewDelete = useSelector((state) => state.dataDelete)
+    const { loading, data: deletedProductReview, error } = useSelector((state) => state.dataDelete)
 
     useEffect(() => {
-        if (productReviewDelete.error) toast.error(productReviewDelete.error)
-        if (productReviewDelete.data) {
-            toast.success(`Review ${productReviewDelete.data.productReviewId} deleted successfully`)
+        if (error) toast.error(error)
+        if (deletedProductReview.productReviewId) {
+            toast.success(`Review ${deletedProductReview.productReviewId} deleted successfully`)
             window.location.reload()
         }
-    }, [productReviewDelete])
+    }, [deletedProductReview, error])
 
     const deleteHandler = () => {
         dispatch(GenericActions.deleteData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/review/${productReview.productReviewId}`))
     }
 
-    return (
-        <FormComponent
-            loading={productReviewDelete.loading}
-            msg={[`Delete product review ${productReview.productReviewId}`, 'OK']}
-            fields={[]}
-            submitHandler={deleteHandler}
-        />
-    )
+    return <FormComponent loading={loading} msg={[`Delete product review ${productReview.productReviewId}`, 'OK']} fields={[]} submitHandler={deleteHandler} />
 }
 
 export const ProductReviewList = ({ product, action, create }) => {
     const dispatch = useDispatch()
 
-    const productReviewList = useSelector((state) => state.dataList)
+    const { loading, data: productReviews, error } = useSelector((state) => state.dataList)
 
     useEffect(() => {
         dispatch(
             GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/review` + (product ? `?productId=${product.productId}` : ''))
         )
     }, [product, dispatch])
+
+    useEffect(() => {
+        if (error) toast.error(error)
+    }, [error])
 
     const fields = [
         { key: 'productReviewId', label: 'Review ID' },
@@ -105,8 +110,8 @@ export const ProductReviewList = ({ product, action, create }) => {
     ]
     return (
         <TableComponent
-            loading={productReviewList.loading}
-            data={productReviewList.data?.map((productReview) => ({
+            loading={loading}
+            data={productReviews.map((productReview) => ({
                 ...productReview,
                 key: productReview.productReviewId,
                 updateForm: <ProductReviewUpdateForm productReview={productReview} />,

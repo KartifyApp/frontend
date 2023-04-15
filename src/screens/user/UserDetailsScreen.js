@@ -18,11 +18,11 @@ const UserDetailsScreen = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const userDetails = useSelector((state) => state.dataDetails)
+    const { loading, data: user, error } = useSelector((state) => state.dataDetails)
     const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
-        if (!userInfo || !userInfo.token) {
+        if (!userInfo.token) {
             toast.error('No token found')
             navigate('/auth')
         }
@@ -30,39 +30,38 @@ const UserDetailsScreen = () => {
     }, [userInfo, dispatch, navigate])
 
     useEffect(() => {
-        if (userDetails.error) {
-            toast.error(userDetails.error)
-            navigate('/status/404')
+        if (error) {
+            toast.error(error)
         }
-    }, [userDetails, navigate])
+    }, [error])
 
     const userInfoComponent = (
         <InfoComponent
-            msg={[`${userDetails.data.name} Details`]}
+            msg={[`${user.name} Details`]}
             data={[
-                { key: 'User ID', value: userDetails.data.userId },
-                { key: 'Name', value: userDetails.data.name },
-                { key: 'Email', value: userDetails.data.email },
-                { key: 'Username', value: userDetails.data.username },
-                { key: 'User Type', value: userDetails.data.userType },
+                { key: 'User ID', value: user.userId },
+                { key: 'Name', value: user.name },
+                { key: 'Email', value: user.email },
+                { key: 'Username', value: user.username },
+                { key: 'User Type', value: user.userType },
                 {
                     key: 'Address',
                     value: [
-                        { key: 'P.O.', value: userDetails.data.userAddress?.postOffice },
-                        { key: 'City', value: userDetails.data.userAddress?.city },
-                        { key: 'PIN', value: userDetails.data.userAddress?.pinCode },
-                        { key: 'Country', value: userDetails.data.userAddress?.country },
-                        { key: 'Phone', value: userDetails.data.userAddress?.phoneNumber }
+                        { key: 'P.O.', value: user.userAddress?.postOffice },
+                        { key: 'City', value: user.userAddress?.city },
+                        { key: 'PIN', value: user.userAddress?.pinCode },
+                        { key: 'Country', value: user.userAddress?.country },
+                        { key: 'Phone', value: user.userAddress?.phoneNumber }
                     ]
                 }
             ]}
-            updateForm={<UserUpdateForm user={userDetails.data} />}
+            updateForm={<UserUpdateForm user={user} />}
         />
     )
 
     return (
         <>
-            <Header msg={[`User Profile`, `User ID ${userDetails.data.userId}`, `Get all information about your profile`]} />
+            <Header msg={[`User Profile`, `User ID ${user.userId}`, `Get all information about your profile`]} />
             <Container maxWidth="lg">
                 <TabsComponent
                     tabs={[
@@ -78,7 +77,7 @@ const UserDetailsScreen = () => {
                             component: <ProductReviewList create={false} action={true} />
                         }
                     ]}
-                    loading={false}
+                    loading={loading}
                 />
             </Container>
             <Footer />

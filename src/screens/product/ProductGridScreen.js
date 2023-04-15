@@ -19,10 +19,10 @@ const ProductGridScreen = () => {
     const platform = state?.platform
 
     const { userInfo } = useSelector((state) => state.userLogin)
-    const productList = useSelector((state) => state.dataList)
+    const { loading, data: products, error } = useSelector((state) => state.dataList)
 
     useEffect(() => {
-        if (!userInfo || !userInfo.token) {
+        if (!userInfo.token) {
             toast.error('No token found')
             navigate('/auth')
         }
@@ -30,14 +30,18 @@ const ProductGridScreen = () => {
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, { platformId: platform.platformId }))
     }, [userInfo, platform, dispatch, navigate])
 
+    useEffect(() => {
+        if (error) toast.error(error)
+    }, [error])
+
     return (
         <>
             <Header msg={['Products', `Products for  platform '${platform.name}'`]} />
             <Container maxWidth="lg">
                 <GridComponent
                     msg={['Products']}
-                    loading={productList.loading}
-                    data={productList.data?.map((product) => ({
+                    loading={loading}
+                    data={products.map((product) => ({
                         id: product.productId,
                         name: [product.name, product.brand, product.category].join('\xa0'.repeat(5)),
                         description: product.description,
@@ -49,7 +53,7 @@ const ProductGridScreen = () => {
                         key: 'category',
                         menu: platform.categories
                     }}
-                    createForm={userInfo.userType === UserType.PROVIDER ? <ProductCreateForm platformId={platform.platformId} /> : null}
+                    createForm={userInfo.userType === UserType.PROVIDER && <ProductCreateForm platformId={platform.platformId} />}
                 />
             </Container>
             <Footer />

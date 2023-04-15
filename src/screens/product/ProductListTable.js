@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
+import { toast } from 'react-toastify'
+
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { TableComponent } from 'src/components2/TableComponent'
 import { RouteConstants, UserType } from 'src/enumConstants'
@@ -10,12 +12,16 @@ export const ProductListTable = ({ platform }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const productList = useSelector((state) => state.dataList)
+    const { loading, data: products, error } = useSelector((state) => state.dataList)
     const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, { platformId: platform.platformId }))
     }, [platform, dispatch])
+
+    useEffect(() => {
+        if (error) toast.error(error)
+    }, [error])
 
     const fields = [
         { key: 'productId', label: 'Product ID' },
@@ -27,8 +33,8 @@ export const ProductListTable = ({ platform }) => {
     ]
     return (
         <TableComponent
-            loading={productList.loading}
-            data={productList.data?.map((product) => ({ ...product, key: product.productId, onClick: (e) => navigate(`/product/${product.productId}`) }))}
+            loading={loading}
+            data={products.map((product) => ({ ...product, key: product.productId, onClick: (e) => navigate(`/product/${product.productId}`) }))}
             fields={fields}
             filter={{
                 label: 'Category',
@@ -36,7 +42,7 @@ export const ProductListTable = ({ platform }) => {
                 menu: platform.categories
             }}
             msg={[`Products in platform ${platform.name}`]}
-            createForm={userInfo.userType === UserType.PROVIDER ? <ProductCreateForm platformId={platform.platformId} /> : null}
+            createForm={userInfo.userType === UserType.PROVIDER && <ProductCreateForm platformId={platform.platformId} />}
         />
     )
 }

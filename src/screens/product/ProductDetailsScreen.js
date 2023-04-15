@@ -20,12 +20,12 @@ const ProductDetailsScreen = () => {
 
     const { productId } = useParams()
 
-    const productDetails = useSelector((state) => state.dataDetails)
+    const { loading, data: product, error } = useSelector((state) => state.dataDetails)
     const { userInfo } = useSelector((state) => state.userLogin)
-    const { cartProducts, error } = useSelector((state) => state.cartDetails)
+    const { cartProducts, error: cartDetailsError } = useSelector((state) => state.cartDetails)
 
     useEffect(() => {
-        if (!userInfo || !userInfo.token) {
+        if (!userInfo.token) {
             toast.error('No token found')
             navigate('/auth')
         }
@@ -34,40 +34,38 @@ const ProductDetailsScreen = () => {
     }, [productId, userInfo, dispatch, navigate])
 
     useEffect(() => {
-        if (productDetails.error) {
-            toast.error(productDetails.error)
-        }
-        if (error) toast.error('Products must be from same platform')
-    }, [productDetails, error])
+        if (error) toast.error(error)
+        if (cartDetailsError) toast.error('Products must be from same platform')
+    }, [error, cartDetailsError])
 
     const productInfo = (
         <InfoComponent
-            msg={[`${productDetails.data.name} Details`]}
+            msg={[`${product.name} Details`]}
             data={[
-                { key: 'Product ID', value: productDetails.data.productId },
-                { key: 'Name', value: productDetails.data.name },
-                { key: 'Image', value: productDetails.data.image },
-                { key: 'Brand', value: productDetails.data.brand },
-                { key: 'category', value: productDetails.data.category },
-                { key: 'Description', value: productDetails.data.description },
-                { key: 'Price', value: productDetails.data.price },
-                { key: 'Stock Count', value: productDetails.data.stockCount },
-                { key: 'Platform ID', value: productDetails.data.platformId }
+                { key: 'Product ID', value: product.productId },
+                { key: 'Name', value: product.name },
+                { key: 'Image', value: product.image },
+                { key: 'Brand', value: product.brand },
+                { key: 'category', value: product.category },
+                { key: 'Description', value: product.description },
+                { key: 'Price', value: product.price },
+                { key: 'Stock Count', value: product.stockCount },
+                { key: 'Platform ID', value: product.platformId }
             ]}
-            updateForm={<ProductUpdateForm product={productDetails.data} />}
-            deleteForm={<ProductDeleteForm product={productDetails.data} />}
+            updateForm={userInfo.userType === UserType.PROVIDER && <ProductUpdateForm product={product} />}
+            deleteForm={userInfo.userType === UserType.PROVIDER && <ProductDeleteForm product={product} />}
         />
     )
 
     return (
         <>
             <Header
-                msg={[`Product Details`, `Product ID ${productDetails.data.productId}`, `Get all information about ${productDetails.data.name}`]}
+                msg={[`Product Details`, `Product ID ${product.productId}`, `Get all information about ${product.name}`]}
                 buttons={
                     userInfo.userType === UserType.CONSUMER && [
-                        cartProducts[productDetails.data.productId]
-                            ? { label: 'Remove', onClick: (e) => dispatch(CartActions.removeFromcart(productDetails.data)) }
-                            : { label: 'Add', onClick: (e) => dispatch(CartActions.addToCart(productDetails.data)) }
+                        cartProducts[product.productId]
+                            ? { label: 'Remove', onClick: (e) => dispatch(CartActions.removeFromcart(product)) }
+                            : { label: 'Add', onClick: (e) => dispatch(CartActions.addToCart(product)) }
                     ]
                 }
             />
@@ -78,10 +76,10 @@ const ProductDetailsScreen = () => {
                         {
                             value: 'reviews',
                             label: 'Reviews',
-                            component: <ProductReviewList product={productDetails.data} action={false} create={userInfo.userType === UserType.CONSUMER} />
+                            component: <ProductReviewList product={product} action={false} create={userInfo.userType === UserType.CONSUMER} />
                         }
                     ]}
-                    loading={false}
+                    loading={loading}
                 />
             </Container>
             <Footer />

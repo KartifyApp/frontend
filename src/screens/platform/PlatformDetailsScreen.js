@@ -20,59 +20,60 @@ const PlatformDetailsScreen = () => {
 
     const { platformId } = useParams()
 
-    const platformDetails = useSelector((state) => state.dataDetails)
+    const { loading, data: platform, error } = useSelector((state) => state.dataDetails)
     const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
-        if (!userInfo || !userInfo.token) {
+        if (!userInfo.token) {
             toast.error('No token found')
             navigate('/auth')
         }
+        if (!platformId) navigate('/platform')
         dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platformId}`))
     }, [userInfo, platformId, dispatch, navigate])
 
     useEffect(() => {
-        if (platformDetails.error) {
-            toast.error(platformDetails.error)
+        if (error) {
+            toast.error(error)
         }
-    }, [platformDetails])
+    }, [error])
 
     const platformInfo = (
         <InfoComponent
-            msg={[`${platformDetails.data.name} Details`]}
+            msg={[`${platform.name} Details`]}
             data={[
-                { key: 'Platform ID', value: platformDetails.data.platformId },
-                { key: 'Name', value: platformDetails.data.name },
-                { key: 'Image', value: platformDetails.data.image },
-                { key: 'Description', value: platformDetails.data.description },
-                { key: 'User ID', value: platformDetails.data.userId },
-                { key: 'Categories', value: platformDetails.data.categories?.map((category, i) => ({ key: i + 1, value: category })) },
-                { key: 'Platform Status', value: platformDetails.data.platformStatus },
+                { key: 'Platform ID', value: platform.platformId },
+                { key: 'Name', value: platform.name },
+                { key: 'Image', value: platform.image },
+                { key: 'Description', value: platform.description },
+                { key: 'User ID', value: platform.userId },
+                { key: 'Categories', value: platform.categories?.map((category, i) => ({ key: i + 1, value: category })) },
+                { key: 'Platform Status', value: platform.platformStatus },
                 {
                     key: 'Address',
                     value: [
-                        { key: 'P.O.', value: platformDetails.data.platformAddress?.postOffice },
-                        { key: 'City', value: platformDetails.data.platformAddress?.city },
-                        { key: 'PIN', value: platformDetails.data.platformAddress?.pinCode },
-                        { key: 'Country', value: platformDetails.data.platformAddress?.country },
-                        { key: 'Phone', value: platformDetails.data.platformAddress?.phoneNumber }
+                        { key: 'P.O.', value: platform.platformAddress?.postOffice },
+                        { key: 'City', value: platform.platformAddress?.city },
+                        { key: 'PIN', value: platform.platformAddress?.pinCode },
+                        { key: 'Country', value: platform.platformAddress?.country },
+                        { key: 'Phone', value: platform.platformAddress?.phoneNumber }
                     ]
                 }
             ]}
-            updateForm={userInfo.userType === UserType.PROVIDER ? <PlatformUpdateForm platform={platformDetails.data} /> : null}
-            deleteForm={userInfo.userType === UserType.PROVIDER ? <PlatformDeleteForm platform={platformDetails.data} /> : null}
+            updateForm={userInfo.userType === UserType.PROVIDER && <PlatformUpdateForm platform={platform} />}
+            deleteForm={userInfo.userType === UserType.PROVIDER && <PlatformDeleteForm platform={platform} />}
         />
     )
 
     return (
         <>
             <Header
-                msg={[`Platform Details`, `Platform ID ${platformDetails.data.platformId}`, `Get all information about ${platformDetails.data.name}`]}
+                msg={[`Platform Details`, `Platform ID ${platform.platformId}`, `Get all information about ${platform.name}`]}
                 buttons={[
                     { label: 'Orders', onClick: (e) => {} },
                     userInfo.userType !== UserType.DELIVERY && {
                         label: 'Delivery',
-                        onClick: (e) => navigate(`/user/delivery-job?platformId=${platformDetails.data.platformId}`)
+                        onClick: (e) => navigate(`/user/delivery-job?platformId=${platform.platformId}`)
                     }
                 ]}
             />
@@ -83,15 +84,15 @@ const PlatformDetailsScreen = () => {
                         userInfo.userType !== UserType.DELIVERY && {
                             value: 'reviews',
                             label: 'Reviews',
-                            component: <PlatformReviewList platform={platformDetails.data} create={userInfo.userType === UserType.CONSUMER} action={false} />
+                            component: <PlatformReviewList platform={platform} create={userInfo.userType === UserType.CONSUMER} action={false} />
                         },
                         userInfo.userType !== UserType.DELIVERY && {
                             value: 'products',
                             label: 'Products',
-                            component: <ProductListTable platform={platformDetails.data} />
+                            component: <ProductListTable platform={platform} />
                         }
                     ]}
-                    loading={false}
+                    loading={loading}
                 />
             </Container>
             <Footer />
