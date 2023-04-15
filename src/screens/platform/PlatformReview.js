@@ -93,12 +93,8 @@ export const PlatformReviewList = ({ platform, create, action }) => {
     const { loading, data: platformReviews, error } = useSelector((state) => state.dataList)
 
     useEffect(() => {
-        dispatch(
-            GenericActions.getDataList(
-                RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/review` + (platform ? `?platformId=${platform.platformId}` : '')
-            )
-        )
-    }, [platform, dispatch])
+        dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/review`, { platformId: platform?.platformId }))
+    }, [dispatch])
 
     useEffect(() => {
         if (error) toast.error(error)

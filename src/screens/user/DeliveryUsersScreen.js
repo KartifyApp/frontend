@@ -8,17 +8,17 @@ import Footer from 'src/components2/Footer'
 import Header from 'src/components2/Header'
 import { TableComponent } from 'src/components2/TableComponent'
 import { RouteConstants } from 'src/enumConstants'
-import { DeliveryJobCreateForm } from './DeliveryJobForms'
+import { DeliveryJobCreateForm } from './DeliveryJob'
 
 const DeliveryUsersScreen = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const deliveryUserList = useSelector((state) => state.dataList)
+    const { loading, data: deliveryUsers, error } = useSelector((state) => state.dataList)
     const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
-        if (!userInfo || !userInfo.token) {
+        if (!userInfo.token) {
             toast.error('No token found')
             navigate('/auth')
         }
@@ -26,8 +26,8 @@ const DeliveryUsersScreen = () => {
     }, [userInfo, dispatch, navigate])
 
     useEffect(() => {
-        if (deliveryUserList.error) toast.error(deliveryUserList.error)
-    }, [deliveryUserList])
+        if (error) toast.error(error)
+    }, [error])
 
     const fields = [
         { key: 'userId', label: 'User ID' },
@@ -43,8 +43,8 @@ const DeliveryUsersScreen = () => {
             <Header msg={['Delivery Users', 'Delivery Users', 'User details of all delivery users']} />
             <Container maxWidth="lg">
                 <TableComponent
-                    loading={false}
-                    data={deliveryUserList.data?.map((deliveryUser) => ({
+                    loading={loading}
+                    data={deliveryUsers.map((deliveryUser) => ({
                         ...deliveryUser,
                         key: deliveryUser.userId,
                         phoneNumber: deliveryUser.userAddress.phoneNumber,

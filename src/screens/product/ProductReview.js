@@ -91,10 +91,8 @@ export const ProductReviewList = ({ product, action, create }) => {
     const { loading, data: productReviews, error } = useSelector((state) => state.dataList)
 
     useEffect(() => {
-        dispatch(
-            GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/review` + (product ? `?productId=${product.productId}` : ''))
-        )
-    }, [product, dispatch])
+        dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/review`, { productId: product?.productId }))
+    }, [dispatch])
 
     useEffect(() => {
         if (error) toast.error(error)

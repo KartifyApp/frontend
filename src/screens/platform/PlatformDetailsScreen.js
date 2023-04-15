@@ -70,8 +70,8 @@ const PlatformDetailsScreen = () => {
             <Header
                 msg={[`Platform Details`, `Platform ID ${platform.platformId}`, `Get all information about ${platform.name}`]}
                 buttons={[
-                    { label: 'Orders', onClick: (e) => {} },
-                    userInfo.userType !== UserType.DELIVERY && {
+                    userInfo.userType === UserType.PROVIDER && { label: 'Orders', onClick: (e) => {} },
+                    userInfo.userType === UserType.PROVIDER && {
                         label: 'Delivery',
                         onClick: (e) => navigate(`/user/delivery-job?platformId=${platform.platformId}`)
                     }

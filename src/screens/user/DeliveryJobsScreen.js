@@ -1,27 +1,28 @@
-import { Container } from '@mui/material'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
+import { useSearchParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { Container } from '@mui/material'
+
 import { GenericActions } from 'src/reduxManager/genericActions'
 import Footer from 'src/components2/Footer'
 import Header from 'src/components2/Header'
 import { TableComponent } from 'src/components2/TableComponent'
 import { RouteConstants } from 'src/enumConstants'
-import { DeliveryJobDeleteForm, DeliveryJobUpdateForm } from './DeliveryJobForms'
-import { useSearchParams } from 'react-router-dom'
+import { DeliveryJobDeleteForm, DeliveryJobUpdateForm } from './DeliveryJob'
 
 const DeliveryJobsScreen = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const deliveryJobList = useSelector((state) => state.dataList)
+    const { loading, data: deliveryJobs, error } = useSelector((state) => state.dataList)
     const { userInfo } = useSelector((state) => state.userLogin)
 
     const platformId = useSearchParams()[0].get('platformId')
 
     useEffect(() => {
-        if (!userInfo || !userInfo.token) {
+        if (!userInfo.token) {
             toast.error('No token found')
             navigate('/auth')
         }
@@ -29,10 +30,8 @@ const DeliveryJobsScreen = () => {
     }, [userInfo, platformId, navigate, dispatch])
 
     useEffect(() => {
-        if (deliveryJobList.error) {
-            toast.error(deliveryJobList.error)
-        }
-    }, [deliveryJobList])
+        if (error) toast.error(error)
+    }, [error])
 
     const fields = [
         { key: 'deliveryJobId', label: 'Job ID' },
@@ -48,8 +47,8 @@ const DeliveryJobsScreen = () => {
             <Header msg={['Delivery Jobs', `Delivery Jobs ${platformId ? `for platform ID ${platformId}` : ''}`, 'Manage delivery jobs']} />
             <Container maxWidth="lg">
                 <TableComponent
-                    loading={false}
-                    data={deliveryJobList.data.map((deliveryJob) => ({
+                    loading={loading}
+                    data={deliveryJobs.map((deliveryJob) => ({
                         ...deliveryJob,
                         key: deliveryJob.deliveryJobId,
                         onClick: (e) => navigate(`/platform/${deliveryJob.platformId}`),
