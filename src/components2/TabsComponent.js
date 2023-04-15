@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Box, Container, Tabs, Tab, CircularProgress } from '@mui/material'
+import { Box, Tabs, Tab, CircularProgress } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 const TabsContainerWrapper = styled(Box)(

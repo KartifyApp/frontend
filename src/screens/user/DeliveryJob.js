@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { GenericActions } from 'src/reduxManager/genericActions'
-import FormComponent from 'src/components2/FormComponent'
+import { FormComponent } from 'src/components2/FormComponent'
 import { DeliveryStatus, RouteConstants, UserType } from 'src/enumConstants'
 import { TableComponent } from 'src/components2/TableComponent'
 import { useNavigate } from 'react-router'
@@ -96,7 +96,7 @@ export const DeliveryJobList = ({ platform }) => {
 
     useEffect(() => {
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.DELIVERY_JOB, { platformId: platform?.platformId }))
-    }, [dispatch])
+    }, [platform, dispatch])
 
     useEffect(() => {
         if (error) toast.error(error)

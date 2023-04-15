@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 import { GenericActions } from 'src/reduxManager/genericActions'
-import FormComponent from 'src/components2/FormComponent'
+import { FormComponent } from 'src/components2/FormComponent'
 import { TableComponent } from 'src/components2/TableComponent'
 import { RouteConstants } from 'src/enumConstants'
 
@@ -92,7 +92,7 @@ export const ProductReviewList = ({ product, action, create }) => {
 
     useEffect(() => {
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/review`, { productId: product?.productId }))
-    }, [dispatch])
+    }, [product, dispatch])
 
     useEffect(() => {
         if (error) toast.error(error)

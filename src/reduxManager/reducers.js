@@ -16,16 +16,18 @@ export class Reducers {
         }
     }
 
-    static cartReducer = (state = { cartProducts: {}, shippingAddress: {}, platformId: null, error: 0 }, action) => {
+    static cartReducer = (state = { cartProducts: {}, shippingAddress: {}, platformId: null }, action) => {
         switch (action.type) {
             case CartConstants.CART_UPDATE_PRODUCTS:
                 return { ...state, cartProducts: action.payload.cartProducts, platformId: action.payload.platformId }
             case CartConstants.CART_UPDATE_FAIL:
-                return { ...state, error: state.error + 1 }
+                return { ...state, error: action.payload }
             case CartConstants.CART_SAVE_SHIPPING_ADDRESS:
                 return { ...state, shippingAddress: action.payload }
             case CartConstants.CART_SAVE_PAYMENT_METHOD:
                 return { ...state, paymentMethod: action.payload }
+            case CartConstants.CART_ERROR_RESET:
+                return { ...state, error: null }
             default:
                 return state
         }

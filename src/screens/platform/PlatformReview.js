@@ -1,9 +1,8 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import { GenericActions } from 'src/reduxManager/genericActions'
-import FormComponent from 'src/components2/FormComponent'
+import { FormComponent } from 'src/components2/FormComponent'
 import { TableComponent } from 'src/components2/TableComponent'
 import { RouteConstants } from 'src/enumConstants'
 
@@ -94,7 +93,7 @@ export const PlatformReviewList = ({ platform, create, action }) => {
 
     useEffect(() => {
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/review`, { platformId: platform?.platformId }))
-    }, [dispatch])
+    }, [platform, dispatch])
 
     useEffect(() => {
         if (error) toast.error(error)

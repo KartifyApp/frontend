@@ -1,4 +1,5 @@
 import { CartConstants } from 'src/enumConstants'
+import { ActionServices } from './actionServices'
 
 export class CartActions {
     static addToCart = (product) => async (dispatch, getState) => {
@@ -6,7 +7,9 @@ export class CartActions {
             cartDetails: { cartProducts, platformId }
         } = getState()
         if (platformId && product.platformId !== platformId) {
-            dispatch({ type: CartConstants.CART_UPDATE_FAIL })
+            dispatch({ type: CartConstants.CART_UPDATE_FAIL, payload: 'Products must be from same platform' })
+            await ActionServices.sleep(3000)
+            dispatch({ type: CartConstants.CART_ERROR_RESET })
         } else {
             dispatch({
                 type: CartConstants.CART_UPDATE_PRODUCTS,
@@ -30,12 +33,14 @@ export class CartActions {
         localStorage.setItem('platformId', JSON.stringify(getState().cartDetails.platformId))
     }
 
-    static increaseQuantity = (product) => (dispatch, getState) => {
+    static increaseQuantity = (product) => async (dispatch, getState) => {
         const {
             cartDetails: { cartProducts, platformId }
         } = getState()
         if (cartProducts[product.productId] === product.stockCount) {
-            dispatch({ type: CartConstants.CART_UPDATE_FAIL })
+            dispatch({ type: CartConstants.CART_UPDATE_FAIL, payload: 'Cannot exceed stock count' })
+            await ActionServices.sleep(3000)
+            dispatch({ type: CartConstants.CART_ERROR_RESET })
         } else {
             cartProducts[product.productId] += 1
             dispatch({ type: CartConstants.CART_UPDATE_PRODUCTS, payload: { cartProducts, platformId } })

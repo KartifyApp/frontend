@@ -1,5 +1,5 @@
 import { Container } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
@@ -15,14 +15,12 @@ const CartTableScreen = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { cartProducts, platformId, error } = useSelector((state) => state.cartDetails)
+    const { cartProducts, platformId, error: cartDetailsError } = useSelector((state) => state.cartDetails)
     const { userInfo } = useSelector((state) => state.userLogin)
-    const productList = useSelector((state) => state.dataList)
-
-    const [open, setOpen] = useState(false)
+    const { loading, data: products, error } = useSelector((state) => state.dataList)
 
     useEffect(() => {
-        if (!userInfo || !userInfo.token) {
+        if (!userInfo.token) {
             toast.error('No token found')
             navigate('/auth')
         }
@@ -30,9 +28,9 @@ const CartTableScreen = () => {
     }, [userInfo, platformId, navigate, dispatch])
 
     useEffect(() => {
-        if (productList.error) toast.error(productList.error)
-        if (error) toast.error('Cannot exceed stock count')
-    }, [productList, error, cartProducts])
+        if (error) toast.error(error)
+        if (cartDetailsError) toast.error(cartDetailsError)
+    }, [cartDetailsError, error])
 
     const fields = [
         { key: 'productId', label: 'Product ID' },
@@ -48,12 +46,11 @@ const CartTableScreen = () => {
 
     return (
         <>
-            <Header msg={['Cart', 'Cart Products', 'Manage your cart products']} buttons={[{ label: 'Place', onClick: (e) => setOpen(true) }]} />
-            <OrderCreateForm open={open} setOpen={setOpen} />
+            <Header msg={['Cart', 'Cart Products', 'Create an order from your cart']} />
             <Container maxWidth="lg">
                 <TableComponent
-                    loading={false}
-                    data={productList.data
+                    loading={loading}
+                    data={products
                         .filter((product) => cartProducts[product.productId])
                         .map((product) => ({
                             ...product,
@@ -65,6 +62,7 @@ const CartTableScreen = () => {
                         }))}
                     fields={fields}
                     msg={[`Products currently in your cart`]}
+                    createForm={<OrderCreateForm />}
                 />
             </Container>
             <Footer />

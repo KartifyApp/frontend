@@ -35,7 +35,7 @@ const ProductDetailsScreen = () => {
 
     useEffect(() => {
         if (error) toast.error(error)
-        if (cartDetailsError) toast.error('Products must be from same platform')
+        if (cartDetailsError) toast.error(cartDetailsError)
     }, [error, cartDetailsError])
 
     const productInfo = (

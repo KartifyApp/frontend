@@ -1,26 +1,24 @@
-import { Dialog } from '@mui/material'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import FormComponent from 'src/components2/FormComponent'
-import { PaymentMethod, RouteConstants } from 'src/enumConstants'
+import { FormComponent } from 'src/components2/FormComponent'
+import { AddressKeys, PaymentMethod, RouteConstants } from 'src/enumConstants'
 import { CartActions } from 'src/reduxManager/cartActions'
 import { GenericActions } from 'src/reduxManager/genericActions'
 
-export const OrderCreateForm = ({ open, setOpen }) => {
+export const OrderCreateForm = () => {
     const dispatch = useDispatch()
 
     const { shippingAddress, paymentMethod, cartProducts, platformId } = useSelector((state) => state.cartDetails)
-    const orderCreate = useSelector((state) => state.dataCreate)
+    const { loading, data: createdOrder, error } = useSelector((state) => state.dataCreate)
 
     useEffect(() => {
-        if (orderCreate.error) toast.error(orderCreate.error)
-        if (orderCreate.data) {
-            toast.success(`Order ${orderCreate.data.platformReviewId} created successfully`)
+        if (error) toast.error(error)
+        if (createdOrder.orderId) {
+            toast.success(`Order ID ${createdOrder.orderId} created successfully`)
             dispatch(CartActions.clearCart())
-            window.location.reload()
         }
-    }, [orderCreate])
+    }, [createdOrder, error, dispatch])
 
     const fields = [
         { key: 'postOffice', label: 'Post Office', required: true, default: shippingAddress.postOffice },
@@ -34,21 +32,15 @@ export const OrderCreateForm = ({ open, setOpen }) => {
     const submitHandler = (data) => {
         dispatch(CartActions.updatePaymentMethod(data.paymentMethod))
         dispatch(CartActions.updateShippingAddress(data))
-        dispatch(
-            GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES, {
-                shippingAddress,
-                paymentMethod: data.paymentMethod,
-                platformId,
-                cartProducts
-            })
-        )
+        data.shippingAddress = {}
+        for (var key of AddressKeys) {
+            data.shippingAddress[key] = data[key]
+            delete data[key]
+        }
+        data.platformId = platformId
+        data.cartProducts = cartProducts
+        dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES, data))
     }
 
-    return (
-        <>
-            <Dialog onClose={(e) => setOpen(false)} open={open}>
-                <FormComponent loading={false} msg={['Update shipping address', 'Save']} fields={fields} submitHandler={submitHandler} />
-            </Dialog>
-        </>
-    )
+    return <FormComponent loading={loading} msg={['Update shipping address and payment method', 'Save']} fields={fields} submitHandler={submitHandler} />
 }

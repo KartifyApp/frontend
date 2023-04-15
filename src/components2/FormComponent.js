@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 
-const FormComponent = ({ msg, fields, submitHandler, loading }) => {
+export const FormComponent = ({ msg, fields, submitHandler, loading }) => {
     const [formData, setFormData] = useState({})
 
     useEffect(() => {
@@ -86,5 +86,3 @@ const FormComponent = ({ msg, fields, submitHandler, loading }) => {
         </Card>
     )
 }
-
-export default FormComponent
