@@ -1,13 +1,15 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router'
+import { toast } from 'react-toastify'
+import { Container } from '@mui/material'
+
 import { GenericActions } from 'src/reduxManager/genericActions'
 import GridComponent from 'src/components2/GridComponent'
 import { RouteConstants, UserType } from 'src/enumConstants'
 import { ProductCreateForm } from './ProductForms'
 import Footer from 'src/components2/Footer'
 import Header from 'src/components2/Header'
-import { toast } from 'react-toastify'
 
 const ProductGridScreen = () => {
     const dispatch = useDispatch()
@@ -31,23 +33,25 @@ const ProductGridScreen = () => {
     return (
         <>
             <Header msg={['Products', `Products for  platform '${platform.name}'`]} />
-            <GridComponent
-                msg={['Products']}
-                loading={productList.loading}
-                data={productList.data?.map((product) => ({
-                    id: product.productId,
-                    name: [product.name, product.brand, product.category].join('\xa0'.repeat(5)),
-                    description: product.description,
-                    category: product.category,
-                    buttons: [{ name: 'Info', onClick: (e) => navigate(`/product/${product.productId}`, { state: { product: product } }) }]
-                }))}
-                filter={{
-                    label: 'Cartegory',
-                    key: 'category',
-                    menu: platform.categories
-                }}
-                createForm={userInfo.userType === UserType.PROVIDER ? <ProductCreateForm platformId={platform.platformId} /> : null}
-            />
+            <Container maxWidth="lg">
+                <GridComponent
+                    msg={['Products']}
+                    loading={productList.loading}
+                    data={productList.data?.map((product) => ({
+                        id: product.productId,
+                        name: [product.name, product.brand, product.category].join('\xa0'.repeat(5)),
+                        description: product.description,
+                        category: product.category,
+                        buttons: [{ name: 'Info', onClick: (e) => navigate(`/product/${product.productId}`, { state: { product: product } }) }]
+                    }))}
+                    filter={{
+                        label: 'Cartegory',
+                        key: 'category',
+                        menu: platform.categories
+                    }}
+                    createForm={userInfo.userType === UserType.PROVIDER ? <ProductCreateForm platformId={platform.platformId} /> : null}
+                />
+            </Container>
             <Footer />
         </>
     )

@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material'
+import { Container } from '@mui/material'
 
 import { TabsComponent } from 'src/components2/TabsComponent'
 import Header from 'src/components2/Header'
@@ -7,28 +7,26 @@ import { UserLoginForm, UserRegisterForm } from './UserForms'
 
 const UserAuthScreen = () => {
     return (
-        <Grid container direction="row" justifyContent="center" alignItems="stretch" spacing={0}>
-            <Grid item xs={4.5}>
-                <Header msg={[`User`, `Kartify Auth`, `Sign In or Sign Up to use all features of our app`]} />
-                <TabsComponent
-                    tabs={[
-                        {
-                            value: 'login',
-                            label: 'Login',
-                            component: <UserLoginForm />
-                        },
-                        {
-                            value: 'register',
-                            label: 'Register',
-                            component: <UserRegisterForm />
-                        }
-                    ]}
-                    loading={false}
-                    refresh={false}
-                />
-                <Footer />
-            </Grid>
-        </Grid>
+        <Container maxWidth="sm">
+            <Header msg={[`User`, `Kartify Auth`, `Sign In or Sign Up to use all features of our app`]} />
+            <TabsComponent
+                tabs={[
+                    {
+                        value: 'login',
+                        label: 'Login',
+                        component: <UserLoginForm />
+                    },
+                    {
+                        value: 'register',
+                        label: 'Register',
+                        component: <UserRegisterForm />
+                    }
+                ]}
+                loading={false}
+                refresh={false}
+            />
+            <Footer />
+        </Container>
     )
 }
 

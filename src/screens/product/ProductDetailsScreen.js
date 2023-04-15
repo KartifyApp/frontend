@@ -1,6 +1,9 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
+import { toast } from 'react-toastify'
+import { Container } from '@mui/material'
+
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { InfoComponent } from 'src/components2/InfoComponent'
 import { TabsComponent } from 'src/components2/TabsComponent'
@@ -9,7 +12,6 @@ import { ProductDeleteForm, ProductUpdateForm } from './ProductForms'
 import { ProductReviewList } from './ProductReview'
 import Header from 'src/components2/Header'
 import Footer from 'src/components2/Footer'
-import { toast } from 'react-toastify'
 import { CartActions } from 'src/reduxManager/cartActions'
 
 const ProductDetailsScreen = () => {
@@ -62,24 +64,26 @@ const ProductDetailsScreen = () => {
             <Header
                 msg={[`Product Details`, `Product ID ${productDetails.data.productId}`, `Get all information about ${productDetails.data.name}`]}
                 buttons={
-                    userInfo.userType === UserType.CONSUMER && [
+                    userInfo?.userType === UserType.CONSUMER && [
                         cartProducts[productDetails.data.productId]
                             ? { label: 'Remove', onClick: (e) => dispatch(CartActions.removeFromcart(productDetails.data)) }
                             : { label: 'Add', onClick: (e) => dispatch(CartActions.addToCart(productDetails.data)) }
                     ]
                 }
             />
-            <TabsComponent
-                tabs={[
-                    { value: 'productDetails', label: 'Details', component: productInfo },
-                    {
-                        value: 'reviews',
-                        label: 'Reviews',
-                        component: <ProductReviewList product={productDetails.data} action={false} create={userInfo.userType === UserType.CONSUMER} />
-                    }
-                ]}
-                loading={false}
-            />
+            <Container maxWidth="lg">
+                <TabsComponent
+                    tabs={[
+                        { value: 'productDetails', label: 'Details', component: productInfo },
+                        {
+                            value: 'reviews',
+                            label: 'Reviews',
+                            component: <ProductReviewList product={productDetails.data} action={false} create={userInfo?.userType === UserType.CONSUMER} />
+                        }
+                    ]}
+                    loading={false}
+                />
+            </Container>
             <Footer />
         </>
     )

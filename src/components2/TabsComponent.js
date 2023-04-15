@@ -92,7 +92,7 @@ export const TabsComponent = ({ tabs, loading }) => {
     }, [tabs])
 
     return (
-        <Container maxWidth="lg">
+        <>
             <TabsContainerWrapper>
                 <Tabs
                     onChange={(e, value) => setCurrentTab(value)}
@@ -116,6 +116,6 @@ export const TabsComponent = ({ tabs, loading }) => {
             ) : (
                 <>{tabs.filter((tab) => tab).find((tab) => tab.value === currentTab).component}</>
             )}
-        </Container>
+        </>
     )
 }
