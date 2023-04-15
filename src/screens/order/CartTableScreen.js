@@ -1,5 +1,5 @@
 import { Container } from '@mui/material'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
@@ -9,6 +9,7 @@ import Footer from 'src/components2/Footer'
 import Header from 'src/components2/Header'
 import { TableComponent } from 'src/components2/TableComponent'
 import { RouteConstants } from 'src/enumConstants'
+import { OrderCreateForm } from './OrderForms'
 
 const CartTableScreen = () => {
     const dispatch = useDispatch()
@@ -17,6 +18,8 @@ const CartTableScreen = () => {
     const { cartProducts, platformId, error } = useSelector((state) => state.cartDetails)
     const { userInfo } = useSelector((state) => state.userLogin)
     const productList = useSelector((state) => state.dataList)
+
+    const [open, setOpen] = useState(false)
 
     useEffect(() => {
         if (!userInfo || !userInfo.token) {
@@ -45,7 +48,8 @@ const CartTableScreen = () => {
 
     return (
         <>
-            <Header msg={['Cart', 'Cart Products', 'Manage your cart products']} buttons={[{ label: 'Place', onClick: (e) => {} }]} />
+            <Header msg={['Cart', 'Cart Products', 'Manage your cart products']} buttons={[{ label: 'Place', onClick: (e) => setOpen(true) }]} />
+            <OrderCreateForm open={open} setOpen={setOpen} />
             <Container maxWidth="lg">
                 <TableComponent
                     loading={false}

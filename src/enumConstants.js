@@ -3,6 +3,7 @@ export const RouteConstants = Object.freeze({
     USER_ROUTES: '/api/user',
     PLATFORM_ROUTES: '/api/platform',
     PRODUCT_ROUTES: '/api/product',
+    ORDER_ROUTES: '/api/order',
     DELIVERY_JOB: '/api/delivery-job'
 })
 
@@ -24,6 +25,11 @@ export const DeliveryStatus = Object.freeze({
     ACTIVE: 'ACTIVE',
     INACTIVE: 'INACTIVE',
     WORKING: 'WORKING'
+})
+
+export const PaymentMethod = Object.freeze({
+    CASH_ON_DELIVERY: 'CASH_ON_DELIVERY',
+    ONLINE_TRANSACTION: 'ONLINE_TRANSACTION'
 })
 
 export const AddressKeys = ['postOffice', 'pinCode', 'city', 'country', 'phoneNumber']

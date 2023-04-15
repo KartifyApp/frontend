@@ -22,6 +22,10 @@ export class Reducers {
                 return { ...state, cartProducts: action.payload.cartProducts, platformId: action.payload.platformId }
             case CartConstants.CART_UPDATE_FAIL:
                 return { ...state, error: state.error + 1 }
+            case CartConstants.CART_SAVE_SHIPPING_ADDRESS:
+                return { ...state, shippingAddress: action.payload }
+            case CartConstants.CART_SAVE_PAYMENT_METHOD:
+                return { ...state, paymentMethod: action.payload }
             default:
                 return state
         }

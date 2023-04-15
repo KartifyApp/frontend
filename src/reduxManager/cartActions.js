@@ -61,4 +61,20 @@ export class CartActions {
         localStorage.setItem('cartProducts', JSON.stringify(getState().cartDetails.cartProducts))
         localStorage.setItem('platformId', JSON.stringify(getState().cartDetails.platformId))
     }
+
+    static clearCart = () => (dispatch, getState) => {
+        dispatch({ type: CartConstants.CART_UPDATE_PRODUCTS, payload: { cartProducts: [], platformId: null } })
+        localStorage.setItem('cartProducts', JSON.stringify(getState().cartDetails.cartProducts))
+        localStorage.setItem('platformId', JSON.stringify(getState().cartDetails.platformId))
+    }
+
+    static updateShippingAddress = (address) => (dispatch, getState) => {
+        dispatch({ type: CartConstants.CART_SAVE_SHIPPING_ADDRESS, payload: address })
+        localStorage.setItem('shippingAddress', JSON.stringify(getState().cartDetails.shippingAddress))
+    }
+
+    static updatePaymentMethod = (method) => (dispatch, getState) => {
+        dispatch({ type: CartConstants.CART_SAVE_PAYMENT_METHOD, payload: method })
+        localStorage.setItem('paymentMethod', JSON.stringify(getState().cartDetails.paymentMethod))
+    }
 }
