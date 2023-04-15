@@ -14,7 +14,7 @@ const reducers = combineReducers({
     dataDelete: Reducers.dataDeleteReducer
 })
 
-const userInfoFromStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null
+const userInfoFromStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : {}
 
 const platformIdFromStorage = localStorage.getItem('platformId') ? JSON.parse(localStorage.getItem('platformId')) : null
 const cartProductsFromStorage = localStorage.getItem('cartProducts') ? JSON.parse(localStorage.getItem('cartProducts')) : {}

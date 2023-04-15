@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { RouteConstants, UserConstants } from 'src/enumConstants'
+import { ActionServices } from './actionServices'
 
 const config = {
     headers: {
@@ -20,7 +21,7 @@ export class UserActions {
         } catch (error) {
             dispatch({
                 type: UserConstants.USER_LOGIN_FAIL,
-                payload: error
+                payload: ActionServices.getError(error)
             })
         }
     }

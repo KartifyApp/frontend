@@ -64,7 +64,7 @@ const ProductDetailsScreen = () => {
             <Header
                 msg={[`Product Details`, `Product ID ${productDetails.data.productId}`, `Get all information about ${productDetails.data.name}`]}
                 buttons={
-                    userInfo?.userType === UserType.CONSUMER && [
+                    userInfo.userType === UserType.CONSUMER && [
                         cartProducts[productDetails.data.productId]
                             ? { label: 'Remove', onClick: (e) => dispatch(CartActions.removeFromcart(productDetails.data)) }
                             : { label: 'Add', onClick: (e) => dispatch(CartActions.addToCart(productDetails.data)) }
@@ -78,7 +78,7 @@ const ProductDetailsScreen = () => {
                         {
                             value: 'reviews',
                             label: 'Reviews',
-                            component: <ProductReviewList product={productDetails.data} action={false} create={userInfo?.userType === UserType.CONSUMER} />
+                            component: <ProductReviewList product={productDetails.data} action={false} create={userInfo.userType === UserType.CONSUMER} />
                         }
                     ]}
                     loading={false}

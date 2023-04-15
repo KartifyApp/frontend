@@ -29,10 +29,7 @@ const PlatformGridScreen = () => {
     return (
         <>
             <Header
-                msg={[
-                    'Platforms',
-                    userInfo?.userType === UserType.PROVIDER ? 'View all the platforms created by you' : 'Shop from any platform of your choice'
-                ]}
+                msg={['Platforms', userInfo.userType === UserType.PROVIDER ? 'View all the platforms created by you' : 'Shop from any platform of your choice']}
             />
             <Container maxWidth="lg">
                 <GridComponent

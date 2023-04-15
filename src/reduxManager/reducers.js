@@ -1,16 +1,16 @@
 import { CartConstants, UserConstants, ReduxConstants } from 'src/enumConstants'
 
 export class Reducers {
-    static userLoginReducer = (state = {}, action) => {
+    static userLoginReducer = (state = { userInfo: {} }, action) => {
         switch (action.type) {
             case UserConstants.USER_LOGIN_REQUEST:
-                return { loading: true }
+                return { ...state, loading: true }
             case UserConstants.USER_LOGIN_SUCCESS:
                 return { loading: false, userInfo: action.payload }
             case UserConstants.USER_LOGIN_FAIL:
-                return { loading: false, error: action.payload }
+                return { ...state, loading: false, error: action.payload }
             case UserConstants.USER_LOGOUT:
-                return { loading: false }
+                return { ...state, loading: false }
             default:
                 return state
         }
@@ -31,7 +31,7 @@ export class Reducers {
         }
     }
 
-    static dataListReducer = (state = { data: [], loading: false }, action) => {
+    static dataListReducer = (state = { loading: false, data: [] }, action) => {
         switch (action.type) {
             case ReduxConstants.LIST_REQUEST:
                 return { loading: true, data: [] }
@@ -46,16 +46,16 @@ export class Reducers {
         }
     }
 
-    static dataCreateReducer = (state = { loading: false }, action) => {
+    static dataCreateReducer = (state = { loading: false, data: {} }, action) => {
         switch (action.type) {
             case ReduxConstants.CREATE_REQUEST:
-                return { loading: true }
+                return { loading: true, data: {} }
             case ReduxConstants.CREATE_SUCCESS:
                 return { loading: false, data: action.payload }
             case ReduxConstants.CREATE_FAIL:
-                return { loading: false, error: action.payload }
+                return { loading: false, error: action.payload, data: {} }
             case ReduxConstants.CREATE_RESET:
-                return { loading: false }
+                return { loading: false, data: {} }
             default:
                 return state
         }
@@ -76,31 +76,31 @@ export class Reducers {
         }
     }
 
-    static dataUpdateReducer = (state = { loadng: false }, action) => {
+    static dataUpdateReducer = (state = { loadng: false, data: {} }, action) => {
         switch (action.type) {
             case ReduxConstants.UPDATE_REQUEST:
-                return { loading: true }
+                return { loading: true, data: {} }
             case ReduxConstants.UPDATE_SUCCESS:
                 return { loading: false, data: action.payload }
             case ReduxConstants.UPDATE_FAIL:
-                return { loading: false, error: action.payload }
+                return { loading: false, error: action.payload, data: {} }
             case ReduxConstants.UPDATE_RESET:
-                return { loading: false }
+                return { loading: false, data: {} }
             default:
                 return state
         }
     }
 
-    static dataDeleteReducer = (state = { loadng: false }, action) => {
+    static dataDeleteReducer = (state = { loadng: false, data: {} }, action) => {
         switch (action.type) {
             case ReduxConstants.DELETE_REQUEST:
-                return { loading: true }
+                return { loading: true, data: {} }
             case ReduxConstants.DELETE_SUCCESS:
                 return { loading: false, data: action.payload }
             case ReduxConstants.DELETE_FAIL:
-                return { loading: false, error: action.payload }
+                return { loading: false, error: action.payload, data: {} }
             case ReduxConstants.DELETE_RESET:
-                return { loading: false }
+                return { loading: false, data: {} }
             default:
                 return state
         }

@@ -10,15 +10,14 @@ import { AddressKeys, RouteConstants, UserType } from 'src/enumConstants'
 export const UserRegisterForm = () => {
     const dispatch = useDispatch()
 
-    const userCreate = useSelector((state) => state.dataCreate)
+    const { loading, data: createdUser, error } = useSelector((state) => state.dataCreate)
 
     useEffect(() => {
-        if (userCreate.error) toast.error(userCreate.error)
-        if (userCreate.data) {
-            toast.success(`${userCreate.data.name} registered successfully`)
-            window.location.reload()
+        if (error) toast.error(error)
+        if (createdUser.name) {
+            toast.success(`${createdUser.name} registered successfully`)
         }
-    }, [userCreate])
+    }, [error, createdUser])
 
     const fields = [
         { key: 'name', label: 'Name', required: true },
@@ -42,29 +41,22 @@ export const UserRegisterForm = () => {
         dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.USER_ROUTES, data))
     }
 
-    return (
-        <FormComponent
-            loading={userCreate.loading}
-            msg={['Register as a consumer, provider or delivery', 'Register']}
-            fields={fields}
-            submitHandler={submitHandler}
-        />
-    )
+    return <FormComponent loading={loading} msg={['Register as a consumer, provider or delivery', 'Register']} fields={fields} submitHandler={submitHandler} />
 }
 
 export const UserLoginForm = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const userLogin = useSelector((state) => state.userLogin)
+    const { loading, userInfo, error } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
-        if (userLogin.error) toast.error(userLogin.error)
-        if (userLogin.userInfo) {
+        if (error) toast.error(error)
+        if (userInfo.token) {
             toast.success('Login successful')
             navigate('/')
         }
-    }, [userLogin, navigate])
+    }, [error, userInfo, navigate])
 
     const fields = [
         { key: 'username', label: 'Username', required: true },
@@ -75,21 +67,21 @@ export const UserLoginForm = () => {
         dispatch(UserActions.login(data))
     }
 
-    return <FormComponent loading={userLogin.loading} msg={['Login with your credentials', 'Login']} fields={fields} submitHandler={submitHandler} />
+    return <FormComponent loading={loading} msg={['Login with your credentials', 'Login']} fields={fields} submitHandler={submitHandler} />
 }
 
 export const UserUpdateForm = ({ user }) => {
     const dispatch = useDispatch()
 
-    const userUpdate = useSelector((state) => state.dataUpdate)
+    const { loading, data: updatedUser, error } = useSelector((state) => state.dataUpdate)
 
     useEffect(() => {
-        if (userUpdate.error) toast.error(userUpdate.error)
-        if (userUpdate.data) {
-            toast.success(`User ID ${userUpdate.data.userId} updated successfully`)
+        if (error) toast.error(error)
+        if (updatedUser.userId) {
+            toast.success(`User ID ${updatedUser.userId} updated successfully`)
             window.location.reload()
         }
-    }, [userUpdate, user])
+    }, [error, updatedUser])
 
     const fields = [
         { key: 'name', label: 'Name', required: true, default: user.name },
@@ -112,5 +104,5 @@ export const UserUpdateForm = ({ user }) => {
         dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.USER_ROUTES, data))
     }
 
-    return <FormComponent loading={userUpdate.loading} msg={[`Update user ${user.name}`, 'Update']} fields={fields} submitHandler={submitHandler} />
+    return <FormComponent loading={loading} msg={[`Update user ${user.name}`, 'Update']} fields={fields} submitHandler={submitHandler} />
 }
