@@ -4,14 +4,14 @@ import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { Container } from '@mui/material'
 
+import { Header } from 'src/components2/Header'
+import { Footer } from 'src/components2/Footer'
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { InfoComponent } from 'src/components2/InfoComponent'
 import { TabsComponent } from 'src/components2/TabsComponent'
 import { RouteConstants, UserType } from 'src/enumConstants'
 import { ProductDeleteForm, ProductUpdateForm } from './ProductForms'
 import { ProductReviewList } from './ProductReview'
-import Header from 'src/components2/Header'
-import Footer from 'src/components2/Footer'
 import { CartActions } from 'src/reduxManager/cartActions'
 
 const ProductDetailsScreen = () => {

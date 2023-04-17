@@ -4,12 +4,12 @@ import { useLocation, useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import { Container } from '@mui/material'
 
+import { Footer } from 'src/components2/Footer'
+import { Header } from 'src/components2/Header'
 import { GenericActions } from 'src/reduxManager/genericActions'
-import GridComponent from 'src/components2/GridComponent'
+import { GridComponent } from 'src/components2/GridComponent'
 import { RouteConstants, UserType } from 'src/enumConstants'
 import { ProductCreateForm } from './ProductForms'
-import Footer from 'src/components2/Footer'
-import Header from 'src/components2/Header'
 
 const ProductGridScreen = () => {
     const dispatch = useDispatch()

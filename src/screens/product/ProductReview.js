@@ -117,7 +117,7 @@ export const ProductReviewList = ({ product, action, create }) => {
             }))}
             fields={fields}
             msg={[product ? `Reviews for product ${product.name}` : 'All product reviews by you']}
-            createForm={product && create ? <ProductReviewCreateForm productId={product.productId} /> : null}
+            createForm={product && create && <ProductReviewCreateForm productId={product.productId} />}
         />
     )
 }

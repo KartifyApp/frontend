@@ -6,7 +6,7 @@ const FooterWrapper = styled(Container)(
 `
 )
 
-function Footer() {
+export const Footer = () => {
     return (
         <FooterWrapper className="footer-wrapper">
             <Box pb={4} display={{ xs: 'block', md: 'flex' }} alignItems="center" textAlign={{ xs: 'center', md: 'left' }} justifyContent="space-between">
@@ -29,5 +29,3 @@ function Footer() {
         </FooterWrapper>
     )
 }
-
-export default Footer

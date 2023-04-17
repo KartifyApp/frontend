@@ -4,6 +4,8 @@ import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { Container } from '@mui/material'
 
+import { Footer } from 'src/components2/Footer'
+import { Header } from 'src/components2/Header'
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { InfoComponent } from 'src/components2/InfoComponent'
 import { TabsComponent } from 'src/components2/TabsComponent'
@@ -11,8 +13,6 @@ import { RouteConstants, UserType } from 'src/enumConstants'
 import { ProductListTable } from '../product/ProductListTable'
 import { PlatformDeleteForm, PlatformUpdateForm } from './PlatformForms'
 import { PlatformReviewList } from './PlatformReview'
-import Footer from 'src/components2/Footer'
-import Header from 'src/components2/Header'
 
 const PlatformDetailsScreen = () => {
     const navigate = useNavigate()

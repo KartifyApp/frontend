@@ -18,7 +18,7 @@ import {
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 
-const GridComponent = ({ msg, loading, data, filter, createForm }) => {
+export const GridComponent = ({ msg, loading, data, filter, createForm }) => {
     const [open, setOpen] = useState(false)
     const [filterValue, setFilterValue] = useState('All')
     const [filteredData, setFilteredData] = useState([])
@@ -119,5 +119,3 @@ const GridComponent = ({ msg, loading, data, filter, createForm }) => {
         </Card>
     )
 }
-
-export default GridComponent

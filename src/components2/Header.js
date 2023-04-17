@@ -20,7 +20,7 @@ PageTitleWrapper.propTypes = {
     children: PropTypes.node.isRequired
 }
 
-const Header = ({ msg, buttons }) => {
+export const Header = ({ msg, buttons }) => {
     return (
         <>
             <Helmet>
@@ -49,5 +49,3 @@ const Header = ({ msg, buttons }) => {
         </>
     )
 }
-
-export default Header

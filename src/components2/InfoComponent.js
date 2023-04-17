@@ -96,7 +96,7 @@ const InfoValueComponent = ({ element }) => {
     )
 }
 
-const InfoComponent = ({ data, msg, updateForm, deleteForm }) => {
+export const InfoComponent = ({ data, msg, updateForm, deleteForm }) => {
     const [updateOpen, setUpdateOpen] = useState(false)
     const [deleteOpen, setDeleteOpen] = useState(false)
 
@@ -155,5 +155,3 @@ const InfoComponent = ({ data, msg, updateForm, deleteForm }) => {
         </Card>
     )
 }
-
-export { InfoComponent }
