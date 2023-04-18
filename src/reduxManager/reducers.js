@@ -10,7 +10,7 @@ export class Reducers {
             case UserConstants.USER_LOGIN_FAIL:
                 return { ...state, loading: false, error: action.payload }
             case UserConstants.USER_LOGOUT:
-                return { ...state, loading: false }
+                return { ...state, loading: false, userInfo: {} }
             default:
                 return state
         }

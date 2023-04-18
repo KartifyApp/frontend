@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 
 import 'nprogress/nprogress.css'
 import App from 'src/App'
-import { SidebarProvider } from 'src/contexts/SidebarContext'
+import { SidebarProvider } from 'src/layouts/Sidebar/SidebarContext'
 import * as serviceWorker from 'src/serviceWorker'
 import store from './store'
 
