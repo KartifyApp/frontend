@@ -2,15 +2,16 @@ import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { Container } from '@mui/material'
 
 import { Header } from 'src/components2/Header'
 import { Footer } from 'src/components2/Footer'
 import { GenericActions } from 'src/reduxManager/genericActions'
-import { ReduxConstants, RouteConstants } from 'src/enumConstants'
+import { OrderStatus, PaymentStatus, ReduxConstants, RouteConstants, UserType } from 'src/enumConstants'
 import { InfoComponent } from 'src/components2/InfoComponent'
 import { TabsComponent } from 'src/components2/TabsComponent'
-import { Container } from '@mui/material'
 import { TableComponent } from 'src/components2/TableComponent'
+import { OrderCancelForm, OrderPaymentForm, OrderUpdateForm } from './OrderForms'
 
 export const OrderProductsTable = ({ order }) => {
     const dispatch = useDispatch()
@@ -72,6 +73,20 @@ const OrderDetailsScreen = () => {
         }
     }, [error, dispatch])
 
+    const updatePermission =
+        (userInfo.userType === UserType.PROVIDER && [OrderStatus.PLACED, OrderStatus.CONFIRMED].includes(order.orderStatus)) ||
+        (userInfo.userType === UserType.DELIVERY &&
+            [OrderStatus.PICKUP, OrderStatus.SHIPPED, OrderStatus.TAKE, OrderStatus.RETURNED].includes(order.orderStatus))
+
+    const cancelPermission =
+        (userInfo.userType === UserType.PROVIDER && order.orderStatus === OrderStatus.PLACED) ||
+        (userInfo.userType === UserType.CONSUMER &&
+            [OrderStatus.PLACED, OrderStatus.CONFIRMED, OrderStatus.PICKUP, OrderStatus.SHIPPED, OrderStatus.DELIVERED].includes(order.orderStatus))
+
+    const paymentPermission =
+        (userInfo.userType === UserType.CONSUMER && order.paymentStatus === PaymentStatus.PAYMENT_PROCESSING) ||
+        (userInfo.userType === UserType.PROVIDER && order.paymentStatus === PaymentStatus.REFUND_PROCESSING)
+
     const orderInfoComponent = (
         <InfoComponent
             msg={[`Order ID ${order.orderId} Details`]}
@@ -98,13 +113,14 @@ const OrderDetailsScreen = () => {
                     ]
                 }
             ]}
-            updateForm={null}
+            updateForm={(updatePermission && <OrderUpdateForm order={order} />) || (paymentPermission && <OrderPaymentForm order={order} />)}
+            deleteForm={cancelPermission && <OrderCancelForm order={order} />}
         />
     )
 
     return (
         <>
-            <Header msg={[`Order Details`, `Order ID ${order.orderId}`, `Track and manage order`]} />
+            <Header msg={[`Order Details`, `Order ID ${order.orderId}`, paymentPermission ? 'Click on update to pay' : 'Track and manage order']} />
             <Container maxWidth="lg">
                 <TabsComponent
                     tabs={[

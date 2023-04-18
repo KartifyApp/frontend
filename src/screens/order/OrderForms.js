@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { FormComponent } from 'src/components2/FormComponent'
-import { AddressKeys, PaymentMethod, RouteConstants } from 'src/enumConstants'
+import { AddressKeys, OrderStatus, PaymentMethod, RouteConstants } from 'src/enumConstants'
 import { CartActions } from 'src/reduxManager/cartActions'
 import { GenericActions } from 'src/reduxManager/genericActions'
 
@@ -62,4 +62,80 @@ export const OrderDeliveryJobForm = ({ order }) => {
     }
 
     return <FormComponent loading={loading} msg={[`Deliver Order ${order.orderId}`, 'OK']} fields={[]} submitHandler={submitHandler} />
+}
+
+export const OrderUpdateForm = ({ order }) => {
+    const dispatch = useDispatch()
+
+    const { loading, data: updatedOrder, error } = useSelector((state) => state.dataUpdate)
+
+    useEffect(() => {
+        if (error) toast.error(error)
+        if (updatedOrder.orderId) {
+            toast.success(`Order ID ${updatedOrder.orderId} updated successfully`)
+            window.location.reload()
+        }
+    }, [error, updatedOrder])
+
+    const submitHandler = (data) => {
+        dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES + `/${order.orderId}`, {}))
+    }
+
+    const nextState = {
+        [OrderStatus.PLACED]: OrderStatus.CONFIRMED,
+        [OrderStatus.CONFIRMED]: OrderStatus.PICKUP,
+        [OrderStatus.PICKUP]: OrderStatus.SHIPPED,
+        [OrderStatus.SHIPPED]: OrderStatus.DELIVERED,
+        [OrderStatus.TAKE]: OrderStatus.RETURNED,
+        [OrderStatus.RETURNED]: OrderStatus.RECEIVED
+    }
+
+    return (
+        <FormComponent
+            loading={loading}
+            msg={[`Update order ID ${order.orderId} status to ${nextState[order.orderStatus]}`, 'OK']}
+            fields={[]}
+            submitHandler={submitHandler}
+        />
+    )
+}
+
+export const OrderCancelForm = ({ order }) => {
+    const dispatch = useDispatch()
+
+    const { loading, data: cancelledOrder, error } = useSelector((state) => state.dataUpdate)
+
+    useEffect(() => {
+        if (error) toast.error(error)
+        if (cancelledOrder.orderId) {
+            toast.success(`Order ID ${cancelledOrder.orderId} cancelled successfully`)
+            window.location.reload()
+        }
+    }, [error, cancelledOrder])
+
+    const submitHandler = (data) => {
+        dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES + `/${order.orderId}/cancel`, {}))
+    }
+
+    return <FormComponent loading={loading} msg={[`Cancel order ID ${order.orderId}`, 'OK']} fields={[]} submitHandler={submitHandler} />
+}
+
+export const OrderPaymentForm = ({ order }) => {
+    const dispatch = useDispatch()
+
+    const { loading, data: paidOrder, error } = useSelector((state) => state.dataUpdate)
+
+    useEffect(() => {
+        if (error) toast.error(error)
+        if (paidOrder.orderId) {
+            toast.success(`Order ID ${paidOrder.orderId} paid successfully`)
+            window.location.reload()
+        }
+    }, [error, paidOrder])
+
+    const submitHandler = (data) => {
+        dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES + `/${order.orderId}/pay`, {}))
+    }
+
+    return <FormComponent loading={loading} msg={[`Pay ${order.totalPrice} for order ID ${order.orderId}`, 'PAY']} fields={[]} submitHandler={submitHandler} />
 }

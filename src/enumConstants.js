@@ -1,10 +1,12 @@
 export const RouteConstants = Object.freeze({
     BASE_URL: 'http://localhost:5000',
+    PAYPAL_SDK_URL: 'https://www.paypal.com/sdk/js',
     USER_ROUTES: '/api/user',
     PLATFORM_ROUTES: '/api/platform',
     PRODUCT_ROUTES: '/api/product',
     ORDER_ROUTES: '/api/order',
-    DELIVERY_JOB: '/api/delivery-job'
+    DELIVERY_JOB: '/api/delivery-job',
+    PAYPAL: '/api/config/paypal'
 })
 
 export const UserType = Object.freeze({
@@ -42,6 +44,14 @@ export const OrderStatus = Object.freeze({
 export const PaymentMethod = Object.freeze({
     CASH_ON_DELIVERY: 'CASH_ON_DELIVERY',
     ONLINE_TRANSACTION: 'ONLINE_TRANSACTION'
+})
+
+export const PaymentStatus = Object.freeze({
+    PAYMENT_INIT: 'PAYMENT_INIT',
+    PAYMENT_PROCESSING: 'PAYMENT_PROCESSING',
+    PAYMENT_CONFIRMED: 'PAYMENT_CONFIRMED',
+    REFUND_PROCESSING: 'REFUND_PROCESSING',
+    REFUND_CONFIRMED: 'REFUND_CONFIRMED'
 })
 
 export const AddressKeys = ['postOffice', 'pinCode', 'city', 'country', 'phoneNumber']
