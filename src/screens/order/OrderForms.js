@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { FormComponent } from 'src/components2/FormComponent'
+import { FormComponent } from 'src/components/FormComponent'
 import { AddressKeys, OrderStatus, PaymentMethod, RouteConstants } from 'src/enumConstants'
 import { CartActions } from 'src/reduxManager/cartActions'
 import { GenericActions } from 'src/reduxManager/genericActions'

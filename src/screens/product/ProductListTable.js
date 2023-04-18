@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { GenericActions } from 'src/reduxManager/genericActions'
-import { TableComponent } from 'src/components2/TableComponent'
+import { TableComponent } from 'src/components/TableComponent'
 import { RouteConstants, UserType } from 'src/enumConstants'
 import { ProductCreateForm } from './ProductForms'
 

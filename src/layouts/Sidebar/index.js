@@ -1,11 +1,9 @@
 import { useContext } from 'react'
-import Scrollbar from 'src/components/Scrollbar'
 import { SidebarContext } from 'src/layouts/Sidebar/SidebarContext'
 
-import { Box, Drawer, alpha, styled, Divider, useTheme, lighten, darken } from '@mui/material'
+import { Box, Drawer, alpha, styled, Divider, useTheme, lighten, darken, Tooltip, tooltipClasses } from '@mui/material'
 
 import SidebarMenu from './SidebarMenu'
-import Logo from 'src/components/LogoSign'
 
 const SidebarWrapper = styled(Box)(
     ({ theme }) => `
@@ -18,6 +16,20 @@ const SidebarWrapper = styled(Box)(
         padding-bottom: 68px;
 `
 )
+
+const TooltipWrapper = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: theme.colors.alpha.trueWhite[100],
+        color: theme.palette.getContrastText(theme.colors.alpha.trueWhite[100]),
+        fontSize: theme.typography.pxToRem(12),
+        fontWeight: 'bold',
+        borderRadius: theme.general.borderRadiusSm,
+        boxShadow: '0 .2rem .8rem rgba(7,9,25,.18), 0 .08rem .15rem rgba(7,9,25,.15)'
+    },
+    [`& .${tooltipClasses.arrow}`]: {
+        color: theme.colors.alpha.trueWhite[100]
+    }
+}))
 
 function Sidebar() {
     const { sidebarToggle, toggleSidebar } = useContext(SidebarContext)
@@ -39,26 +51,26 @@ function Sidebar() {
                     boxShadow: theme.palette.mode === 'dark' ? theme.sidebar.boxShadow : 'none'
                 }}
             >
-                <Scrollbar>
-                    <Box mt={3}>
-                        <Box
-                            mx={2}
-                            sx={{
-                                width: 52
-                            }}
-                        >
-                            <Logo />
-                        </Box>
-                    </Box>
-                    <Divider
+                <Box mt={3}>
+                    <Box
+                        mx={2}
                         sx={{
-                            mt: theme.spacing(3),
-                            mx: theme.spacing(2),
-                            background: theme.colors.alpha.trueWhite[10]
+                            width: 52
                         }}
-                    />
-                    <SidebarMenu />
-                </Scrollbar>
+                    >
+                        <TooltipWrapper title="IITB ASC" arrow>
+                            <img src="" height="150" />
+                        </TooltipWrapper>
+                    </Box>
+                </Box>
+                <Divider
+                    sx={{
+                        mt: theme.spacing(3),
+                        mx: theme.spacing(2),
+                        background: theme.colors.alpha.trueWhite[10]
+                    }}
+                />
+                <SidebarMenu />
             </SidebarWrapper>
             <Drawer
                 sx={{
@@ -75,26 +87,26 @@ function Sidebar() {
                         background: theme.palette.mode === 'dark' ? theme.colors.alpha.white[100] : darken(theme.colors.alpha.black[100], 0.5)
                     }}
                 >
-                    <Scrollbar>
-                        <Box mt={3}>
-                            <Box
-                                mx={2}
-                                sx={{
-                                    width: 52
-                                }}
-                            >
-                                <Logo />
-                            </Box>
-                        </Box>
-                        <Divider
+                    <Box mt={3}>
+                        <Box
+                            mx={2}
                             sx={{
-                                mt: theme.spacing(3),
-                                mx: theme.spacing(2),
-                                background: theme.colors.alpha.trueWhite[10]
+                                width: 52
                             }}
-                        />
-                        <SidebarMenu />
-                    </Scrollbar>
+                        >
+                            <TooltipWrapper title="IITB ASC" arrow>
+                                <img src="" height="150" />
+                            </TooltipWrapper>
+                        </Box>
+                    </Box>
+                    <Divider
+                        sx={{
+                            mt: theme.spacing(3),
+                            mx: theme.spacing(2),
+                            background: theme.colors.alpha.trueWhite[10]
+                        }}
+                    />
+                    <SidebarMenu />
                 </SidebarWrapper>
             </Drawer>
         </>

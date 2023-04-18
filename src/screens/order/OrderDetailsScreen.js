@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { Container } from '@mui/material'
 
-import { Header } from 'src/components2/Header'
-import { Footer } from 'src/components2/Footer'
+import { Header } from 'src/components/Header'
+import { Footer } from 'src/components/Footer'
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { OrderStatus, PaymentStatus, ReduxConstants, RouteConstants, UserType } from 'src/enumConstants'
-import { InfoComponent } from 'src/components2/InfoComponent'
-import { TabsComponent } from 'src/components2/TabsComponent'
-import { TableComponent } from 'src/components2/TableComponent'
+import { InfoComponent } from 'src/components/InfoComponent'
+import { TabsComponent } from 'src/components/TabsComponent'
+import { TableComponent } from 'src/components/TableComponent'
 import { OrderCancelForm, OrderPaymentForm, OrderUpdateForm } from './OrderForms'
 
 export const OrderProductsTable = ({ order }) => {

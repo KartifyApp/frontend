@@ -5,10 +5,10 @@ import { useSearchParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Container } from '@mui/material'
 
-import { Footer } from 'src/components2/Footer'
-import { Header } from 'src/components2/Header'
+import { Footer } from 'src/components/Footer'
+import { Header } from 'src/components/Header'
 import { GenericActions } from 'src/reduxManager/genericActions'
-import { TableComponent } from 'src/components2/TableComponent'
+import { TableComponent } from 'src/components/TableComponent'
 import { RouteConstants } from 'src/enumConstants'
 import { DeliveryJobDeleteForm, DeliveryJobUpdateForm } from './DeliveryJob'
 

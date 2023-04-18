@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { UserActions } from 'src/reduxManager/userActions'
-import { FormComponent } from 'src/components2/FormComponent'
+import { FormComponent } from 'src/components/FormComponent'
 import { AddressKeys, RouteConstants, UserType } from 'src/enumConstants'
 
 export const UserRegisterForm = () => {

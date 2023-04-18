@@ -1,8 +1,8 @@
 import { Container } from '@mui/material'
 
-import { Header } from 'src/components2/Header'
-import { Footer } from 'src/components2/Footer'
-import { TabsComponent } from 'src/components2/TabsComponent'
+import { Header } from 'src/components/Header'
+import { Footer } from 'src/components/Footer'
+import { TabsComponent } from 'src/components/TabsComponent'
 import { UserLoginForm, UserRegisterForm } from './UserForms'
 
 const UserAuthScreen = () => {

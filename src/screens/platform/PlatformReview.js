@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { GenericActions } from 'src/reduxManager/genericActions'
-import { FormComponent } from 'src/components2/FormComponent'
-import { TableComponent } from 'src/components2/TableComponent'
+import { FormComponent } from 'src/components/FormComponent'
+import { TableComponent } from 'src/components/TableComponent'
 import { RouteConstants } from 'src/enumConstants'
 
 export const PlatformReviewCreateForm = ({ platformId }) => {
