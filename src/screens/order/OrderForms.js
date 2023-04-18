@@ -37,9 +37,8 @@ export const OrderCreateForm = () => {
             data.shippingAddress[key] = data[key]
             delete data[key]
         }
-        data.platformId = platformId
         data.cartProducts = cartProducts
-        dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES, data))
+        platformId && dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platformId}/order`, data))
     }
 
     return <FormComponent loading={loading} msg={['Update shipping address and payment method', 'Save']} fields={fields} submitHandler={submitHandler} />

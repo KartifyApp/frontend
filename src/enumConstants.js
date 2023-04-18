@@ -27,6 +27,18 @@ export const DeliveryStatus = Object.freeze({
     WORKING: 'WORKING'
 })
 
+export const OrderStatus = Object.freeze({
+    PLACED: 'PLACED',
+    CONFIRMED: 'CONFIRMED',
+    PICKUP: 'PICKUP',
+    SHIPPED: 'SHIPPED',
+    DELIVERED: 'DELIVERED',
+    TAKE: 'TAKE',
+    RETURNED: 'RETURNED',
+    RECEIVED: 'RECEIVED',
+    CANCELLED: 'CANCELLED'
+})
+
 export const PaymentMethod = Object.freeze({
     CASH_ON_DELIVERY: 'CASH_ON_DELIVERY',
     ONLINE_TRANSACTION: 'ONLINE_TRANSACTION'

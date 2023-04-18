@@ -56,6 +56,7 @@ const ProductGridScreen = Loader(lazy(() => import('src/screens/product/ProductG
 const PlatformDetailsScreen = Loader(lazy(() => import('src/screens/platform/PlatformDetailsScreen')))
 const ProductDetailsScreen = Loader(lazy(() => import('src/screens/product/ProductDetailsScreen')))
 const CartTableScreen = Loader(lazy(() => import('src/screens/order/CartTableScreen')))
+const OrdersScreen = Loader(lazy(() => import('src/screens/order/OrdersScreen')))
 const DeliveryUsersScreen = Loader(lazy(() => import('src/screens/user/DeliveryUsersScreen')))
 const DeliveryJobsScreen = Loader(lazy(() => import('src/screens/user/DeliveryJobsScreen')))
 
@@ -257,6 +258,10 @@ const routes = [
         path: 'order',
         element: <SidebarLayout />,
         children: [
+            {
+                path: '',
+                element: <OrdersScreen />
+            },
             {
                 path: 'cart',
                 element: <CartTableScreen />
