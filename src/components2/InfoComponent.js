@@ -70,7 +70,7 @@ const InfoValueComponent = ({ element }) => {
             </Grid>
             <Grid item xs={12} sm={8} md={9}>
                 <Text color="black">
-                    {typeof element.value == 'object' ? (
+                    {element.value && typeof element.value == 'object' ? (
                         <>
                             {element.value.map((element1) => (
                                 <Grid container key={element1.key}>

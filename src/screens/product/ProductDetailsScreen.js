@@ -34,7 +34,9 @@ const ProductDetailsScreen = () => {
     }, [productId, userInfo, dispatch, navigate])
 
     useEffect(() => {
-        if (error) toast.error(error)
+        if (error) {
+            toast.error(error)
+        }
         if (cartDetailsError) toast.error(cartDetailsError)
     }, [error, cartDetailsError])
 
@@ -73,7 +75,7 @@ const ProductDetailsScreen = () => {
                 <TabsComponent
                     tabs={[
                         { value: 'productDetails', label: 'Details', component: productInfo },
-                        {
+                        userInfo.userType !== UserType.DELIVERY && {
                             value: 'reviews',
                             label: 'Reviews',
                             component: <ProductReviewList product={product} action={false} create={userInfo.userType === UserType.CONSUMER} />

@@ -70,7 +70,7 @@ const PlatformDetailsScreen = () => {
             <Header
                 msg={[`Platform Details`, `Platform ID ${platform.platformId}`, `Get all information about ${platform.name}`]}
                 buttons={[
-                    userInfo.userType === UserType.PROVIDER && { label: 'Orders', onClick: (e) => navigate(`/order?platformId=${platform.platformId}`) },
+                    userInfo.userType !== UserType.CONSUMER && { label: 'Orders', onClick: (e) => navigate(`/order?platformId=${platform.platformId}`) },
                     userInfo.userType === UserType.PROVIDER && {
                         label: 'Delivery',
                         onClick: (e) => navigate(`/user/delivery-job?platformId=${platform.platformId}`)
@@ -86,7 +86,7 @@ const PlatformDetailsScreen = () => {
                             label: 'Reviews',
                             component: <PlatformReviewList platform={platform} create={userInfo.userType === UserType.CONSUMER} action={false} />
                         },
-                        userInfo.userType !== UserType.DELIVERY && {
+                        {
                             value: 'products',
                             label: 'Products',
                             component: <ProductListTable platform={platform} />

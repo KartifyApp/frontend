@@ -7,8 +7,9 @@ import { toast } from 'react-toastify'
 import { Footer } from 'src/components2/Footer'
 import { Header } from 'src/components2/Header'
 import { TableComponent } from 'src/components2/TableComponent'
-import { OrderStatus, RouteConstants } from 'src/enumConstants'
+import { OrderStatus, RouteConstants, UserType } from 'src/enumConstants'
 import { GenericActions } from 'src/reduxManager/genericActions'
+import { OrderDeliveryJobForm } from './OrderForms'
 
 const OrdersScreen = () => {
     const dispatch = useDispatch()
@@ -40,9 +41,10 @@ const OrdersScreen = () => {
         { key: 'totalPrice', label: 'Total Price' },
         { key: 'orderStatus', label: 'Order Status' },
         { key: 'paymentStatus', label: 'Payment Status' },
-        { key: 'paymentMethod', label: 'Payment Method' },
         { key: 'userId', label: 'User ID' },
-        { key: 'platformId', label: 'Platform ID' }
+        { key: 'platformId', label: 'Platform ID' },
+        { key: 'deliveryJobId', label: 'Job ID' },
+        userInfo.userType === UserType.DELIVERY && platformId && { key: 'create', label: 'Deliver' }
     ]
 
     return (
@@ -54,7 +56,8 @@ const OrdersScreen = () => {
                     data={orders.map((order) => ({
                         ...order,
                         key: order.orderId,
-                        onClick: (e) => navigate(`/order/${order.orderId}`)
+                        onClick: (e) => navigate(`/order/${order.orderId}`),
+                        createForm: <OrderDeliveryJobForm order={order} />
                     }))}
                     fields={fields}
                     msg={[`Update or delete delivery jobs`]}

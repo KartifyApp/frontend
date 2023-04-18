@@ -43,3 +43,23 @@ export const OrderCreateForm = () => {
 
     return <FormComponent loading={loading} msg={['Update shipping address and payment method', 'Save']} fields={fields} submitHandler={submitHandler} />
 }
+
+export const OrderDeliveryJobForm = ({ order }) => {
+    const dispatch = useDispatch()
+
+    const { loading, data: updatedOrder, error } = useSelector((state) => state.dataCreate)
+
+    useEffect(() => {
+        if (error) toast.error(error)
+        if (updatedOrder.orderId) {
+            toast.success(`Order ID ${updatedOrder.orderId} updated successfully for delivery`)
+            window.location.reload()
+        }
+    }, [error, updatedOrder])
+
+    const submitHandler = (data) => {
+        dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES + `/${order.orderId}`, {}))
+    }
+
+    return <FormComponent loading={loading} msg={[`Deliver Order ${order.orderId}`, 'OK']} fields={[]} submitHandler={submitHandler} />
+}
