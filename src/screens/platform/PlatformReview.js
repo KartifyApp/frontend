@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { FormComponent } from 'src/components/FormComponent'
 import { TableComponent } from 'src/components/TableComponent'
-import { RouteConstants } from 'src/enumConstants'
+import { RouteConstants } from 'src/constants/enumConstants'
 
 export const PlatformReviewCreateForm = ({ platformId }) => {
     const dispatch = useDispatch()
@@ -26,7 +26,7 @@ export const PlatformReviewCreateForm = ({ platformId }) => {
 
     const submitHandler = (data) => {
         data.platformId = platformId
-        dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/review`, data))
+        dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_REVIEW_ROUTES, data))
     }
 
     return <FormComponent loading={loading} msg={['Create a new platform Review', 'Submit']} fields={fields} submitHandler={submitHandler} />
@@ -51,7 +51,7 @@ export const PlatformReviewUpdateForm = ({ platformReview }) => {
     ]
 
     const submitHandler = (data) => {
-        dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/review/${platformReview.platformReviewId}`, data))
+        dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_REVIEW_ROUTES + `/${platformReview.platformReviewId}`, data))
     }
 
     return (
@@ -78,7 +78,7 @@ export const PlatformReviewDeleteForm = ({ platformReview }) => {
     }, [deletedPlatformReview, error])
 
     const deleteHandler = () => {
-        dispatch(GenericActions.deleteData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/review/${platformReview.platformReviewId}`))
+        dispatch(GenericActions.deleteData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_REVIEW_ROUTES + `/${platformReview.platformReviewId}`))
     }
 
     return (
@@ -92,7 +92,7 @@ export const PlatformReviewList = ({ platform, create, action }) => {
     const { loading, data: platformReviews, error } = useSelector((state) => state.dataList)
 
     useEffect(() => {
-        dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/review`, { platformId: platform?.platformId }))
+        dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_REVIEW_ROUTES, { platformId: platform?.platformId }))
     }, [platform, dispatch])
 
     useEffect(() => {

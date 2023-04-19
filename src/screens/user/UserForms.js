@@ -2,10 +2,11 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
+
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { UserActions } from 'src/reduxManager/userActions'
 import { FormComponent } from 'src/components/FormComponent'
-import { AddressKeys, RouteConstants, UserType } from 'src/enumConstants'
+import { AddressKeys, RouteConstants, UserType } from 'src/constants/enumConstants'
 
 export const UserRegisterForm = () => {
     const dispatch = useDispatch()

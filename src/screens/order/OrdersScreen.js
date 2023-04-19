@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 import { Footer } from 'src/components/Footer'
 import { Header } from 'src/components/Header'
 import { TableComponent } from 'src/components/TableComponent'
-import { OrderStatus, RouteConstants, UserType } from 'src/enumConstants'
+import { OrderStatus, RouteConstants, UserType } from 'src/constants/enumConstants'
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { OrderDeliveryJobForm } from './OrderForms'
 
@@ -21,16 +21,12 @@ const OrdersScreen = () => {
     const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
-        if (!userInfo.token) {
-            toast.error('No token found')
-            navigate('/auth')
-        }
         dispatch(
             GenericActions.getDataList(
                 RouteConstants.BASE_URL + (platformId ? RouteConstants.PLATFORM_ROUTES + `/${platformId}/order` : RouteConstants.ORDER_ROUTES)
             )
         )
-    }, [platformId, userInfo, dispatch, navigate])
+    }, [platformId, dispatch])
 
     useEffect(() => {
         if (error) toast.error(error)

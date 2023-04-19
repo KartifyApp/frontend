@@ -8,7 +8,7 @@ import { Footer } from 'src/components/Footer'
 import { Header } from 'src/components/Header'
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { GridComponent } from 'src/components/GridComponent'
-import { RouteConstants, UserType } from 'src/enumConstants'
+import { RouteConstants, UserType } from 'src/constants/enumConstants'
 import { ProductCreateForm } from './ProductForms'
 
 const ProductGridScreen = () => {
@@ -22,13 +22,9 @@ const ProductGridScreen = () => {
     const { loading, data: products, error } = useSelector((state) => state.dataList)
 
     useEffect(() => {
-        if (!userInfo.token) {
-            toast.error('No token found')
-            navigate('/auth')
-        }
         if (!platform) navigate('/platform')
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, { platformId: platform.platformId }))
-    }, [userInfo, platform, dispatch, navigate])
+    }, [platform, dispatch, navigate])
 
     useEffect(() => {
         if (error) toast.error(error)

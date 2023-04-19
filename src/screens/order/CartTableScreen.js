@@ -8,7 +8,7 @@ import { CartActions } from 'src/reduxManager/cartActions'
 import { Footer } from 'src/components/Footer'
 import { Header } from 'src/components/Header'
 import { TableComponent } from 'src/components/TableComponent'
-import { RouteConstants } from 'src/enumConstants'
+import { RouteConstants } from 'src/constants/enumConstants'
 import { OrderCreateForm } from './OrderForms'
 
 const CartTableScreen = () => {
@@ -16,16 +16,11 @@ const CartTableScreen = () => {
     const navigate = useNavigate()
 
     const { cartProducts, platformId, error: cartDetailsError } = useSelector((state) => state.cartDetails)
-    const { userInfo } = useSelector((state) => state.userLogin)
     const { loading, data: products, error } = useSelector((state) => state.dataList)
 
     useEffect(() => {
-        if (!userInfo.token) {
-            toast.error('No token found')
-            navigate('/auth')
-        }
         platformId && dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, { platformId }))
-    }, [userInfo, platformId, navigate, dispatch])
+    }, [platformId, dispatch])
 
     useEffect(() => {
         if (error) toast.error(error)

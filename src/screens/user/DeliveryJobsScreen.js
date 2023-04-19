@@ -9,7 +9,7 @@ import { Footer } from 'src/components/Footer'
 import { Header } from 'src/components/Header'
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { TableComponent } from 'src/components/TableComponent'
-import { RouteConstants } from 'src/enumConstants'
+import { RouteConstants } from 'src/constants/enumConstants'
 import { DeliveryJobDeleteForm, DeliveryJobUpdateForm } from './DeliveryJob'
 
 const DeliveryJobsScreen = () => {
@@ -17,17 +17,12 @@ const DeliveryJobsScreen = () => {
     const navigate = useNavigate()
 
     const { loading, data: deliveryJobs, error } = useSelector((state) => state.dataList)
-    const { userInfo } = useSelector((state) => state.userLogin)
 
     const platformId = useSearchParams()[0].get('platformId')
 
     useEffect(() => {
-        if (!userInfo.token) {
-            toast.error('No token found')
-            navigate('/auth')
-        }
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.DELIVERY_JOB, { platformId: platformId }))
-    }, [userInfo, platformId, navigate, dispatch])
+    }, [platformId, dispatch])
 
     useEffect(() => {
         if (error) toast.error(error)

@@ -1,4 +1,4 @@
-import { CartConstants, UserConstants, ReduxConstants } from 'src/enumConstants'
+import { CartConstants, UserConstants, ReduxConstants } from 'src/constants/enumConstants'
 
 export class Reducers {
     static userLoginReducer = (state = { userInfo: {} }, action) => {

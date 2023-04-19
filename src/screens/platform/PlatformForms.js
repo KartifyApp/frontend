@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { FormComponent } from 'src/components/FormComponent'
-import { AddressKeys, PlatformStatus, RouteConstants } from 'src/enumConstants'
+import { AddressKeys, PlatformStatus, RouteConstants } from 'src/constants/enumConstants'
 
 export const PlatformCreateForm = () => {
     const dispatch = useDispatch()

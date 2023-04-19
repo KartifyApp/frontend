@@ -8,7 +8,7 @@ import { Header } from 'src/components/Header'
 import { Footer } from 'src/components/Footer'
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { GridComponent } from 'src/components/GridComponent'
-import { PlatformStatus, RouteConstants, UserType } from 'src/enumConstants'
+import { PlatformStatus, RouteConstants, UserType } from 'src/constants/enumConstants'
 import { PlatformCreateForm } from './PlatformForms'
 
 const PlatformGridScreen = () => {
@@ -19,12 +19,8 @@ const PlatformGridScreen = () => {
     const { loading, data: platforms, error } = useSelector((state) => state.dataList)
 
     useEffect(() => {
-        if (!userInfo || !userInfo.token) {
-            toast.error('No token found')
-            navigate('/auth')
-        }
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES))
-    }, [userInfo, dispatch, navigate])
+    }, [dispatch])
 
     useEffect(() => {
         if (error) toast.error(error)

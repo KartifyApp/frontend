@@ -1,4 +1,4 @@
-import { CartConstants } from 'src/enumConstants'
+import { CartConstants, STATE_RESET_TIME } from 'src/constants/enumConstants'
 import { ActionServices } from './actionServices'
 
 export class CartActions {
@@ -8,7 +8,7 @@ export class CartActions {
         } = getState()
         if (platformId && product.platformId !== platformId) {
             dispatch({ type: CartConstants.CART_UPDATE_FAIL, payload: 'Products must be from same platform' })
-            await ActionServices.sleep(3000)
+            await ActionServices.sleep(STATE_RESET_TIME)
             dispatch({ type: CartConstants.CART_ERROR_RESET })
         } else {
             dispatch({
@@ -39,7 +39,7 @@ export class CartActions {
         } = getState()
         if (cartProducts[product.productId] === product.stockCount) {
             dispatch({ type: CartConstants.CART_UPDATE_FAIL, payload: 'Cannot exceed stock count' })
-            await ActionServices.sleep(3000)
+            await ActionServices.sleep(STATE_RESET_TIME)
             dispatch({ type: CartConstants.CART_ERROR_RESET })
         } else {
             cartProducts[product.productId] += 1

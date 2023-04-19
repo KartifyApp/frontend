@@ -9,7 +9,7 @@ import { Footer } from 'src/components/Footer'
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { InfoComponent } from 'src/components/InfoComponent'
 import { TabsComponent } from 'src/components/TabsComponent'
-import { RouteConstants, UserType } from 'src/enumConstants'
+import { RouteConstants, UserType } from 'src/constants/enumConstants'
 import { ProductDeleteForm, ProductUpdateForm } from './ProductForms'
 import { ProductReviewList } from './ProductReview'
 import { CartActions } from 'src/reduxManager/cartActions'
@@ -25,13 +25,9 @@ const ProductDetailsScreen = () => {
     const { cartProducts, error: cartDetailsError } = useSelector((state) => state.cartDetails)
 
     useEffect(() => {
-        if (!userInfo.token) {
-            toast.error('No token found')
-            navigate('/auth')
-        }
         if (!productId) navigate('/product')
         dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/${productId}`))
-    }, [productId, userInfo, dispatch, navigate])
+    }, [productId, dispatch, navigate])
 
     useEffect(() => {
         if (error) {

@@ -6,6 +6,7 @@ import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone'
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone'
 import { useDispatch, useSelector } from 'react-redux'
 import { UserActions } from 'src/reduxManager/userActions'
+import { toast } from 'react-toastify'
 
 const UserBoxButton = styled(Button)(
     ({ theme }) => `
@@ -50,6 +51,13 @@ function HeaderUserbox() {
     const ref = useRef(null)
 
     const { userInfo } = useSelector((state) => state.userLogin)
+
+    useEffect(() => {
+        if (!userInfo.token) {
+            toast.error('No token found')
+            navigate('/auth')
+        }
+    }, [userInfo, navigate])
 
     return (
         <>

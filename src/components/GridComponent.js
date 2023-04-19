@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import {
     Box,
     Button,
@@ -11,12 +12,14 @@ import {
     Divider,
     FormControl,
     Grid,
+    InputAdornment,
     InputLabel,
     MenuItem,
+    OutlinedInput,
     Select,
     Typography
 } from '@mui/material'
-import { useEffect, useState } from 'react'
+import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone'
 
 export const GridComponent = ({ msg, loading, data, filter, createForm }) => {
     const [open, setOpen] = useState(false)
@@ -33,10 +36,26 @@ export const GridComponent = ({ msg, loading, data, filter, createForm }) => {
                 title={msg[0]}
                 action={
                     <>
-                        <Box width={300}>
+                        <Box width={600}>
                             <Grid container justifyContent="flex-end">
+                                <Grid item xs={6}>
+                                    <FormControl variant="outlined">
+                                        <OutlinedInput
+                                            type="text"
+                                            placeholder={`Search key here...`}
+                                            onChange={(e) => {
+                                                setFilteredData(data.filter((element) => element.name.toLowerCase().includes(e.target.value.toLowerCase())))
+                                            }}
+                                            startAdornment={
+                                                <InputAdornment position="start">
+                                                    <SearchTwoToneIcon />
+                                                </InputAdornment>
+                                            }
+                                        />
+                                    </FormControl>
+                                </Grid>
                                 {filter && (
-                                    <Grid item xs={6}>
+                                    <Grid item xs={3}>
                                         <FormControl fullWidth variant="outlined">
                                             <InputLabel>{filter.label}</InputLabel>
                                             <Select
@@ -61,7 +80,7 @@ export const GridComponent = ({ msg, loading, data, filter, createForm }) => {
                                     </Grid>
                                 )}
                                 {createForm && (
-                                    <Grid item xs={6}>
+                                    <Grid item xs={3}>
                                         <Button size="large" sx={{ marginLeft: 2 }} variant="contained" onClick={(e) => setOpen(true)}>
                                             Create
                                         </Button>
@@ -110,11 +129,9 @@ export const GridComponent = ({ msg, loading, data, filter, createForm }) => {
                         ))}
                     </Grid>
                 )}
-                {open && (
-                    <Dialog onClose={(e) => setOpen(false)} open={open}>
-                        {createForm}
-                    </Dialog>
-                )}
+                <Dialog onClose={(e) => setOpen(false)} open={open}>
+                    {createForm}
+                </Dialog>
             </CardContent>
         </Card>
     )

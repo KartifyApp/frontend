@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { RouteConstants, UserConstants } from 'src/enumConstants'
+import { RouteConstants, UserConstants } from 'src/constants/enumConstants'
 import { ActionServices } from './actionServices'
 
 const config = {

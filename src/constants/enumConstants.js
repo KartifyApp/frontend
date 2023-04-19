@@ -1,12 +1,12 @@
 export const RouteConstants = Object.freeze({
     BASE_URL: 'http://localhost:5000',
-    PAYPAL_SDK_URL: 'https://www.paypal.com/sdk/js',
     USER_ROUTES: '/api/user',
     PLATFORM_ROUTES: '/api/platform',
+    PLATFORM_REVIEW_ROUTES: '/api/platform/review',
     PRODUCT_ROUTES: '/api/product',
+    PRODUCT_REVIEW_ROUTES: '/api/product/review',
     ORDER_ROUTES: '/api/order',
-    DELIVERY_JOB: '/api/delivery-job',
-    PAYPAL: '/api/config/paypal'
+    DELIVERY_JOB: '/api/delivery-job'
 })
 
 export const UserType = Object.freeze({

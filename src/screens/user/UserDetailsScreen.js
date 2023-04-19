@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import { Container } from '@mui/material'
 
@@ -9,25 +8,20 @@ import { Footer } from 'src/components/Footer'
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { InfoComponent } from 'src/components/InfoComponent'
 import { TabsComponent } from 'src/components/TabsComponent'
-import { RouteConstants, UserType } from 'src/enumConstants'
+import { RouteConstants, UserType } from 'src/constants/enumConstants'
 import { UserUpdateForm } from './UserForms'
 import { PlatformReviewList } from '../platform/PlatformReview'
 import { ProductReviewList } from '../product/ProductReview'
 
 const UserDetailsScreen = () => {
-    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const { loading, data: user, error } = useSelector((state) => state.dataDetails)
     const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
-        if (!userInfo.token) {
-            toast.error('No token found')
-            navigate('/auth')
-        }
         dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.USER_ROUTES))
-    }, [userInfo, dispatch, navigate])
+    }, [dispatch])
 
     useEffect(() => {
         if (error) {

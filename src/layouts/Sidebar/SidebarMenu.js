@@ -10,7 +10,7 @@ import GroupIcon from '@mui/icons-material/Group'
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining'
 
 import { SidebarContext } from 'src/layouts/Sidebar/SidebarContext'
-import { UserType } from 'src/enumConstants'
+import { UserType } from 'src/constants/enumConstants'
 
 const MenuWrapper = styled(Box)(
     ({ theme }) => `

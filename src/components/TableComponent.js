@@ -19,7 +19,8 @@ import {
     Button,
     Dialog,
     IconButton,
-    useTheme
+    useTheme,
+    CircularProgress
 } from '@mui/material'
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
@@ -95,127 +96,133 @@ export const TableComponent = ({ fields, data, msg, loading, filter, createForm 
             />
             <Divider />
             <TableContainer>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            {fields
-                                .filter((field) => field)
-                                .map((field) => (
-                                    <TableCell key={field.key} align="center">
-                                        {field.label}
-                                    </TableCell>
-                                ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {filteredData.map((row) => (
-                            <TableRow key={row.key} hover onClick={row.onClick}>
+                {loading ? (
+                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <CircularProgress />
+                    </Box>
+                ) : (
+                    <Table>
+                        <TableHead>
+                            <TableRow>
                                 {fields
                                     .filter((field) => field)
                                     .map((field) => (
                                         <TableCell key={field.key} align="center">
-                                            {field.key === 'actions' ? (
-                                                <>
-                                                    <IconButton
-                                                        sx={{
-                                                            '&:hover': {
-                                                                background: theme.colors.primary.lighter
-                                                            },
-                                                            color: theme.palette.primary.main
-                                                        }}
-                                                        color="inherit"
-                                                        size="small"
-                                                        onClick={(e) => {
-                                                            e.stopPropagation()
-                                                            setOpen(true)
-                                                            setForm(row.updateForm)
-                                                        }}
-                                                        key={1}
-                                                    >
-                                                        <EditTwoToneIcon fontSize="small" />
-                                                    </IconButton>
-                                                    <IconButton
-                                                        sx={{
-                                                            '&:hover': { background: theme.colors.error.lighter },
-                                                            color: theme.palette.error.main
-                                                        }}
-                                                        color="inherit"
-                                                        size="small"
-                                                        onClick={(e) => {
-                                                            e.stopPropagation()
-                                                            setOpen(true)
-                                                            setForm(row.deleteForm)
-                                                        }}
-                                                        key={2}
-                                                    >
-                                                        <DeleteTwoToneIcon fontSize="small" />
-                                                    </IconButton>
-                                                </>
-                                            ) : field.key === 'create' ? (
-                                                <IconButton
-                                                    sx={{
-                                                        '&:hover': {
-                                                            background: theme.colors.primary.lighter
-                                                        },
-                                                        color: theme.palette.primary.main
-                                                    }}
-                                                    color="inherit"
-                                                    size="small"
-                                                    onClick={(e) => {
-                                                        e.stopPropagation()
-                                                        setOpen(true)
-                                                        setForm(row.createForm)
-                                                    }}
-                                                    key={1}
-                                                >
-                                                    <AddBoxIcon fontSize="small" />
-                                                </IconButton>
-                                            ) : field.key === 'update' ? (
-                                                <>
-                                                    <IconButton
-                                                        sx={{
-                                                            '&:hover': {
-                                                                background: theme.colors.primary.lighter
-                                                            },
-                                                            color: theme.palette.primary.main
-                                                        }}
-                                                        color="inherit"
-                                                        size="small"
-                                                        onClick={(e) => {
-                                                            e.stopPropagation()
-                                                            row.onRemove()
-                                                        }}
-                                                        key={1}
-                                                    >
-                                                        <RemoveIcon fontSize="small" />
-                                                    </IconButton>
-                                                    <IconButton
-                                                        sx={{
-                                                            '&:hover': { background: theme.colors.error.lighter },
-                                                            color: theme.palette.error.main
-                                                        }}
-                                                        color="inherit"
-                                                        size="small"
-                                                        onClick={(e) => {
-                                                            e.stopPropagation()
-                                                            row.onAdd()
-                                                        }}
-                                                        key={2}
-                                                    >
-                                                        <AddIcon fontSize="small" />
-                                                    </IconButton>
-                                                </>
-                                            ) : (
-                                                <Typography variant="body1" fontWeight="bold" color="text.primary" gutterBottom noWrap>
-                                                    {row[field.key]}
-                                                </Typography>
-                                            )}
+                                            {field.label}
                                         </TableCell>
                                     ))}
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHead>
+                        <TableBody>
+                            {filteredData.map((row) => (
+                                <TableRow key={row.key} hover onClick={row.onClick}>
+                                    {fields
+                                        .filter((field) => field)
+                                        .map((field) => (
+                                            <TableCell key={field.key} align="center">
+                                                {field.key === 'actions' ? (
+                                                    <>
+                                                        <IconButton
+                                                            sx={{
+                                                                '&:hover': {
+                                                                    background: theme.colors.primary.lighter
+                                                                },
+                                                                color: theme.palette.primary.main
+                                                            }}
+                                                            color="inherit"
+                                                            size="small"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation()
+                                                                setOpen(true)
+                                                                setForm(row.updateForm)
+                                                            }}
+                                                            key={1}
+                                                        >
+                                                            <EditTwoToneIcon fontSize="small" />
+                                                        </IconButton>
+                                                        <IconButton
+                                                            sx={{
+                                                                '&:hover': { background: theme.colors.error.lighter },
+                                                                color: theme.palette.error.main
+                                                            }}
+                                                            color="inherit"
+                                                            size="small"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation()
+                                                                setOpen(true)
+                                                                setForm(row.deleteForm)
+                                                            }}
+                                                            key={2}
+                                                        >
+                                                            <DeleteTwoToneIcon fontSize="small" />
+                                                        </IconButton>
+                                                    </>
+                                                ) : field.key === 'create' ? (
+                                                    <IconButton
+                                                        sx={{
+                                                            '&:hover': {
+                                                                background: theme.colors.primary.lighter
+                                                            },
+                                                            color: theme.palette.primary.main
+                                                        }}
+                                                        color="inherit"
+                                                        size="small"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation()
+                                                            setOpen(true)
+                                                            setForm(row.createForm)
+                                                        }}
+                                                        key={1}
+                                                    >
+                                                        <AddBoxIcon fontSize="small" />
+                                                    </IconButton>
+                                                ) : field.key === 'update' ? (
+                                                    <>
+                                                        <IconButton
+                                                            sx={{
+                                                                '&:hover': {
+                                                                    background: theme.colors.primary.lighter
+                                                                },
+                                                                color: theme.palette.primary.main
+                                                            }}
+                                                            color="inherit"
+                                                            size="small"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation()
+                                                                row.onRemove()
+                                                            }}
+                                                            key={1}
+                                                        >
+                                                            <RemoveIcon fontSize="small" />
+                                                        </IconButton>
+                                                        <IconButton
+                                                            sx={{
+                                                                '&:hover': { background: theme.colors.error.lighter },
+                                                                color: theme.palette.error.main
+                                                            }}
+                                                            color="inherit"
+                                                            size="small"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation()
+                                                                row.onAdd()
+                                                            }}
+                                                            key={2}
+                                                        >
+                                                            <AddIcon fontSize="small" />
+                                                        </IconButton>
+                                                    </>
+                                                ) : (
+                                                    <Typography variant="body1" fontWeight="bold" color="text.primary" gutterBottom noWrap>
+                                                        {row[field.key]}
+                                                    </Typography>
+                                                )}
+                                            </TableCell>
+                                        ))}
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                )}
                 <Dialog onClose={(e) => setOpen(false)} open={open}>
                     {form}
                 </Dialog>

@@ -7,7 +7,7 @@ import { Container } from '@mui/material'
 import { Header } from 'src/components/Header'
 import { Footer } from 'src/components/Footer'
 import { GenericActions } from 'src/reduxManager/genericActions'
-import { OrderStatus, PaymentStatus, ReduxConstants, RouteConstants, UserType } from 'src/enumConstants'
+import { OrderStatus, PaymentStatus, ReduxConstants, RouteConstants, UserType } from 'src/constants/enumConstants'
 import { InfoComponent } from 'src/components/InfoComponent'
 import { TabsComponent } from 'src/components/TabsComponent'
 import { TableComponent } from 'src/components/TableComponent'
@@ -50,7 +50,6 @@ export const OrderProductsTable = ({ order }) => {
 }
 
 const OrderDetailsScreen = () => {
-    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const { orderId } = useParams()
@@ -59,12 +58,8 @@ const OrderDetailsScreen = () => {
     const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
-        if (!userInfo.token) {
-            toast.error('No token found')
-            navigate('/auth')
-        }
         dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES + `/${orderId}`))
-    }, [userInfo, orderId, dispatch, navigate])
+    }, [orderId, dispatch])
 
     useEffect(() => {
         if (error) {

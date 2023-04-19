@@ -9,7 +9,7 @@ import { Header } from 'src/components/Header'
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { InfoComponent } from 'src/components/InfoComponent'
 import { TabsComponent } from 'src/components/TabsComponent'
-import { RouteConstants, UserType } from 'src/enumConstants'
+import { RouteConstants, UserType } from 'src/constants/enumConstants'
 import { ProductListTable } from '../product/ProductListTable'
 import { PlatformDeleteForm, PlatformUpdateForm } from './PlatformForms'
 import { PlatformReviewList } from './PlatformReview'
@@ -24,13 +24,9 @@ const PlatformDetailsScreen = () => {
     const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
-        if (!userInfo.token) {
-            toast.error('No token found')
-            navigate('/auth')
-        }
         if (!platformId) navigate('/platform')
         dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platformId}`))
-    }, [userInfo, platformId, dispatch, navigate])
+    }, [platformId, dispatch, navigate])
 
     useEffect(() => {
         if (error) {

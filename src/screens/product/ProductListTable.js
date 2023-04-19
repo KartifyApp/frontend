@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { TableComponent } from 'src/components/TableComponent'
-import { RouteConstants, UserType } from 'src/enumConstants'
+import { RouteConstants, UserType } from 'src/constants/enumConstants'
 import { ProductCreateForm } from './ProductForms'
 
 export const ProductListTable = ({ platform }) => {

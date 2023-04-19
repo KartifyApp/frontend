@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { FormComponent } from 'src/components/FormComponent'
 import { TableComponent } from 'src/components/TableComponent'
-import { RouteConstants } from 'src/enumConstants'
+import { RouteConstants } from 'src/constants/enumConstants'
 
 export const ProductReviewCreateForm = ({ productId }) => {
     const dispatch = useDispatch()
@@ -27,7 +27,7 @@ export const ProductReviewCreateForm = ({ productId }) => {
 
     const submitHandler = (data) => {
         data.productId = productId
-        dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/review`, data))
+        dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_REVIEW_ROUTES, data))
     }
 
     return <FormComponent loading={loading} msg={['Create a new product Review', 'Submit']} fields={fields} submitHandler={submitHandler} />
@@ -52,7 +52,7 @@ export const ProductReviewUpdateForm = ({ productReview }) => {
     ]
 
     const submitHandler = (data) => {
-        dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/review/${productReview.productReviewId}`, data))
+        dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_REVIEW_ROUTES + `/${productReview.productReviewId}`, data))
     }
 
     return (
@@ -79,7 +79,7 @@ export const ProductReviewDeleteForm = ({ productReview }) => {
     }, [deletedProductReview, error])
 
     const deleteHandler = () => {
-        dispatch(GenericActions.deleteData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/review/${productReview.productReviewId}`))
+        dispatch(GenericActions.deleteData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_REVIEW_ROUTES + `/${productReview.productReviewId}`))
     }
 
     return <FormComponent loading={loading} msg={[`Delete product review ${productReview.productReviewId}`, 'OK']} fields={[]} submitHandler={deleteHandler} />
@@ -91,7 +91,7 @@ export const ProductReviewList = ({ product, action, create }) => {
     const { loading, data: productReviews, error } = useSelector((state) => state.dataList)
 
     useEffect(() => {
-        dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/review`, { productId: product?.productId }))
+        dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_REVIEW_ROUTES, { productId: product?.productId }))
     }, [product, dispatch])
 
     useEffect(() => {

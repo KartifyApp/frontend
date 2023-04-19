@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ReduxConstants, STATE_RESET_TIME } from 'src/enumConstants'
+import { ReduxConstants, STATE_RESET_TIME } from 'src/constants/enumConstants'
 import { ActionServices } from './actionServices'
 
 export class GenericActions {

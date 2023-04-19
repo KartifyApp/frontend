@@ -1,30 +1,23 @@
 import { Container } from '@mui/material'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { Footer } from 'src/components/Footer'
 import { Header } from 'src/components/Header'
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { TableComponent } from 'src/components/TableComponent'
-import { RouteConstants } from 'src/enumConstants'
+import { RouteConstants } from 'src/constants/enumConstants'
 import { DeliveryJobCreateForm } from './DeliveryJob'
 
 const DeliveryUsersScreen = () => {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     const { loading, data: deliveryUsers, error } = useSelector((state) => state.dataList)
-    const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
-        if (!userInfo.token) {
-            toast.error('No token found')
-            navigate('/auth')
-        }
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.USER_ROUTES + '/delivery'))
-    }, [userInfo, dispatch, navigate])
+    }, [dispatch])
 
     useEffect(() => {
         if (error) toast.error(error)

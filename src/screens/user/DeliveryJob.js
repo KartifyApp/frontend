@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { FormComponent } from 'src/components/FormComponent'
-import { DeliveryStatus, RouteConstants, UserType } from 'src/enumConstants'
+import { DeliveryStatus, RouteConstants, UserType } from 'src/constants/enumConstants'
 import { TableComponent } from 'src/components/TableComponent'
 import { useNavigate } from 'react-router'
 
