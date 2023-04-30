@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
-import { toast } from 'react-toastify'
 import { Container } from '@mui/material'
 
 import { Footer } from 'src/components/Footer'
@@ -16,17 +15,13 @@ const DeliveryJobsScreen = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { loading, data: deliveryJobs, error } = useSelector((state) => state.dataList)
+    const { loading, data: deliveryJobs } = useSelector((state) => state.dataList)
 
     const platformId = useSearchParams()[0].get('platformId')
 
     useEffect(() => {
-        dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.DELIVERY_JOB, { platformId: platformId }))
+        dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.DELIVERY_JOB, { platformId }))
     }, [platformId, dispatch])
-
-    useEffect(() => {
-        if (error) toast.error(error)
-    }, [error])
 
     const fields = [
         { key: 'deliveryJobId', label: 'Job ID' },
@@ -47,8 +42,8 @@ const DeliveryJobsScreen = () => {
                         ...deliveryJob,
                         key: deliveryJob.deliveryJobId,
                         onClick: (e) => navigate(`/platform/${deliveryJob.platformId}`),
-                        updateForm: <DeliveryJobUpdateForm deliveryJob={deliveryJob} />,
-                        deleteForm: <DeliveryJobDeleteForm deliveryJob={deliveryJob} />
+                        updateForm: <DeliveryJobUpdateForm deliveryJob={deliveryJob} platformId={platformId} />,
+                        deleteForm: <DeliveryJobDeleteForm deliveryJob={deliveryJob} platformId={platformId} />
                     }))}
                     fields={fields}
                     msg={[`Update or delete delivery jobs`]}

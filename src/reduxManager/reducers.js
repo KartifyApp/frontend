@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify'
 import { CartConstants, UserConstants, ReduxConstants } from 'src/constants/enumConstants'
 
 export class Reducers {
@@ -40,8 +41,7 @@ export class Reducers {
             case ReduxConstants.LIST_SUCCESS:
                 return { loading: false, data: action.payload }
             case ReduxConstants.LIST_FAIL:
-                return { loading: false, error: action.payload, data: [] }
-            case ReduxConstants.LIST_RESET:
+                toast.error(action.payload)
                 return { loading: false, data: [] }
             default:
                 return state
@@ -55,11 +55,10 @@ export class Reducers {
             case ReduxConstants.CREATE_SUCCESS:
                 return { loading: false, data: action.payload }
             case ReduxConstants.CREATE_FAIL:
-                return { loading: false, error: action.payload, data: {} }
-            case ReduxConstants.CREATE_RESET:
+                toast.error(action.payload)
                 return { loading: false, data: {} }
             default:
-                return state
+                return { loading: false, data: {} }
         }
     }
 
@@ -70,8 +69,7 @@ export class Reducers {
             case ReduxConstants.DETAILS_SUCCESS:
                 return { loading: false, data: action.payload }
             case ReduxConstants.DETAILS_FAIL:
-                return { loading: false, error: action.payload, data: {} }
-            case ReduxConstants.DETAILS_RESET:
+                toast.error(action.payload)
                 return { loading: false, data: {} }
             default:
                 return state
@@ -85,11 +83,10 @@ export class Reducers {
             case ReduxConstants.UPDATE_SUCCESS:
                 return { loading: false, data: action.payload }
             case ReduxConstants.UPDATE_FAIL:
-                return { loading: false, error: action.payload, data: {} }
-            case ReduxConstants.UPDATE_RESET:
+                toast.error(action.payload)
                 return { loading: false, data: {} }
             default:
-                return state
+                return { loading: false, data: {} }
         }
     }
 
@@ -100,11 +97,10 @@ export class Reducers {
             case ReduxConstants.DELETE_SUCCESS:
                 return { loading: false, data: action.payload }
             case ReduxConstants.DELETE_FAIL:
-                return { loading: false, error: action.payload, data: {} }
-            case ReduxConstants.DELETE_RESET:
+                toast.error(action.payload)
                 return { loading: false, data: {} }
             default:
-                return state
+                return { loading: false, data: {} }
         }
     }
 }

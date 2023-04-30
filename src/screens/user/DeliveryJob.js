@@ -10,15 +10,14 @@ import { useNavigate } from 'react-router'
 export const DeliveryJobCreateForm = ({ userId }) => {
     const dispatch = useDispatch()
 
-    const { loading, data: createdDeliveryJob, error } = useSelector((state) => state.dataCreate)
+    const { loading, data: createdDeliveryJob } = useSelector((state) => state.dataCreate)
 
     useEffect(() => {
-        if (error) toast.error(error)
         if (createdDeliveryJob.deliveryJobId) {
             toast.success(`Delivery Job ID ${createdDeliveryJob.deliveryJobId} created successfully`)
-            window.location.reload()
+            dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.USER_ROUTES + '/delivery'))
         }
-    }, [createdDeliveryJob, error])
+    }, [createdDeliveryJob, dispatch])
 
     const fields = [
         { key: 'salary', label: 'Salary', required: true },
@@ -33,19 +32,18 @@ export const DeliveryJobCreateForm = ({ userId }) => {
     return <FormComponent loading={loading} msg={['Create a new delivery job', 'Submit']} fields={fields} submitHandler={submitHandler} />
 }
 
-export const DeliveryJobUpdateForm = ({ deliveryJob }) => {
+export const DeliveryJobUpdateForm = ({ deliveryJob, platformId }) => {
     const dispatch = useDispatch()
 
-    const { loading, data: updatedDeliveryJob, error } = useSelector((state) => state.dataUpdate)
+    const { loading, data: updatedDeliveryJob } = useSelector((state) => state.dataUpdate)
     const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
-        if (error) toast.error(error)
         if (updatedDeliveryJob.deliveryJobId) {
-            toast.success(`Delivery Job ID ${updatedDeliveryJob.productId} updated successfully`)
-            window.location.reload()
+            toast.success(`Delivery Job ID ${updatedDeliveryJob.deliveryJobId} updated successfully`)
+            dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.DELIVERY_JOB, { platformId }))
         }
-    }, [updatedDeliveryJob, error])
+    }, [updatedDeliveryJob, dispatch, platformId])
 
     const fields = [
         userInfo.userType === UserType.PROVIDER && { key: 'salary', label: 'Salary', required: true, default: deliveryJob.salary },
@@ -68,18 +66,17 @@ export const DeliveryJobUpdateForm = ({ deliveryJob }) => {
     )
 }
 
-export const DeliveryJobDeleteForm = ({ deliveryJob }) => {
+export const DeliveryJobDeleteForm = ({ deliveryJob, platformId }) => {
     const dispatch = useDispatch()
 
-    const { loading, data: deletedDeliveryJob, error } = useSelector((state) => state.dataDelete)
+    const { loading, data: deletedDeliveryJob } = useSelector((state) => state.dataDelete)
 
     useEffect(() => {
-        if (error) toast.error(error)
         if (deletedDeliveryJob.deliveryJobId) {
-            toast.success(`Delivery job ${deletedDeliveryJob.productReviewId} deleted successfully`)
-            window.location.reload()
+            toast.success(`Delivery job ${deletedDeliveryJob.deliveryJobId} deleted successfully`)
+            dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.DELIVERY_JOB, { platformId }))
         }
-    }, [deletedDeliveryJob, error])
+    }, [deletedDeliveryJob, dispatch, platformId])
 
     const deleteHandler = () => {
         dispatch(GenericActions.deleteData(RouteConstants.BASE_URL + RouteConstants.DELIVERY_JOB + `/${deliveryJob.deliveryJobId}`))
@@ -92,15 +89,11 @@ export const DeliveryJobList = ({ platform }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { loading, data: deliveryJobs, error } = useSelector((state) => state.dataList)
+    const { loading, data: deliveryJobs } = useSelector((state) => state.dataList)
 
     useEffect(() => {
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.DELIVERY_JOB, { platformId: platform?.platformId }))
     }, [platform, dispatch])
-
-    useEffect(() => {
-        if (error) toast.error(error)
-    }, [error])
 
     const fields = [
         { key: 'deliveryJobId', label: 'Job ID' },

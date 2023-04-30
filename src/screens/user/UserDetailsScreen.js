@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
 import { Container } from '@mui/material'
 
 import { Header } from 'src/components/Header'
@@ -16,18 +15,12 @@ import { ProductReviewList } from '../product/ProductReview'
 const UserDetailsScreen = () => {
     const dispatch = useDispatch()
 
-    const { loading, data: user, error } = useSelector((state) => state.dataDetails)
+    const { loading, data: user } = useSelector((state) => state.dataDetails)
     const { userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
         dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.USER_ROUTES))
     }, [dispatch])
-
-    useEffect(() => {
-        if (error) {
-            toast.error(error)
-        }
-    }, [error])
 
     const userInfoComponent = (
         <InfoComponent

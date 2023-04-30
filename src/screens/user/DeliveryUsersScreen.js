@@ -1,7 +1,6 @@
 import { Container } from '@mui/material'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
 
 import { Footer } from 'src/components/Footer'
 import { Header } from 'src/components/Header'
@@ -13,15 +12,11 @@ import { DeliveryJobCreateForm } from './DeliveryJob'
 const DeliveryUsersScreen = () => {
     const dispatch = useDispatch()
 
-    const { loading, data: deliveryUsers, error } = useSelector((state) => state.dataList)
+    const { loading, data: deliveryUsers } = useSelector((state) => state.dataList)
 
     useEffect(() => {
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.USER_ROUTES + '/delivery'))
     }, [dispatch])
-
-    useEffect(() => {
-        if (error) toast.error(error)
-    }, [error])
 
     const fields = [
         { key: 'userId', label: 'User ID' },
@@ -41,7 +36,7 @@ const DeliveryUsersScreen = () => {
                     data={deliveryUsers.map((deliveryUser) => ({
                         ...deliveryUser,
                         key: deliveryUser.userId,
-                        phoneNumber: deliveryUser.userAddress.phoneNumber,
+                        phoneNumber: deliveryUser.userAddress?.phoneNumber,
                         createForm: <DeliveryJobCreateForm userId={deliveryUser.userId} />
                     }))}
                     fields={fields}
