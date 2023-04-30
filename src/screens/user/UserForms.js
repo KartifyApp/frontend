@@ -11,14 +11,13 @@ import { AddressKeys, RouteConstants, UserType } from 'src/constants/enumConstan
 export const UserRegisterForm = () => {
     const dispatch = useDispatch()
 
-    const { loading, data: createdUser, error } = useSelector((state) => state.dataCreate)
+    const { loading, data: createdUser } = useSelector((state) => state.dataCreate)
 
     useEffect(() => {
-        if (error) toast.error(error)
         if (createdUser.name) {
             toast.success(`${createdUser.name} registered successfully`)
         }
-    }, [error, createdUser])
+    }, [createdUser])
 
     const fields = [
         { key: 'name', label: 'Name', required: true },
@@ -49,15 +48,14 @@ export const UserLoginForm = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { loading, userInfo, error } = useSelector((state) => state.userLogin)
+    const { loading, userInfo } = useSelector((state) => state.userLogin)
 
     useEffect(() => {
-        if (error) toast.error(error)
         if (userInfo.token) {
             toast.success('Login successful')
             navigate('/')
         }
-    }, [error, userInfo, navigate])
+    }, [userInfo, navigate])
 
     const fields = [
         { key: 'username', label: 'Username', required: true },
@@ -74,15 +72,14 @@ export const UserLoginForm = () => {
 export const UserUpdateForm = ({ user }) => {
     const dispatch = useDispatch()
 
-    const { loading, data: updatedUser, error } = useSelector((state) => state.dataUpdate)
+    const { loading, data: updatedUser } = useSelector((state) => state.dataUpdate)
 
     useEffect(() => {
-        if (error) toast.error(error)
         if (updatedUser.userId) {
             toast.success(`User ID ${updatedUser.userId} updated successfully`)
-            window.location.reload()
+            dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.USER_ROUTES))
         }
-    }, [error, updatedUser])
+    }, [updatedUser, dispatch])
 
     const fields = [
         { key: 'name', label: 'Name', required: true, default: user.name },

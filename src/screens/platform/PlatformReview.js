@@ -9,15 +9,14 @@ import { RouteConstants } from 'src/constants/enumConstants'
 export const PlatformReviewCreateForm = ({ platformId }) => {
     const dispatch = useDispatch()
 
-    const { loading, data: createdPlatformReview, error } = useSelector((state) => state.dataCreate)
+    const { loading, data: createdPlatformReview } = useSelector((state) => state.dataCreate)
 
     useEffect(() => {
-        if (error) toast.error(error)
         if (createdPlatformReview.platformReviewId) {
             toast.success(`Platform review ID ${createdPlatformReview.platformReviewId} created successfully`)
-            window.location.reload()
+            dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_REVIEW_ROUTES, { platformId }))
         }
-    }, [createdPlatformReview, error])
+    }, [createdPlatformReview, dispatch, platformId])
 
     const fields = [
         { key: 'comment', label: 'Comment', required: true },
@@ -35,15 +34,14 @@ export const PlatformReviewCreateForm = ({ platformId }) => {
 export const PlatformReviewUpdateForm = ({ platformReview }) => {
     const dispatch = useDispatch()
 
-    const { loading, data: updatedPlatformReview, error } = useSelector((state) => state.dataUpdate)
+    const { loading, data: updatedPlatformReview } = useSelector((state) => state.dataUpdate)
 
     useEffect(() => {
-        if (error) toast.error(error)
         if (updatedPlatformReview.platformReviewId) {
             toast.success(`Platform review ID ${updatedPlatformReview.platformReviewId} updated successfully`)
-            window.location.reload()
+            dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_REVIEW_ROUTES))
         }
-    }, [updatedPlatformReview, error])
+    }, [updatedPlatformReview, dispatch])
 
     const fields = [
         { key: 'comment', label: 'Comment', required: true, default: platformReview.comment },
@@ -67,15 +65,14 @@ export const PlatformReviewUpdateForm = ({ platformReview }) => {
 export const PlatformReviewDeleteForm = ({ platformReview }) => {
     const dispatch = useDispatch()
 
-    const { loading, data: deletedPlatformReview, error } = useSelector((state) => state.dataDelete)
+    const { loading, data: deletedPlatformReview } = useSelector((state) => state.dataDelete)
 
     useEffect(() => {
-        if (error) toast.error(error)
-        if (deletedPlatformReview) {
+        if (deletedPlatformReview.platformReviewId) {
             toast.success(`Platform review ID ${deletedPlatformReview.platformReviewId} deleted successfully`)
-            window.location.reload()
+            dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_REVIEW_ROUTES))
         }
-    }, [deletedPlatformReview, error])
+    }, [deletedPlatformReview, dispatch])
 
     const deleteHandler = () => {
         dispatch(GenericActions.deleteData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_REVIEW_ROUTES + `/${platformReview.platformReviewId}`))
@@ -89,15 +86,11 @@ export const PlatformReviewDeleteForm = ({ platformReview }) => {
 export const PlatformReviewList = ({ platform, create, action }) => {
     const dispatch = useDispatch()
 
-    const { loading, data: platformReviews, error } = useSelector((state) => state.dataList)
+    const { loading, data: platformReviews } = useSelector((state) => state.dataList)
 
     useEffect(() => {
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_REVIEW_ROUTES, { platformId: platform?.platformId }))
     }, [platform, dispatch])
-
-    useEffect(() => {
-        if (error) toast.error(error)
-    }, [error])
 
     const fields = [
         { key: 'platformReviewId', label: 'Review ID' },
