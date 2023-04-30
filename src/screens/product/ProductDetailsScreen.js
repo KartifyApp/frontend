@@ -20,8 +20,8 @@ const ProductDetailsScreen = () => {
 
     const { productId } = useParams()
 
-    const { loading, data: product, error } = useSelector((state) => state.dataDetails)
     const { userInfo } = useSelector((state) => state.userLogin)
+    const { loading, data: product } = useSelector((state) => state.dataDetails)
     const { cartProducts, error: cartDetailsError } = useSelector((state) => state.cartDetails)
 
     useEffect(() => {
@@ -30,11 +30,8 @@ const ProductDetailsScreen = () => {
     }, [productId, dispatch, navigate])
 
     useEffect(() => {
-        if (error) {
-            toast.error(error)
-        }
         if (cartDetailsError) toast.error(cartDetailsError)
-    }, [error, cartDetailsError])
+    }, [cartDetailsError])
 
     const productInfo = (
         <InfoComponent

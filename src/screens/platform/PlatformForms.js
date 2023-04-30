@@ -9,15 +9,14 @@ import { AddressKeys, PlatformStatus, RouteConstants } from 'src/constants/enumC
 export const PlatformCreateForm = () => {
     const dispatch = useDispatch()
 
-    const { loading, data: createdPlatform, error } = useSelector((state) => state.dataCreate)
+    const { loading, data: createdPlatform } = useSelector((state) => state.dataCreate)
 
     useEffect(() => {
-        if (error) toast.error(error)
         if (createdPlatform.name) {
             toast.success(`${createdPlatform.name} created successfully`)
-            window.location.reload()
+            dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES))
         }
-    }, [createdPlatform, error])
+    }, [createdPlatform, dispatch])
 
     const fields = [
         { key: 'name', label: 'Name', required: true },
@@ -52,15 +51,14 @@ export const PlatformCreateForm = () => {
 export const PlatformUpdateForm = ({ platform }) => {
     const dispatch = useDispatch()
 
-    const { loading, data: updatedPlatform, error } = useSelector((state) => state.dataUpdate)
+    const { loading, data: updatedPlatform } = useSelector((state) => state.dataUpdate)
 
     useEffect(() => {
-        if (error) toast.error(error)
         if (updatedPlatform.platformId) {
             toast.success(`Platform ID ${updatedPlatform.platformId} updated successfully`)
-            window.location.reload()
+            dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platform.platformId}`))
         }
-    }, [updatedPlatform, error])
+    }, [updatedPlatform, dispatch, platform])
 
     const fields = [
         { key: 'name', label: 'Name', required: true, default: platform.name },
@@ -97,15 +95,14 @@ export const PlatformDeleteForm = ({ platform }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { loading, data: deletedPlatform, error } = useSelector((state) => state.dataDelete)
+    const { loading, data: deletedPlatform } = useSelector((state) => state.dataDelete)
 
     useEffect(() => {
-        if (error) toast.error(error)
         if (deletedPlatform.platformId) {
             toast.success(`Platform ID ${deletedPlatform.platformId} deleted successfully`)
             navigate('/platform')
         }
-    }, [deletedPlatform, error, navigate])
+    }, [deletedPlatform, navigate])
 
     const deleteHandler = () => {
         dispatch(GenericActions.deleteData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platform.platformId}`))

@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
-import { toast } from 'react-toastify'
 import { Container } from '@mui/material'
 
 import { Header } from 'src/components/Header'
@@ -16,15 +15,11 @@ const PlatformGridScreen = () => {
     const navigate = useNavigate()
 
     const { userInfo } = useSelector((state) => state.userLogin)
-    const { loading, data: platforms, error } = useSelector((state) => state.dataList)
+    const { loading, data: platforms } = useSelector((state) => state.dataList)
 
     useEffect(() => {
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES))
     }, [dispatch])
-
-    useEffect(() => {
-        if (error) toast.error(error)
-    }, [error])
 
     return (
         <>

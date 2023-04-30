@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router'
-import { toast } from 'react-toastify'
 import { Container } from '@mui/material'
 
 import { Footer } from 'src/components/Footer'
@@ -19,20 +18,16 @@ const ProductGridScreen = () => {
     const platform = state?.platform
 
     const { userInfo } = useSelector((state) => state.userLogin)
-    const { loading, data: products, error } = useSelector((state) => state.dataList)
+    const { loading, data: products } = useSelector((state) => state.dataList)
 
     useEffect(() => {
         if (!platform) navigate('/platform')
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, { platformId: platform.platformId }))
     }, [platform, dispatch, navigate])
 
-    useEffect(() => {
-        if (error) toast.error(error)
-    }, [error])
-
     return (
         <>
-            <Header msg={['Products', `Products for  platform '${platform.name}'`]} />
+            <Header msg={['Products', `Products for  Platform ID  ${platform.platformId}`]} />
             <Container maxWidth="lg">
                 <GridComponent
                     msg={['Products']}

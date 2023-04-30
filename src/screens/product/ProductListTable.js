@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
-import { toast } from 'react-toastify'
 
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { TableComponent } from 'src/components/TableComponent'
@@ -12,16 +11,12 @@ export const ProductListTable = ({ platform }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { loading, data: products, error } = useSelector((state) => state.dataList)
     const { userInfo } = useSelector((state) => state.userLogin)
+    const { loading, data: products } = useSelector((state) => state.dataList)
 
     useEffect(() => {
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, { platformId: platform.platformId }))
     }, [platform, dispatch])
-
-    useEffect(() => {
-        if (error) toast.error(error)
-    }, [error])
 
     const fields = [
         { key: 'productId', label: 'Product ID' },

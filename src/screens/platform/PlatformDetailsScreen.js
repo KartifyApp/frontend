@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
-import { toast } from 'react-toastify'
 import { Container } from '@mui/material'
 
 import { Footer } from 'src/components/Footer'
@@ -20,19 +19,13 @@ const PlatformDetailsScreen = () => {
 
     const { platformId } = useParams()
 
-    const { loading, data: platform, error } = useSelector((state) => state.dataDetails)
     const { userInfo } = useSelector((state) => state.userLogin)
+    const { loading, data: platform } = useSelector((state) => state.dataDetails)
 
     useEffect(() => {
         if (!platformId) navigate('/platform')
         dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platformId}`))
     }, [platformId, dispatch, navigate])
-
-    useEffect(() => {
-        if (error) {
-            toast.error(error)
-        }
-    }, [error])
 
     const platformInfo = (
         <InfoComponent
