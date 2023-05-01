@@ -28,7 +28,7 @@ export const OrderCreateForm = () => {
         { key: 'city', label: 'City', required: true, default: shippingAddress.city },
         { key: 'country', label: 'Country', required: true, default: shippingAddress.country },
         { key: 'phoneNumber', label: 'Phone', required: true, default: shippingAddress.phoneNumber },
-        { key: 'paymentMethod', label: 'Payment Method', required: true, dropdown: true, menu: Object.keys(PaymentMethod), default: paymentMethod }
+        { key: 'paymentMethod', label: 'Payment Method', required: true, menu: Object.keys(PaymentMethod), default: paymentMethod }
     ]
 
     const submitHandler = (data) => {

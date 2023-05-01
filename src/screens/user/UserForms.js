@@ -22,7 +22,7 @@ export const UserRegisterForm = () => {
     const fields = [
         { key: 'name', label: 'Name', required: true },
         { key: 'email', label: 'Email', required: true },
-        { key: 'userType', label: 'User Type', dropdown: true, menu: Object.values(UserType), default: UserType.CONSUMER },
+        { key: 'userType', label: 'User Type', menu: Object.values(UserType), default: UserType.CONSUMER },
         { key: 'username', label: 'Username', required: true },
         { key: 'password', label: 'Password', required: true },
         { key: 'postOffice', label: 'Post Office' },

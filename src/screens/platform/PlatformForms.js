@@ -22,12 +22,13 @@ export const PlatformCreateForm = () => {
         { key: 'name', label: 'Name', required: true },
         { key: 'description', label: 'Description' },
         { key: 'categories', label: 'Categories' },
-        { key: 'platformStatus', label: 'Platform Status', dropdown: true, menu: Object.values(PlatformStatus), default: PlatformStatus.DOWNTIME },
+        { key: 'platformStatus', label: 'Platform Status', menu: Object.values(PlatformStatus), default: PlatformStatus.DOWNTIME },
         { key: 'postOffice', label: 'Post Office' },
         { key: 'city', label: 'City' },
         { key: 'pinCode', label: 'PIN Code' },
         { key: 'country', label: 'Country' },
-        { key: 'phoneNumber', label: 'Phone' }
+        { key: 'phoneNumber', label: 'Phone' },
+        { key: 'image', label: 'Image' }
     ]
 
     const submitHandler = (data) => {
@@ -62,15 +63,15 @@ export const PlatformUpdateForm = ({ platform }) => {
 
     const fields = [
         { key: 'name', label: 'Name', required: true, default: platform.name },
-        { key: 'image', label: 'Image', default: platform.image },
         { key: 'description', label: 'Description', default: platform.description },
         { key: 'categories', label: 'Categories', default: platform.categories?.join(',') },
-        { key: 'platformStatus', label: 'Platform Status', dropdown: true, menu: Object.values(PlatformStatus), default: platform.platformStatus },
+        { key: 'platformStatus', label: 'Platform Status', menu: Object.values(PlatformStatus), default: platform.platformStatus },
         { key: 'postOffice', label: 'Post Office', default: platform.platformAddress?.postOffice },
         { key: 'city', label: 'City', default: platform.platformAddress?.city },
         { key: 'pinCode', label: 'PIN Code', default: platform.platformAddress?.pinCode },
         { key: 'country', label: 'Country', default: platform.platformAddress?.country },
-        { key: 'phoneNumber', label: 'Phone', default: platform.platformAddress?.phoneNumber }
+        { key: 'phoneNumber', label: 'Phone', default: platform.platformAddress?.phoneNumber },
+        { key: 'image', label: 'Image', default: platform.image }
     ]
 
     const submitHandler = (data) => {

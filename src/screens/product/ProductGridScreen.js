@@ -44,7 +44,7 @@ const ProductGridScreen = () => {
                         key: 'category',
                         menu: platform.categories
                     }}
-                    createForm={userInfo.userType === UserType.PROVIDER && <ProductCreateForm platformId={platform.platformId} />}
+                    createForm={userInfo.userType === UserType.PROVIDER && <ProductCreateForm platform={platform} />}
                 />
             </Container>
             <Footer />

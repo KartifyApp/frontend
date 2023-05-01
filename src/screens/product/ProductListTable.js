@@ -37,7 +37,7 @@ export const ProductListTable = ({ platform }) => {
                 menu: platform.categories
             }}
             msg={[`Products in platform ${platform.name}`]}
-            createForm={userInfo.userType === UserType.PROVIDER && <ProductCreateForm platformId={platform.platformId} />}
+            createForm={userInfo.userType === UserType.PROVIDER && <ProductCreateForm platform={platform} />}
         />
     )
 }

@@ -51,7 +51,6 @@ export const DeliveryJobUpdateForm = ({ deliveryJob, platformId }) => {
             key: 'deliveryStatus',
             label: 'Delivery Status',
             required: true,
-            dropdown: true,
             menu: Object.keys(DeliveryStatus),
             default: deliveryJob.deliveryStatus
         }

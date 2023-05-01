@@ -6,7 +6,7 @@ import { GenericActions } from 'src/reduxManager/genericActions'
 import { FormComponent } from 'src/components/FormComponent'
 import { RouteConstants } from 'src/constants/enumConstants'
 
-export const ProductCreateForm = ({ platformId }) => {
+export const ProductCreateForm = ({ platform }) => {
     const dispatch = useDispatch()
 
     const { loading, data: createdProduct } = useSelector((state) => state.dataCreate)
@@ -14,22 +14,22 @@ export const ProductCreateForm = ({ platformId }) => {
     useEffect(() => {
         if (createdProduct.name) {
             toast.success(`${createdProduct.name} created successfully`)
-            dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, { platformId }))
+            dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, { platformId: platform.platformId }))
         }
-    }, [createdProduct, dispatch, platformId])
+    }, [createdProduct, dispatch, platform])
 
     const fields = [
         { key: 'name', label: 'Name', required: true },
         { key: 'brand', label: 'Brand', required: true },
-        { key: 'category', label: 'Category', required: true },
-        { key: 'image', label: 'Image' },
+        { key: 'category', label: 'Category', required: true, menu: platform.categories },
         { key: 'description', label: 'Description' },
         { key: 'price', label: 'Price', default: '0.00' },
-        { key: 'stockCount', label: 'Stock Count', default: 1 }
+        { key: 'stockCount', label: 'Stock Count', default: 1 },
+        { key: 'image' }
     ]
 
     const submitHandler = (data) => {
-        data.platformId = platformId
+        data.platformId = platform.platformId
         dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, data))
     }
 
@@ -50,12 +50,12 @@ export const ProductUpdateForm = ({ product }) => {
 
     const fields = [
         { key: 'name', label: 'Name', required: true, default: product.name },
-        { key: 'image', label: 'image', default: product.image },
-        { key: 'brand', label: 'brand', required: true, default: product.brand },
-        { key: 'category', label: 'category', required: true, default: product.category },
-        { key: 'description', label: 'description', default: product.description },
-        { key: 'price', label: 'price', default: product.price },
-        { key: 'stockCount', label: 'stockCount', default: product.stockCount }
+        { key: 'brand', label: 'Brand', required: true, default: product.brand },
+        { key: 'category', label: 'Category', required: true, default: product.category },
+        { key: 'description', label: 'Description', default: product.description },
+        { key: 'price', label: 'Price', default: product.price },
+        { key: 'stockCount', label: 'Stock Count', default: product.stockCount },
+        { key: 'image', default: product.image }
     ]
 
     const submitHandler = (data) => {

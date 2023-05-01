@@ -30,7 +30,7 @@ export const FormComponent = ({ msg, fields, submitHandler, loading }) => {
                     {fields
                         .filter((field) => field)
                         .map((field) =>
-                            field.dropdown ? (
+                            field.menu ? (
                                 <TextField
                                     key={field.key}
                                     required={field.required}
@@ -46,6 +46,11 @@ export const FormComponent = ({ msg, fields, submitHandler, loading }) => {
                                         </MenuItem>
                                     ))}
                                 </TextField>
+                            ) : field.key === 'image' ? (
+                                <Button component="label" key={field.key}>
+                                    Upload Image
+                                    <input type="file" hidden />
+                                </Button>
                             ) : (
                                 <TextField
                                     key={field.key}
