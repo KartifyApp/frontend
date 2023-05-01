@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify'
 import { CartConstants, UserConstants, ReduxConstants } from 'src/constants/enumConstants'
 
 export class Reducers {
@@ -21,14 +20,10 @@ export class Reducers {
         switch (action.type) {
             case CartConstants.CART_UPDATE_PRODUCTS:
                 return { ...state, cartProducts: action.payload.cartProducts, platformId: action.payload.platformId }
-            case CartConstants.CART_UPDATE_FAIL:
-                return { ...state, error: action.payload }
             case CartConstants.CART_SAVE_SHIPPING_ADDRESS:
                 return { ...state, shippingAddress: action.payload }
             case CartConstants.CART_SAVE_PAYMENT_METHOD:
                 return { ...state, paymentMethod: action.payload }
-            case CartConstants.CART_ERROR_RESET:
-                return { ...state, error: null }
             default:
                 return state
         }
@@ -40,9 +35,6 @@ export class Reducers {
                 return { loading: true, data: [] }
             case ReduxConstants.LIST_SUCCESS:
                 return { loading: false, data: action.payload }
-            case ReduxConstants.LIST_FAIL:
-                toast.error(action.payload)
-                return { loading: false, data: [] }
             default:
                 return state
         }
@@ -54,9 +46,6 @@ export class Reducers {
                 return { loading: true, data: {} }
             case ReduxConstants.CREATE_SUCCESS:
                 return { loading: false, data: action.payload }
-            case ReduxConstants.CREATE_FAIL:
-                toast.error(action.payload)
-                return { loading: false, data: {} }
             default:
                 return { loading: false, data: {} }
         }
@@ -68,9 +57,6 @@ export class Reducers {
                 return { loading: true, data: {} }
             case ReduxConstants.DETAILS_SUCCESS:
                 return { loading: false, data: action.payload }
-            case ReduxConstants.DETAILS_FAIL:
-                toast.error(action.payload)
-                return { loading: false, data: {} }
             default:
                 return state
         }
@@ -82,9 +68,6 @@ export class Reducers {
                 return { loading: true, data: {} }
             case ReduxConstants.UPDATE_SUCCESS:
                 return { loading: false, data: action.payload }
-            case ReduxConstants.UPDATE_FAIL:
-                toast.error(action.payload)
-                return { loading: false, data: {} }
             default:
                 return { loading: false, data: {} }
         }
@@ -96,9 +79,6 @@ export class Reducers {
                 return { loading: true, data: {} }
             case ReduxConstants.DELETE_SUCCESS:
                 return { loading: false, data: action.payload }
-            case ReduxConstants.DELETE_FAIL:
-                toast.error(action.payload)
-                return { loading: false, data: {} }
             default:
                 return { loading: false, data: {} }
         }

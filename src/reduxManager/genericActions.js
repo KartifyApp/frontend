@@ -14,10 +14,8 @@ export class GenericActions {
                     payload: data
                 })
             } catch (error) {
-                dispatch({
-                    type: ReduxConstants.LIST_FAIL,
-                    payload: ActionServices.getError(error)
-                })
+                dispatch({ type: ReduxConstants.LIST_FAIL })
+                ActionServices.toastError(error)
             }
         }
 
@@ -32,10 +30,8 @@ export class GenericActions {
                     payload: data
                 })
             } catch (error) {
-                dispatch({
-                    type: ReduxConstants.CREATE_FAIL,
-                    payload: ActionServices.getError(error)
-                })
+                dispatch({ type: ReduxConstants.CREATE_FAIL })
+                ActionServices.toastError(error)
             }
         }
 
@@ -50,10 +46,8 @@ export class GenericActions {
                     payload: data
                 })
             } catch (error) {
-                dispatch({
-                    type: ReduxConstants.DETAILS_FAIL,
-                    payload: ActionServices.getError(error)
-                })
+                dispatch({ type: ReduxConstants.DETAILS_FAIL })
+                ActionServices.toastError(error)
             }
         }
 
@@ -66,10 +60,8 @@ export class GenericActions {
                 payload: data
             })
         } catch (error) {
-            dispatch({
-                type: ReduxConstants.UPDATE_FAIL,
-                payload: ActionServices.getError(error)
-            })
+            dispatch({ type: ReduxConstants.UPDATE_FAIL })
+            ActionServices.toastError(error)
         }
     }
 
@@ -84,10 +76,8 @@ export class GenericActions {
             await ActionServices.sleep(STATE_RESET_TIME)
             dispatch({ type: ReduxConstants.DELETE_RESET })
         } catch (error) {
-            dispatch({
-                type: ReduxConstants.DELETE_FAIL,
-                payload: ActionServices.getError(error)
-            })
+            dispatch({ type: ReduxConstants.DELETE_FAIL })
+            ActionServices.toastError(error)
         }
     }
 }

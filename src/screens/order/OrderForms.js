@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import { FormComponent } from 'src/components/FormComponent'
 import { AddressKeys, OrderStatus, PaymentMethod, RouteConstants } from 'src/constants/enumConstants'
@@ -7,18 +8,19 @@ import { CartActions } from 'src/reduxManager/cartActions'
 import { GenericActions } from 'src/reduxManager/genericActions'
 
 export const OrderCreateForm = () => {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
+    const { loading, data: createdOrder } = useSelector((state) => state.dataCreate)
     const { shippingAddress, paymentMethod, cartProducts, platformId } = useSelector((state) => state.cartDetails)
-    const { loading, data: createdOrder, error } = useSelector((state) => state.dataCreate)
 
     useEffect(() => {
-        if (error) toast.error(error)
         if (createdOrder.orderId) {
             toast.success(`Order ID ${createdOrder.orderId} created successfully`)
             dispatch(CartActions.clearCart())
+            navigate(`/order/${createdOrder.orderId}`)
         }
-    }, [createdOrder, error, dispatch])
+    }, [createdOrder, dispatch, navigate])
 
     const fields = [
         { key: 'postOffice', label: 'Post Office', required: true, default: shippingAddress.postOffice },
@@ -30,6 +32,10 @@ export const OrderCreateForm = () => {
     ]
 
     const submitHandler = (data) => {
+        if (!platformId) {
+            toast.error(`Currently no products in your cart`)
+            return
+        }
         dispatch(CartActions.updatePaymentMethod(data.paymentMethod))
         dispatch(CartActions.updateShippingAddress(data))
         data.shippingAddress = {}
@@ -38,7 +44,7 @@ export const OrderCreateForm = () => {
             delete data[key]
         }
         data.cartProducts = cartProducts
-        platformId && dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platformId}/order`, data))
+        dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${platformId}/order`, data))
     }
 
     return <FormComponent loading={loading} msg={['Update shipping address and payment method', 'Save']} fields={fields} submitHandler={submitHandler} />
@@ -47,35 +53,33 @@ export const OrderCreateForm = () => {
 export const OrderDeliveryJobForm = ({ order }) => {
     const dispatch = useDispatch()
 
-    const { loading, data: updatedOrder, error } = useSelector((state) => state.dataCreate)
+    const { loading, data: updatedOrder } = useSelector((state) => state.dataCreate)
 
     useEffect(() => {
-        if (error) toast.error(error)
         if (updatedOrder.orderId) {
             toast.success(`Order ID ${updatedOrder.orderId} updated successfully for delivery`)
-            window.location.reload()
+            dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${order.platformId}/order`))
         }
-    }, [error, updatedOrder])
+    }, [updatedOrder, dispatch])
 
     const submitHandler = (data) => {
         dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES + `/${order.orderId}`, {}))
     }
 
-    return <FormComponent loading={loading} msg={[`Deliver Order ${order.orderId}`, 'OK']} fields={[]} submitHandler={submitHandler} />
+    return <FormComponent loading={loading} msg={[`Deliver Order ID ${order.orderId}`, 'OK']} fields={[]} submitHandler={submitHandler} />
 }
 
 export const OrderUpdateForm = ({ order }) => {
     const dispatch = useDispatch()
 
-    const { loading, data: updatedOrder, error } = useSelector((state) => state.dataUpdate)
+    const { loading, data: updatedOrder } = useSelector((state) => state.dataUpdate)
 
     useEffect(() => {
-        if (error) toast.error(error)
         if (updatedOrder.orderId) {
             toast.success(`Order ID ${updatedOrder.orderId} updated successfully`)
-            window.location.reload()
+            dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES + `/${order.orderId}`))
         }
-    }, [error, updatedOrder])
+    }, [updatedOrder, dispatch, order])
 
     const submitHandler = (data) => {
         dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES + `/${order.orderId}`, {}))
@@ -103,15 +107,14 @@ export const OrderUpdateForm = ({ order }) => {
 export const OrderCancelForm = ({ order }) => {
     const dispatch = useDispatch()
 
-    const { loading, data: cancelledOrder, error } = useSelector((state) => state.dataUpdate)
+    const { loading, data: cancelledOrder } = useSelector((state) => state.dataUpdate)
 
     useEffect(() => {
-        if (error) toast.error(error)
         if (cancelledOrder.orderId) {
             toast.success(`Order ID ${cancelledOrder.orderId} cancelled successfully`)
-            window.location.reload()
+            dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES + `/${order.orderId}`))
         }
-    }, [error, cancelledOrder])
+    }, [cancelledOrder, dispatch, order])
 
     const submitHandler = (data) => {
         dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES + `/${order.orderId}/cancel`, {}))
@@ -123,15 +126,14 @@ export const OrderCancelForm = ({ order }) => {
 export const OrderPaymentForm = ({ order }) => {
     const dispatch = useDispatch()
 
-    const { loading, data: paidOrder, error } = useSelector((state) => state.dataUpdate)
+    const { loading, data: paidOrder } = useSelector((state) => state.dataUpdate)
 
     useEffect(() => {
-        if (error) toast.error(error)
         if (paidOrder.orderId) {
             toast.success(`Order ID ${paidOrder.orderId} paid successfully`)
-            window.location.reload()
+            dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES + `/${order.orderId}`))
         }
-    }, [error, paidOrder])
+    }, [paidOrder, dispatch, order])
 
     const submitHandler = (data) => {
         dispatch(GenericActions.updateData(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES + `/${order.orderId}/pay`, {}))

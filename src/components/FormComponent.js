@@ -1,7 +1,7 @@
-import { Card, CardHeader, Divider, Box, Button, TextField, MenuItem, CardContent, CircularProgress } from '@mui/material'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
+import { Card, CardHeader, Divider, Box, Button, TextField, MenuItem, CardContent, CircularProgress } from '@mui/material'
 
 export const FormComponent = ({ msg, fields, submitHandler, loading }) => {
     const [formData, setFormData] = useState({})
@@ -16,7 +16,7 @@ export const FormComponent = ({ msg, fields, submitHandler, loading }) => {
 
     return (
         <Card>
-            <CardHeader title={msg[0]} />
+            <CardHeader title={msg[0]} style={{ textAlign: 'center' }} />
             <Divider />
             <CardContent>
                 <Box

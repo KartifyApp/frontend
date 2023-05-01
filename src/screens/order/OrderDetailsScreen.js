@@ -1,13 +1,12 @@
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
 import { Container } from '@mui/material'
 
 import { Header } from 'src/components/Header'
 import { Footer } from 'src/components/Footer'
 import { GenericActions } from 'src/reduxManager/genericActions'
-import { OrderStatus, PaymentStatus, ReduxConstants, RouteConstants, UserType } from 'src/constants/enumConstants'
+import { OrderStatus, PaymentStatus, RouteConstants, UserType } from 'src/constants/enumConstants'
 import { InfoComponent } from 'src/components/InfoComponent'
 import { TabsComponent } from 'src/components/TabsComponent'
 import { TableComponent } from 'src/components/TableComponent'
@@ -17,15 +16,11 @@ export const OrderProductsTable = ({ order }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { loading, data: orderProducts, error } = useSelector((state) => state.dataList)
+    const { loading, data: orderProducts } = useSelector((state) => state.dataList)
 
     useEffect(() => {
         dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES + `/${order.orderId}/product`))
     }, [order, dispatch])
-
-    useEffect(() => {
-        if (error) toast.error(error)
-    }, [error])
 
     const fields = [
         { key: 'productId', label: 'Product ID' },
@@ -54,19 +49,12 @@ const OrderDetailsScreen = () => {
 
     const { orderId } = useParams()
 
-    const { loading, data: order, error } = useSelector((state) => state.dataDetails)
     const { userInfo } = useSelector((state) => state.userLogin)
+    const { loading, data: order } = useSelector((state) => state.dataDetails)
 
     useEffect(() => {
         dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES + `/${orderId}`))
     }, [orderId, dispatch])
-
-    useEffect(() => {
-        if (error) {
-            toast.error(error)
-            dispatch({ type: ReduxConstants.DETAILS_RESET })
-        }
-    }, [error, dispatch])
 
     const updatePermission =
         (userInfo.userType === UserType.PROVIDER && [OrderStatus.PLACED, OrderStatus.CONFIRMED].includes(order.orderStatus)) ||

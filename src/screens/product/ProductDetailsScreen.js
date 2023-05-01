@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
-import { toast } from 'react-toastify'
 import { Container } from '@mui/material'
 
 import { Header } from 'src/components/Header'
@@ -22,16 +21,12 @@ const ProductDetailsScreen = () => {
 
     const { userInfo } = useSelector((state) => state.userLogin)
     const { loading, data: product } = useSelector((state) => state.dataDetails)
-    const { cartProducts, error: cartDetailsError } = useSelector((state) => state.cartDetails)
+    const { cartProducts } = useSelector((state) => state.cartDetails)
 
     useEffect(() => {
         if (!productId) navigate('/product')
         dispatch(GenericActions.getDataDetails(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES + `/${productId}`))
     }, [productId, dispatch, navigate])
-
-    useEffect(() => {
-        if (cartDetailsError) toast.error(cartDetailsError)
-    }, [cartDetailsError])
 
     const productInfo = (
         <InfoComponent

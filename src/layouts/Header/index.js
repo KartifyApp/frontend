@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { Box, alpha, Stack, lighten, Divider, IconButton, Tooltip, styled, useTheme, Typography } from '@mui/material'
+import { Box, alpha, Stack, lighten, IconButton, Tooltip, styled, useTheme, Typography } from '@mui/material'
 import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone'
 import { SidebarContext } from 'src/layouts/Sidebar/SidebarContext'
 import CloseTwoToneIcon from '@mui/icons-material/CloseTwoTone'
@@ -49,12 +49,13 @@ function Header() {
         >
             <Stack direction="row" alignItems="center" spacing={0}>
                 <HomeIcon />
-                <Typography fontSize={20}>
-                    {'>' +
+                <Typography fontSize={18}>
+                    {' -> ' +
                         decodeURI(window.location.href)
                             .split('/')
                             .filter((_, i) => i > 2)
-                            .join('>')}
+                            .map((urlElement) => (urlElement.includes('?') ? urlElement.replace('?', '(') + ')' : urlElement).toUpperCase())
+                            .join(' -> ')}
                 </Typography>
             </Stack>
             <Box display="flex" alignItems="center">

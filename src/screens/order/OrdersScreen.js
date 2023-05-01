@@ -1,9 +1,9 @@
-import { Container } from '@mui/material'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
-import { toast } from 'react-toastify'
+import { Container } from '@mui/material'
+
 import { Footer } from 'src/components/Footer'
 import { Header } from 'src/components/Header'
 import { TableComponent } from 'src/components/TableComponent'
@@ -17,8 +17,8 @@ const OrdersScreen = () => {
 
     const platformId = useSearchParams()[0].get('platformId')
 
-    const { loading, data: orders, error } = useSelector((state) => state.dataList)
     const { userInfo } = useSelector((state) => state.userLogin)
+    const { loading, data: orders } = useSelector((state) => state.dataList)
 
     useEffect(() => {
         dispatch(
@@ -27,10 +27,6 @@ const OrdersScreen = () => {
             )
         )
     }, [platformId, dispatch])
-
-    useEffect(() => {
-        if (error) toast.error(error)
-    }, [error])
 
     const fields = [
         { key: 'orderId', label: 'Order ID' },

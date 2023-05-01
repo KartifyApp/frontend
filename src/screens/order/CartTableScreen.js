@@ -1,8 +1,8 @@
-import { Container } from '@mui/material'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
-import { toast } from 'react-toastify'
+import { Container } from '@mui/material'
+
 import { GenericActions } from 'src/reduxManager/genericActions'
 import { CartActions } from 'src/reduxManager/cartActions'
 import { Footer } from 'src/components/Footer'
@@ -15,17 +15,12 @@ const CartTableScreen = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { cartProducts, platformId, error: cartDetailsError } = useSelector((state) => state.cartDetails)
-    const { loading, data: products, error } = useSelector((state) => state.dataList)
+    const { loading, data: products } = useSelector((state) => state.dataList)
+    const { cartProducts, platformId } = useSelector((state) => state.cartDetails)
 
     useEffect(() => {
         platformId && dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PRODUCT_ROUTES, { platformId }))
     }, [platformId, dispatch])
-
-    useEffect(() => {
-        if (error) toast.error(error)
-        if (cartDetailsError) toast.error(cartDetailsError)
-    }, [cartDetailsError, error])
 
     const fields = [
         { key: 'productId', label: 'Product ID' },

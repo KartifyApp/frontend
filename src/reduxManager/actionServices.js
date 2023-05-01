@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify'
+
 export class ActionServices {
     static getConfig = (getState, params = null) => {
         if (!getState) return {}
@@ -15,8 +17,8 @@ export class ActionServices {
         }
     }
 
-    static getError = (error) => {
-        return error.response && error.response.data.message ? error.response.data.message : error.message
+    static toastError = (error) => {
+        toast.error(error.response && error.response.data.message ? error.response.data.message : error.message)
     }
 
     static sleep = (time) => {
