@@ -58,8 +58,8 @@ function Sidebar() {
                             width: 52
                         }}
                     >
-                        <TooltipWrapper title="IITB ASC" arrow>
-                            <img src="" height="150" />
+                        <TooltipWrapper title="Kartify" arrow>
+                            <img src="/logo.png" height="120" alt="KARTIFY" />
                         </TooltipWrapper>
                     </Box>
                 </Box>
@@ -94,8 +94,8 @@ function Sidebar() {
                                 width: 52
                             }}
                         >
-                            <TooltipWrapper title="IITB ASC" arrow>
-                                <img src="" height="150" />
+                            <TooltipWrapper title="Kartify" arrow>
+                                <img src="/logo.png" height="120" alt="KARTIFY" />
                             </TooltipWrapper>
                         </Box>
                     </Box>

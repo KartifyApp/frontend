@@ -33,7 +33,7 @@ export const TableComponent = ({ fields, data, msg, loading, filter, createForm 
 
     const [open, setOpen] = useState(false)
     const [form, setForm] = useState(createForm)
-    const [filterValue, setFilterValue] = useState('All')
+    const [filterValue, setFilterValue] = useState('ALL')
     const [filteredData, setFilteredData] = useState([])
 
     useEffect(() => {
@@ -57,7 +57,7 @@ export const TableComponent = ({ fields, data, msg, loading, filter, createForm 
                                                 onChange={(e) => {
                                                     setFilterValue(e.target.value)
                                                     setFilteredData(
-                                                        data.filter((element) => element[filter.key] === e.target.value || e.target.value === 'All')
+                                                        data.filter((element) => element[filter.key] === e.target.value || e.target.value === 'ALL')
                                                     )
                                                 }}
                                                 size="small"
@@ -65,7 +65,7 @@ export const TableComponent = ({ fields, data, msg, loading, filter, createForm 
                                                 autoWidth
                                                 sx={{ marginRight: 2 }}
                                             >
-                                                {['All', ...filter.menu].map((mentItem) => (
+                                                {['ALL', ...filter.menu].map((mentItem) => (
                                                     <MenuItem key={mentItem} value={mentItem}>
                                                         {mentItem}
                                                     </MenuItem>

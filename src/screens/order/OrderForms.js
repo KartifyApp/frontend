@@ -60,7 +60,7 @@ export const OrderDeliveryJobForm = ({ order }) => {
             toast.success(`Order ID ${updatedOrder.orderId} updated successfully for delivery`)
             dispatch(GenericActions.getDataList(RouteConstants.BASE_URL + RouteConstants.PLATFORM_ROUTES + `/${order.platformId}/order`))
         }
-    }, [updatedOrder, dispatch])
+    }, [updatedOrder, dispatch, order])
 
     const submitHandler = (data) => {
         dispatch(GenericActions.createData(RouteConstants.BASE_URL + RouteConstants.ORDER_ROUTES + `/${order.orderId}`, {}))

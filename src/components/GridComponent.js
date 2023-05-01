@@ -23,7 +23,7 @@ import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone'
 
 export const GridComponent = ({ msg, loading, data, filter, createForm }) => {
     const [open, setOpen] = useState(false)
-    const [filterValue, setFilterValue] = useState('All')
+    const [filterValue, setFilterValue] = useState('ALL')
     const [filteredData, setFilteredData] = useState([])
 
     useEffect(() => {
@@ -63,14 +63,14 @@ export const GridComponent = ({ msg, loading, data, filter, createForm }) => {
                                                 onChange={(e) => {
                                                     setFilterValue(e.target.value)
                                                     setFilteredData(
-                                                        data.filter((element) => element[filter.key] === e.target.value || e.target.value === 'All')
+                                                        data.filter((element) => element[filter.key] === e.target.value || e.target.value === 'ALL')
                                                     )
                                                 }}
                                                 label="Filter"
                                                 autoWidth
                                                 sx={{ marginRight: 2 }}
                                             >
-                                                {['All', ...filter.menu].map((mentItem) => (
+                                                {['ALL', ...filter.menu].map((mentItem) => (
                                                     <MenuItem key={mentItem} value={mentItem}>
                                                         {mentItem}
                                                     </MenuItem>
@@ -108,7 +108,7 @@ export const GridComponent = ({ msg, loading, data, filter, createForm }) => {
                                         flexDirection: 'column'
                                     }}
                                 >
-                                    <CardMedia sx={{ height: 140 }} image="/static/images/placeholders/covers/6.jpg" title="Contemplative Reptile" />
+                                    <CardMedia sx={{ height: 140 }} image="/cover.jpg" title="Contemplative Reptile" />
                                     <CardContent>
                                         <Typography gutterBottom variant="h5" component="div">
                                             {element.name}

@@ -25,8 +25,7 @@ const initialState = {
     cartDetails: {
         platformId: platformIdFromStorage,
         cartProducts: cartProductsFromStorage,
-        shippingAddress: shippingAddressFromStorage,
-        error: 0
+        shippingAddress: shippingAddressFromStorage
     }
 }
 
